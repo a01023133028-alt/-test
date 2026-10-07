@@ -12,6 +12,7 @@ const Data = (() => {
   };
 
   const DATA_URL = 'data/weeds.json';
+  const CREDITS_URL = 'data/credits.json';
   const CACHE_KEY = 'cachedData';
 
   /* JSON 배열을 검사해 정리된 목록과 경고 메시지를 돌려줌 */
@@ -90,9 +91,19 @@ const Data = (() => {
     });
   }
 
+  /* 사진 출처 (없어도 동작) */
+  async function loadCredits() {
+    try {
+      const res = await fetch(CREDITS_URL, { cache: 'no-cache' });
+      return res.ok ? await res.json() : {};
+    } catch (e) {
+      return {};
+    }
+  }
+
   function clearCache() {
     Storage.remove(CACHE_KEY);
   }
 
-  return { MORPHS, LIFES, MORPH_CLASS, LIFE_CLASS, validate, load, loadFromFile, clearCache };
+  return { MORPHS, LIFES, MORPH_CLASS, LIFE_CLASS, validate, load, loadFromFile, loadCredits, clearCache };
 })();
