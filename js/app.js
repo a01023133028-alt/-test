@@ -84,6 +84,7 @@
     applyTheme(Storage.get('theme', null));
     UI.initOverlays();
     bindGlobal();
+    Data.loadCredits().then(UI.setCredits);
     try {
       setData(await Data.load());
     } catch (err) {

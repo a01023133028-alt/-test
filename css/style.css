@@ -745,3 +745,15 @@ body[data-route="home"] .action-bar { bottom: calc(var(--tabbar-h) + var(--safe-
   font-size: 0.85rem;
   pointer-events: none;
 }
+
+.lb-credit {
+  position: absolute;
+  top: calc(10px + env(safe-area-inset-top, 0px));
+  left: 12px;
+  right: 12px;
+  color: #bbb;
+  font-size: 0.75rem;
+  text-align: center;
+}
+.lb-credit:empty { display: none; }
+.lb-credit a { color: #9fd3a2; }

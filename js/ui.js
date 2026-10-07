@@ -57,6 +57,18 @@ const UI = (() => {
 
   /* ---------- 확대 보기 ---------- */
   const lb = { el: null, list: [], index: 0 };
+  let credits = {};
+
+  /* 사진 출처 { 경로: { author, license, source } } */
+  function setCredits(map) {
+    credits = map || {};
+  }
+
+  function creditHtml(src) {
+    const c = credits[src];
+    if (!c) return '';
+    return `📷 ${esc(c.author || c.login || '알 수 없음')} · ${esc(c.license)} · <a href="${esc(c.source)}" target="_blank" rel="noopener">iNaturalist</a>`;
+  }
 
   function openLightbox(list, index = 0) {
     if (!list.length) return;
@@ -72,6 +84,7 @@ const UI = (() => {
     const many = lb.list.length > 1;
     lb.el.querySelector('.lb-img').innerHTML = img(lb.list[lb.index], 'lb-photo', '확대한 사진');
     lb.el.querySelector('.lb-count').textContent = many ? `${lb.index + 1} / ${lb.list.length}` : '';
+    lb.el.querySelector('.lb-credit').innerHTML = creditHtml(lb.list[lb.index]);
     lb.el.querySelectorAll('.lb-prev, .lb-next').forEach((b) => (b.hidden = !many));
   }
 
@@ -115,6 +128,7 @@ const UI = (() => {
   function initOverlays() {
     const lbEl = document.getElementById('lightbox');
     lbEl.addEventListener('click', (e) => {
+      if (e.target.closest('.lb-credit a')) return;
       if (e.target.closest('.lb-prev')) return stepLightbox(-1);
       if (e.target.closest('.lb-next')) return stepLightbox(1);
       closeLightbox();
@@ -171,6 +185,7 @@ const UI = (() => {
     closeModal,
     isModalOpen,
     initOverlays,
+    setCredits,
     pct,
   };
 })();
