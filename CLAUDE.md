@@ -14,6 +14,7 @@ GitHub Pages(`main` 브랜치, `/` 루트)로 배포되며 `main`에 머지되�
 
 - `index.html`, `css/style.css`, `js/*.js` — 화면과 로직 (`js/app.js`가 시작점)
 - `data/weeds.json` — 77종 데이터 (`id`, `name`, `morph`, `life`, `features`, `images`)
+- `data/pairs.json` — 헷갈리는 쌍(비교 탭) 목록과 구분 포인트
 - `data/credits.json` — iNaturalist에서 추가한 사진의 촬영자·라이선스·원본 링크
 - `images/{3자리 id}/01.jpg …` — 잡초별 사진. 추가·삭제하면 `weeds.json`의 `images`와 `credits.json`도 함께 고친다.
 

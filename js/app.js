@@ -22,6 +22,7 @@
     lastSession: null,
     dexGroup: 'morph',
     dexQuery: '',
+    pairs: [],
   };
 
   function loadOpts() {
@@ -43,7 +44,7 @@
   const screen = (name) => document.getElementById('screen-' + name);
 
   /* ================= 라우팅 ================= */
-  const SCREENS = ['loading', 'loadfile', 'home', 'quiz', 'result', 'stats', 'dex'];
+  const SCREENS = ['loading', 'loadfile', 'home', 'quiz', 'result', 'stats', 'dex', 'pairs'];
 
   function go(route) {
     if (location.hash === '#' + route) onRoute();
@@ -71,10 +72,10 @@
     let r = location.hash.replace(/^#\/?/, '') || 'home';
     if (r === 'quiz' && !state.session) r = 'home';
     if (r === 'result' && !state.lastSession) r = 'home';
-    if (!['home', 'quiz', 'result', 'stats', 'dex'].includes(r)) r = 'home';
+    if (!['home', 'quiz', 'result', 'stats', 'dex', 'pairs'].includes(r)) r = 'home';
     if (('#' + r) !== location.hash) history.replaceState(null, '', '#' + r);
 
-    ({ home: renderHome, quiz: renderQuiz, result: renderResult, stats: renderStats, dex: renderDex })[r]();
+    ({ home: renderHome, quiz: renderQuiz, result: renderResult, stats: renderStats, dex: renderDex, pairs: renderPairs })[r]();
     show(r);
     if (r !== 'quiz') window.scrollTo(0, 0);
   }
@@ -85,6 +86,10 @@
     UI.initOverlays();
     bindGlobal();
     Data.loadCredits().then(UI.setCredits);
+    Data.loadPairs().then((p) => {
+      state.pairs = p;
+      if (state.route === 'pairs') renderPairs();
+    });
     try {
       setData(await Data.load());
     } catch (err) {
@@ -314,7 +319,7 @@
     const total = s.questions.length;
     const done = s.index + (q.answered ? 1 : 0);
     const photo = Quiz.MODES[q.type].photo;
-    const typeLabel = Quiz.MODES[q.type].label + (s.opts.mode === 'wrong' ? ' · 오답' : '');
+    const typeLabel = s.pair ? `헷갈리는 쌍 · ${pairTitle(s.pair)}` : Quiz.MODES[q.type].label + (s.opts.mode === 'wrong' ? ' · 오답' : '');
 
     screen('quiz').innerHTML = `
       <div class="quiz-head">
@@ -578,7 +583,7 @@
 
     screen('result').innerHTML = `
       <div class="card result-card">
-        <div class="muted">${esc(Quiz.MODES[s.type].label)}${s.opts.mode === 'wrong' ? ' · 오답 풀기' : ''}${s.quit ? ' · 중간 종료' : ''}</div>
+        <div class="muted">${s.pair ? `헷갈리는 쌍 · ${pairTitle(s.pair)}` : esc(Quiz.MODES[s.type].label)}${s.opts.mode === 'wrong' && !s.pair ? ' · 오답 풀기' : ''}${s.quit ? ' · 중간 종료' : ''}</div>
         <div class="result-score"><b>${s.score}</b> / ${total}</div>
         <div class="result-pct">${p}점 · ${msg}</div>
         ${hints ? `<div class="muted small">💡 힌트 사용 ${hints}문제</div>` : ''}
@@ -591,8 +596,11 @@
         : '<p class="muted center">틀린 문제가 없어요!</p>'}
 
       <div class="btn-stack">
-        ${wrongs.length ? '<button type="button" class="btn btn-primary btn-block btn-lg" data-action="retry-wrong">틀린 문제 다시 풀기</button>' : ''}
-        <button type="button" class="btn btn-block" data-action="again">같은 설정으로 새로 풀기</button>
+        ${s.pair
+          ? `<button type="button" class="btn btn-primary btn-block btn-lg" data-action="again">이 쌍 다시 연습</button>
+             <a href="#pairs" class="btn btn-block">다른 쌍 보기</a>`
+          : `${wrongs.length ? '<button type="button" class="btn btn-primary btn-block btn-lg" data-action="retry-wrong">틀린 문제 다시 풀기</button>' : ''}
+             <button type="button" class="btn btn-block" data-action="again">같은 설정으로 새로 풀기</button>`}
         <a href="#home" class="btn btn-ghost btn-block">처음으로</a>
       </div>`;
   }
@@ -621,7 +629,9 @@
     const t = e.target.closest('[data-action]');
     if (!t) return;
     const s = state.lastSession;
-    if (t.dataset.action === 'retry-wrong') {
+    if (s.pair && t.dataset.action === 'again') {
+      startPairQuiz(state.pairs.indexOf(s.pair));
+    } else if (t.dataset.action === 'retry-wrong') {
       const ids = s.questions.filter((q) => !q.correct).map((q) => q.weed.id);
       const session = Quiz.createSession(state.weeds, { ...s.opts, count: 'all', cycle: false }, ids);
       if (session) {
@@ -769,6 +779,60 @@
       </span></button>`;
   }
 
+  /* ================= 헷갈리는 쌍 ================= */
+  function pairWeeds(p) {
+    return p.ids.map((id) => state.byId.get(id));
+  }
+
+  function pairTitle(p) {
+    return pairWeeds(p).map((w) => (w ? esc(w.name) : '?')).join(' vs ');
+  }
+
+  function renderPairs() {
+    const cards = state.pairs
+      .map((p, i) => {
+        const ws = pairWeeds(p);
+        if (ws.some((w) => !w)) return '';
+        const side = (w, note) => `
+          <div class="pair-side">
+            <button type="button" class="pair-img" data-weed-detail="${w.id}" aria-label="${esc(w.name)} 자세히 보기">
+              ${UI.img(w.images[0], '', w.name)}
+              ${w.images.length > 1 ? `<span class="img-count">📷 ${w.images.length}</span>` : ''}
+            </button>
+            <b class="pair-name">${esc(w.name)}</b>
+            ${UI.tags(w)}
+            ${note ? `<p class="pair-note">${esc(note)}</p>` : ''}
+          </div>`;
+        const canPractice = ws.every((w) => w.images.length);
+        return `
+          <section class="pair-card card">
+            <h2 class="pair-title"><span class="pair-num">${i + 1}</span>${pairTitle(p)}</h2>
+            <div class="pair-row">${side(ws[0], p.a)}<span class="pair-vs">vs</span>${side(ws[1], p.b)}</div>
+            ${p.common ? `<p class="pair-common">💡 ${esc(p.common)}</p>` : ''}
+            ${canPractice ? `<button type="button" class="btn btn-block btn-sm pair-practice" data-pair="${i}">📝 사진 보고 둘 중 맞히기 (8문제)</button>` : ''}
+          </section>`;
+      })
+      .join('');
+    screen('pairs').innerHTML = `
+      <h1>헷갈리는 쌍</h1>
+      <p class="muted small">사진을 누르면 그 잡초의 사진 전부와 특징을 볼 수 있어요.</p>
+      ${cards || '<p class="muted center">불러오는 중…</p>'}`;
+  }
+
+  function startPairQuiz(i) {
+    const p = state.pairs[i];
+    if (!p) return;
+    const session = Quiz.createPairSession(p, pairWeeds(p), { ...state.opts, mode: 'choice', cycle: false });
+    if (!session) return;
+    state.session = session;
+    go('quiz');
+  }
+
+  function onPairsClick(e) {
+    const t = e.target.closest('[data-pair]');
+    if (t) startPairQuiz(Number(t.dataset.pair));
+  }
+
   function onDexClick(e) {
     const t = e.target.closest('[data-group]');
     if (!t) return;
@@ -836,6 +900,7 @@
     screen('result').addEventListener('click', onResultClick);
     screen('stats').addEventListener('click', onStatsClick);
     screen('dex').addEventListener('click', onDexClick);
+    screen('pairs').addEventListener('click', onPairsClick);
     screen('dex').addEventListener('input', (e) => {
       if (e.target.id === 'dexSearch') {
         state.dexQuery = e.target.value;
