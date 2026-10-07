@@ -123,6 +123,11 @@
 .c-fruit { --c: var(--fruit); --c-bg: var(--fruit-bg); }
 .c-tree { --c: var(--winter); --c-bg: var(--winter-bg); }
 .t-host { --c: var(--text); --c-bg: var(--surface-2); }
+/* 병해: 병원 종류 */
+.p-fungus { --c: var(--broad); --c-bg: var(--broad-bg); }
+.p-bacteria { --c: var(--sedge); --c-bg: var(--sedge-bg); }
+.p-virus { --c: var(--summer); --c-bg: var(--summer-bg); }
+.p-other { --c: var(--winter); --c-bg: var(--winter-bg); }
 
 /* ========== 기본 ========== */
 *, *::before, *::after { box-sizing: border-box; }
