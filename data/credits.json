@@ -17,23 +17,11 @@
   "license": "CC-BY-NC",
   "source": "https://www.inaturalist.org/observations/7ddbc3c9-fac5-4517-928e-579d96ca1f40"
  },
- "images/001/05.jpg": {
-  "author": "chiuluan",
-  "login": "chiuluan",
-  "license": "CC-BY",
-  "source": "https://www.inaturalist.org/observations/6ce32370-7303-4e66-a185-4b95839dbf59"
- },
  "images/002/03.jpg": {
   "author": "Franck Le Driant",
   "login": "franck_le_driant",
   "license": "CC-BY-NC",
   "source": "https://www.inaturalist.org/observations/3f507c74-0d1d-4673-819e-c499cdc2c371"
- },
- "images/002/04.jpg": {
-  "author": "Anastasia Davydova",
-  "login": "anasta_kz",
-  "license": "CC-BY-NC",
-  "source": "https://www.inaturalist.org/observations/20a04d37-e338-43dc-9054-3fa25442db93"
  },
  "images/004/02.jpg": {
   "author": "simys66",
@@ -48,12 +36,6 @@
   "source": "https://www.inaturalist.org/observations/a0648fec-20e1-4e23-9896-f1ffd12893ae"
  },
  "images/004/04.jpg": {
-  "author": "Wen-Hsiang Cheng",
-  "login": "zachcheng",
-  "license": "CC-BY-NC",
-  "source": "https://www.inaturalist.org/observations/5bf36b90-9f0f-4d82-8a03-2fff4075f0e7"
- },
- "images/004/05.jpg": {
   "author": "huanghuai",
   "login": "huanghuai",
   "license": "CC-BY-NC",
@@ -95,18 +77,6 @@
   "license": "CC-BY-NC",
   "source": "https://www.inaturalist.org/observations/d284b61a-047f-4a8e-9895-cf314a272077"
  },
- "images/006/04.jpg": {
-  "author": "박윤희",
-  "login": "djp_yunhee",
-  "license": "CC-BY-NC",
-  "source": "https://www.inaturalist.org/observations/fb0e3a3f-627a-4f30-9464-8b023ff7a018"
- },
- "images/006/05.jpg": {
-  "author": "Woochan Seo",
-  "login": "woochanseo",
-  "license": "CC-BY-NC-SA",
-  "source": "https://www.inaturalist.org/observations/ad299cf1-1065-4cab-a74b-2c35aad2c29a"
- },
  "images/007/03.jpg": {
   "author": "Татьяна Химера",
   "login": "tatiana_chimera",
@@ -125,12 +95,6 @@
   "license": "CC-BY-NC",
   "source": "https://www.inaturalist.org/observations/8679ee09-e2d7-4759-b804-2849a57bbfbb"
  },
- "images/007/06.jpg": {
-  "author": "陳界良",
-  "login": "chiehliangchen",
-  "license": "CC-BY-NC",
-  "source": "https://www.inaturalist.org/observations/8ca86b75-19e7-4c74-9983-727802bd8821"
- },
  "images/008/02.jpg": {
   "author": "Sang-Hyeon Jin",
   "login": "jinsh",
@@ -148,12 +112,6 @@
   "login": "tsaumuii_stenophylloides",
   "license": "CC-BY-NC",
   "source": "https://www.inaturalist.org/observations/e0ec13ea-88b2-4612-8737-e90796ee3cb9"
- },
- "images/008/05.jpg": {
-  "author": "budak",
-  "login": "budak",
-  "license": "CC-BY-NC",
-  "source": "https://www.inaturalist.org/observations/f0d0b703-1151-4c60-9791-cc3d9ffcae98"
  },
  "images/009/03.jpg": {
   "author": "andriy",
@@ -192,12 +150,6 @@
   "source": "https://www.inaturalist.org/observations/aa7ea884-0738-4f73-a63f-da82c188e4d8"
  },
  "images/010/04.jpg": {
-  "author": "kaorilee",
-  "login": "kaorilee",
-  "license": "CC-BY-NC",
-  "source": "https://www.inaturalist.org/observations/faaa9ced-e7b0-4778-aecf-f37ee210e5b6"
- },
- "images/010/05.jpg": {
   "author": "郭伯川",
   "login": "borchuan",
   "license": "CC-BY-NC",
@@ -210,22 +162,10 @@
   "source": "https://www.inaturalist.org/observations/a650294b-e3eb-41f4-a608-613d0ff4a380"
  },
  "images/011/04.jpg": {
-  "author": "onidiras-iNaturalist",
-  "login": "onidiras",
-  "license": "CC-BY-NC",
-  "source": "https://www.inaturalist.org/observations/98265330-6454-4258-a8fc-7ea3fa6de96c"
- },
- "images/011/05.jpg": {
   "author": "Rob Macfie",
   "login": "rmacfie",
   "license": "CC-BY-NC",
   "source": "https://www.inaturalist.org/observations/96ac5a91-3ddb-48b2-ab0a-abc09cdfa308"
- },
- "images/011/06.jpg": {
-  "author": "許柏皓",
-  "login": "naturalist186392",
-  "license": "CC-BY-NC",
-  "source": "https://www.inaturalist.org/observations/d468fe4a-fd96-430f-b48f-59a8363ce6ef"
  },
  "images/012/03.jpg": {
   "author": "Татьяна Химера",
@@ -293,12 +233,6 @@
   "license": "CC-BY",
   "source": "https://www.inaturalist.org/observations/2359c128-e320-401d-bcf2-707d26ccb60b"
  },
- "images/014/06.jpg": {
-  "author": "Bella Lin",
-  "login": "bellalin65",
-  "license": "CC-BY",
-  "source": "https://www.inaturalist.org/observations/1e97ee0f-ed7a-4d09-b93a-ab2fdee7da3d"
- },
  "images/016/03.jpg": {
   "author": "Keita Watanabe",
   "login": "keitawatanabe",
@@ -316,18 +250,6 @@
   "login": "vesca-f",
   "license": "CC-BY-NC",
   "source": "https://www.inaturalist.org/observations/80e4e016-926b-4cf7-b5fa-c3fbf254995a"
- },
- "images/017/05.jpg": {
-  "author": "V.S. Volkotrub",
-  "login": "vvolkotrub",
-  "license": "CC-BY-NC",
-  "source": "https://www.inaturalist.org/observations/bb638562-4d17-42bf-a86e-62c09ffec532"
- },
- "images/017/06.jpg": {
-  "author": "管牧山",
-  "login": "guanmushan",
-  "license": "CC-BY-NC",
-  "source": "https://www.inaturalist.org/observations/e9a267da-af97-44ec-aa9f-e1bead1504ab"
  },
  "images/018/03.jpg": {
   "author": "bio96",
@@ -419,12 +341,6 @@
   "license": "CC-BY-NC",
   "source": "https://www.inaturalist.org/observations/edb1bc0f-d135-4257-b52e-f6cd5316463d"
  },
- "images/021/07.jpg": {
-  "author": "T Duffy",
-  "login": "wimper",
-  "license": "CC-BY-NC",
-  "source": "https://www.inaturalist.org/observations/cf7ca0be-e4a3-4aa6-a504-53ae292868a4"
- },
  "images/022/03.jpg": {
   "author": "WATANABE Hitoshi 渡辺仁",
   "login": "tbc_watanabe",
@@ -436,18 +352,6 @@
   "login": "rrrkai",
   "license": "CC-BY-NC",
   "source": "https://www.inaturalist.org/observations/e9033b3d-0fe6-4aa7-8b35-20a42797ba43"
- },
- "images/022/05.jpg": {
-  "author": "JODY HSIEH",
-  "login": "jodyhsieh",
-  "license": "CC-BY-NC",
-  "source": "https://www.inaturalist.org/observations/8feb9b8f-edc7-4434-9e7f-6b0342a6d06a"
- },
- "images/022/06.jpg": {
-  "author": "Urgamal Magsar",
-  "login": "urgamal",
-  "license": "CC-BY",
-  "source": "https://www.inaturalist.org/observations/bb4a2c20-282c-421a-9acc-c33f97ecc36b"
  },
  "images/023/02.jpg": {
   "author": "lee-cj",
@@ -467,35 +371,11 @@
   "license": "CC-BY",
   "source": "https://www.inaturalist.org/observations/14a4ae2b-56e4-4023-acc6-f5c192b32259"
  },
- "images/023/05.jpg": {
-  "author": "sergeyprokopenko",
-  "login": "sergeyprokopenko",
-  "license": "CC-BY-NC",
-  "source": "https://www.inaturalist.org/observations/4e3011aa-c829-4813-9e6f-22b269766655"
- },
  "images/024/04.jpg": {
-  "author": "김태완",
-  "login": "taewankim",
-  "license": "CC-BY-NC",
-  "source": "https://www.inaturalist.org/observations/b9750ec6-fd19-4ef7-bc8a-d35e2002c211"
- },
- "images/024/05.jpg": {
-  "author": "hyobin Seong",
-  "login": "seonghyobin",
-  "license": "CC-BY-NC",
-  "source": "https://www.inaturalist.org/observations/7f372a0c-c5ac-4afd-93df-16a48a4a0986"
- },
- "images/024/06.jpg": {
   "author": "송선민",
   "login": "djp_everyday337",
   "license": "CC-BY-NC",
   "source": "https://www.inaturalist.org/observations/3396b3b9-e221-47c3-a465-62d6eb2c3974"
- },
- "images/024/07.jpg": {
-  "author": "ryukinishi",
-  "login": "ryukinishi",
-  "license": "CC-BY-NC",
-  "source": "https://www.inaturalist.org/observations/a7035c86-cdd1-41cb-b4ca-edc4e5505351"
  },
  "images/025/03.jpg": {
   "author": "Merlla McLaughlin",
@@ -539,12 +419,6 @@
   "license": "CC-BY-NC",
   "source": "https://www.inaturalist.org/observations/08e6666a-cb4b-4d6e-b091-ded3e0d339d2"
  },
- "images/026/06.jpg": {
-  "author": "mister_bumble",
-  "login": "mister_bumble",
-  "license": "CC-BY",
-  "source": "https://www.inaturalist.org/observations/17559ba2-bfc3-44d7-a463-d85592ae6ad1"
- },
  "images/027/03.jpg": {
   "author": "Chuangzao",
   "login": "chuangzao",
@@ -558,12 +432,6 @@
   "source": "https://www.inaturalist.org/observations/a5fdddfa-c9d5-4a68-ad46-1fe1be128731"
  },
  "images/027/05.jpg": {
-  "author": "wuchinchih",
-  "login": "wuchinchih",
-  "license": "CC-BY-NC",
-  "source": "https://www.inaturalist.org/observations/0dd38f9a-111a-44d5-beae-af5e21d01acf"
- },
- "images/027/06.jpg": {
   "author": "zhangqianyi",
   "login": "zhangqianyi",
   "license": "CC-BY-NC",
@@ -586,12 +454,6 @@
   "login": "tbc_watanabe",
   "license": "CC-BY",
   "source": "https://www.inaturalist.org/observations/2335763d-af5f-46d4-9ed2-23905d619526"
- },
- "images/028/06.jpg": {
-  "author": "Sangyun Kim",
-  "login": "sangyunkim",
-  "license": "CC-BY-NC",
-  "source": "https://www.inaturalist.org/observations/552b1c47-5a86-465e-b2d3-9bc8f9d0e2c4"
  },
  "images/029/03.jpg": {
   "author": "José Ignacio Márquez Corro",
@@ -642,28 +504,10 @@
   "source": "https://www.inaturalist.org/observations/9077dea6-8a83-420a-a9b3-79d5f31bd152"
  },
  "images/031/02.jpg": {
-  "author": "Suyoung Jung",
-  "login": "suyoung_jung",
-  "license": "CC-BY-NC",
-  "source": "https://www.inaturalist.org/observations/198cdaf6-1dbe-4a4b-86f1-9cc2199ad9d1"
- },
- "images/031/03.jpg": {
   "author": "Татьяна Химера",
   "login": "tatiana_chimera",
   "license": "CC-BY-NC",
   "source": "https://www.inaturalist.org/observations/722f8ba4-1f4a-4271-94bc-c737aa1cadfc"
- },
- "images/031/04.jpg": {
-  "author": "Hong",
-  "login": "doggy0406",
-  "license": "CC-BY-NC",
-  "source": "https://www.inaturalist.org/observations/535314d5-88ae-4c0e-a8b3-ee9635283aae"
- },
- "images/031/05.jpg": {
-  "author": "은빈",
-  "login": "naturalist33084",
-  "license": "CC-BY-NC",
-  "source": "https://www.inaturalist.org/observations/b9442ac6-7843-419c-aaf9-2cadd34d40f7"
  },
  "images/032/04.jpg": {
   "author": "Justin Walker",
@@ -683,12 +527,6 @@
   "license": "CC-BY-NC",
   "source": "https://www.inaturalist.org/observations/559fad35-a34c-415f-bdaf-3718eff1afb2"
  },
- "images/032/07.jpg": {
-  "author": "Paul Ha",
-  "login": "durubird",
-  "license": "CC-BY-NC",
-  "source": "https://www.inaturalist.org/observations/0ba648b6-bf2f-488d-802c-8a9c65f935da"
- },
  "images/033/03.jpg": {
   "author": "江国彬",
   "login": "gbno",
@@ -696,22 +534,10 @@
   "source": "https://www.inaturalist.org/observations/b982123d-b010-4500-a89a-507ec06f489e"
  },
  "images/033/04.jpg": {
-  "author": "Gularjanz Grigoryi Mihajlovich",
-  "login": "ggularijants",
-  "license": "CC-BY-NC",
-  "source": "https://www.inaturalist.org/observations/c1e6c2df-4d73-471f-adb6-7b9b376f5401"
- },
- "images/033/05.jpg": {
   "author": "Alexey P. Seregin",
   "login": "apseregin",
   "license": "CC-BY-NC",
   "source": "https://www.inaturalist.org/observations/cc7c4db7-2334-47fc-a67d-45dcd3be825a"
- },
- "images/033/06.jpg": {
-  "author": "小铖/Smalltown",
-  "login": "smalltown_huang",
-  "license": "CC-BY-NC",
-  "source": "https://www.inaturalist.org/observations/0b4284d9-5434-4ff7-9634-25ea6e9c6483"
  },
  "images/034/03.jpg": {
   "author": "campbellfmh",
@@ -720,18 +546,12 @@
   "source": "https://www.inaturalist.org/observations/ef77d29c-0564-4763-9473-a6140bf86c87"
  },
  "images/034/04.jpg": {
-  "author": "Michelle Goerdel",
-  "login": "aandmg",
-  "license": "CC-BY-NC",
-  "source": "https://www.inaturalist.org/observations/ae29184d-c095-41c2-8bf1-870422f2a4f8"
- },
- "images/034/05.jpg": {
   "author": "Jake David MacLennan",
   "login": "jakedavidmaclennan",
   "license": "CC-BY-NC",
   "source": "https://www.inaturalist.org/observations/5a3968d9-f80d-4d13-a5eb-7de13cd38ecb"
  },
- "images/034/06.jpg": {
+ "images/034/05.jpg": {
   "author": "huangmingpan",
   "login": "huangmp",
   "license": "CC-BY-NC",
@@ -774,12 +594,6 @@
   "source": "https://www.inaturalist.org/observations/a3780406-ce5e-424b-9611-b4406ec7b93c"
  },
  "images/036/04.jpg": {
-  "author": "huangmingpan",
-  "login": "huangmp",
-  "license": "CC-BY-NC",
-  "source": "https://www.inaturalist.org/observations/63704b5e-cfd7-4ed7-985a-b5a28be3a20e"
- },
- "images/036/05.jpg": {
   "author": "Yushi Wang",
   "login": "kat717",
   "license": "CC-BY-NC",
@@ -803,12 +617,6 @@
   "license": "CC-BY-NC",
   "source": "https://www.inaturalist.org/observations/875ef464-b10f-40a0-bfee-cf59b490eb36"
  },
- "images/037/07.jpg": {
-  "author": "taiwan_habu",
-  "login": "taiwan_habu",
-  "license": "CC-BY-NC",
-  "source": "https://www.inaturalist.org/observations/13212f64-6e16-435e-84a3-c29ec7024519"
- },
  "images/038/03.jpg": {
   "author": "campbellfmh",
   "login": "campbellfmh",
@@ -821,37 +629,13 @@
   "license": "CC-BY-NC",
   "source": "https://www.inaturalist.org/observations/48695965-f52b-40ba-9ac7-dda84b6f9346"
  },
- "images/038/05.jpg": {
-  "author": "lee-cj",
-  "login": "lee-cj",
-  "license": "CC-BY-NC",
-  "source": "https://www.inaturalist.org/observations/41f208ae-2c7e-4b5c-b011-85a3aa4d3e94"
- },
- "images/038/06.jpg": {
-  "author": "Paul Ha",
-  "login": "durubird",
-  "license": "CC-BY-NC",
-  "source": "https://www.inaturalist.org/observations/49b4b16d-fd7b-444f-9f16-1e9d19c63bcb"
- },
  "images/039/02.jpg": {
-  "author": "onidiras-iNaturalist",
-  "login": "onidiras",
-  "license": "CC-BY-NC",
-  "source": "https://www.inaturalist.org/observations/99082ceb-4a73-43ed-839f-e3b81d5e63ab"
- },
- "images/039/03.jpg": {
-  "author": "Suyoung Jung",
-  "login": "suyoung_jung",
-  "license": "CC-BY-NC",
-  "source": "https://www.inaturalist.org/observations/7f843984-3a55-49b7-9697-1ce950087b9c"
- },
- "images/039/04.jpg": {
   "author": "Zhihan Xing",
   "login": "zhihanxing",
   "license": "CC-BY-NC",
   "source": "https://www.inaturalist.org/observations/4b19bcfc-9578-4ba4-b44d-8b15cd0b8145"
  },
- "images/039/05.jpg": {
+ "images/039/03.jpg": {
   "author": "JODY HSIEH",
   "login": "jodyhsieh",
   "license": "CC-BY-NC",
@@ -875,12 +659,6 @@
   "license": "CC-BY-NC",
   "source": "https://www.inaturalist.org/observations/dd8b73d8-6702-4317-a6b7-e3e05d3f0749"
  },
- "images/040/06.jpg": {
-  "author": "Татьяна Химера",
-  "login": "tatiana_chimera",
-  "license": "CC-BY-NC",
-  "source": "https://www.inaturalist.org/observations/6a1cb990-75e5-48f5-b277-cb1e5ec73173"
- },
  "images/041/02.jpg": {
   "author": "老山敬德",
   "login": "laoshanjinde",
@@ -888,22 +666,10 @@
   "source": "https://www.inaturalist.org/observations/32e46b74-32aa-4893-b203-22b18cdadfa0"
  },
  "images/041/03.jpg": {
-  "author": "kusa-to-uo",
-  "login": "kusa-to-uo",
-  "license": "CC-BY-NC",
-  "source": "https://www.inaturalist.org/observations/90aed52e-f4b7-482e-86c8-f97a7b1dd06b"
- },
- "images/041/04.jpg": {
   "author": "Mason Brock",
   "login": "masebrock",
   "license": "CC0",
   "source": "https://www.inaturalist.org/observations/640ccf11-3fff-496f-87d4-c152da890a5f"
- },
- "images/041/05.jpg": {
-  "author": "lecanorchis",
-  "login": "lecanorchis",
-  "license": "CC-BY-NC",
-  "source": "https://www.inaturalist.org/observations/a5eda85b-1eb0-4c60-8018-7e20c0c0003b"
  },
  "images/042/03.jpg": {
   "author": "이연지",
@@ -912,18 +678,12 @@
   "source": "https://www.inaturalist.org/observations/9780f683-e610-41a4-bf36-476e4591e13b"
  },
  "images/042/04.jpg": {
-  "author": "你猜猜看",
-  "login": "zhen8747",
-  "license": "CC-BY-NC",
-  "source": "https://www.inaturalist.org/observations/b7ab610b-1cdc-4e5b-841e-fe684c427dad"
- },
- "images/042/05.jpg": {
   "author": "이재규",
   "login": "naturalist162977",
   "license": "CC-BY-NC",
   "source": "https://www.inaturalist.org/observations/78bb6802-b498-4d69-8505-155af3391517"
  },
- "images/042/06.jpg": {
+ "images/042/05.jpg": {
   "author": "waterdeer",
   "login": "waterdeer",
   "license": "CC-BY-NC",
@@ -934,24 +694,6 @@
   "login": "calcium",
   "license": "CC-BY-NC",
   "source": "https://www.inaturalist.org/observations/c8302920-d876-4aba-ae6e-2f13c6268e64"
- },
- "images/043/04.jpg": {
-  "author": "ohyerim",
-  "login": "ohyerim",
-  "license": "CC-BY-NC",
-  "source": "https://www.inaturalist.org/observations/d25eafe6-d629-45c2-8a45-6e79edf82b3e"
- },
- "images/043/05.jpg": {
-  "author": "naturalist191146",
-  "login": "naturalist191146",
-  "license": "CC-BY-NC",
-  "source": "https://www.inaturalist.org/observations/a039ff8b-9893-42e8-a23b-77ec7b192bf9"
- },
- "images/043/06.jpg": {
-  "author": "예나",
-  "login": "naturalist127172",
-  "license": "CC-BY-NC",
-  "source": "https://www.inaturalist.org/observations/3edb8d90-6aab-43c9-950d-61fb1a8ea6cb"
  },
  "images/044/03.jpg": {
   "author": "Rob Macfie",
@@ -970,12 +712,6 @@
   "login": "pandahead_hoimoon",
   "license": "CC-BY-NC",
   "source": "https://www.inaturalist.org/observations/33a367a8-faf8-49bc-a809-786a14055d1c"
- },
- "images/044/06.jpg": {
-  "author": "florawhite",
-  "login": "florawhite",
-  "license": "CC-BY",
-  "source": "https://www.inaturalist.org/observations/1e5b2caa-ea7b-4ceb-b442-06a61af3b36f"
  },
  "images/045/03.jpg": {
   "author": "mister_bumble",
@@ -1019,12 +755,6 @@
   "license": "CC-BY-NC",
   "source": "https://www.inaturalist.org/observations/954099cc-aa3e-423f-8bd8-2dee04fdf60a"
  },
- "images/046/05.jpg": {
-  "author": "Paul Ha",
-  "login": "durubird",
-  "license": "CC-BY-NC",
-  "source": "https://www.inaturalist.org/observations/8a1a2ac6-5fe2-4b8f-a759-745d5f987e31"
- },
  "images/047/02.jpg": {
   "author": "lee-cj",
   "login": "lee-cj",
@@ -1036,18 +766,6 @@
   "login": "lava_chen",
   "license": "CC-BY-NC",
   "source": "https://www.inaturalist.org/observations/54b1d8db-bb18-4ce2-9af5-1ee6fef53f8e"
- },
- "images/047/04.jpg": {
-  "author": "Violetta Dzizyurova",
-  "login": "violettadzizyurova",
-  "license": "CC-BY",
-  "source": "https://www.inaturalist.org/observations/0bbfa7e4-aa03-404d-a447-beae75d911fe"
- },
- "images/047/05.jpg": {
-  "author": "이현정",
-  "login": "djp_violet2026",
-  "license": "CC-BY-NC",
-  "source": "https://www.inaturalist.org/observations/a1460357-34ed-46c7-8fa5-98e4a56c232d"
  },
  "images/048/02.jpg": {
   "author": "Martin",
@@ -1074,24 +792,18 @@
   "source": "https://www.inaturalist.org/observations/e9b24234-ef05-472f-ab15-d638252b872f"
  },
  "images/049/02.jpg": {
-  "author": "pitturpattur",
-  "login": "melephant",
-  "license": "CC-BY-NC",
-  "source": "https://www.inaturalist.org/observations/1be6cc35-84c5-4289-8e3d-d5dd78b9ffc8"
- },
- "images/049/03.jpg": {
   "author": "Rob Macfie",
   "login": "rmacfie",
   "license": "CC-BY-NC",
   "source": "https://www.inaturalist.org/observations/9eb0fac6-ee66-4812-9157-6381a7561874"
  },
- "images/049/04.jpg": {
+ "images/049/03.jpg": {
   "author": "강민재",
   "login": "naturalist170421",
   "license": "CC-BY-NC",
   "source": "https://www.inaturalist.org/observations/9ce934d1-d709-4720-a6c8-903e561be75c"
  },
- "images/049/05.jpg": {
+ "images/049/04.jpg": {
   "author": "Kim, Hyun-tae",
   "login": "pintail",
   "license": "CC-BY-NC-SA",
@@ -1115,12 +827,6 @@
   "license": "CC-BY",
   "source": "https://www.inaturalist.org/observations/463e8c4a-a2f5-41d7-861d-6e7571cd9914"
  },
- "images/050/06.jpg": {
-  "author": "andrey19780619",
-  "login": "andrey19780619",
-  "license": "CC-BY-NC",
-  "source": "https://www.inaturalist.org/observations/fb541851-f9c9-4b44-b7e7-6eff5f1b81a1"
- },
  "images/051/02.jpg": {
   "author": "sonokong",
   "login": "sonokong",
@@ -1134,12 +840,6 @@
   "source": "https://www.inaturalist.org/observations/49d64f83-cb59-4d7d-b471-2227bb9e5b17"
  },
  "images/051/04.jpg": {
-  "author": "uio_apes",
-  "login": "uio_apes",
-  "license": "CC-BY-NC",
-  "source": "https://www.inaturalist.org/observations/db73938e-422a-4749-972c-7ba96a62ac07"
- },
- "images/051/05.jpg": {
   "author": "hwang_hye_eun",
   "login": "hwang_hye_eun",
   "license": "CC-BY-NC",
@@ -1158,12 +858,6 @@
   "source": "https://www.inaturalist.org/observations/e96747ad-60f9-47a9-91e4-fc38062f9726"
  },
  "images/052/06.jpg": {
-  "author": "송선민",
-  "login": "djp_everyday337",
-  "license": "CC-BY-NC",
-  "source": "https://www.inaturalist.org/observations/7f1c75bb-dea5-4289-b325-39784ffc9e81"
- },
- "images/052/07.jpg": {
   "author": "Татьяна Химера",
   "login": "tatiana_chimera",
   "license": "CC-BY-NC",
@@ -1182,12 +876,6 @@
   "source": "https://www.inaturalist.org/observations/95dc38aa-cc81-4c34-bfb2-5f547243ef99"
  },
  "images/053/04.jpg": {
-  "author": "Paul Tavares",
-  "login": "paultavares",
-  "license": "CC-BY-NC",
-  "source": "https://www.inaturalist.org/observations/cb5a15b4-e79f-4135-9419-264e66d063df"
- },
- "images/053/05.jpg": {
   "author": "hermanviv",
   "login": "hermanviv",
   "license": "CC-BY-NC",
@@ -1211,12 +899,6 @@
   "license": "CC-BY",
   "source": "https://www.inaturalist.org/observations/29ef2b6e-003d-4c96-9a51-d15f2cb4bafb"
  },
- "images/054/06.jpg": {
-  "author": "lee_meow",
-  "login": "lee_meow",
-  "license": "CC-BY-NC",
-  "source": "https://www.inaturalist.org/observations/6945d3f9-248e-4e13-a31a-e9849ee9e198"
- },
  "images/055/02.jpg": {
   "author": "ao-ka",
   "login": "ao-ka",
@@ -1235,12 +917,6 @@
   "license": "CC-BY-NC",
   "source": "https://www.inaturalist.org/observations/39cbb9c1-a9e7-46da-a6f8-470fa0bbfa02"
  },
- "images/055/05.jpg": {
-  "author": "岸本年郎",
-  "login": "kishimoto_toshio",
-  "license": "CC-BY",
-  "source": "https://www.inaturalist.org/observations/4a59b592-04b0-45eb-927a-16119c3e9a20"
- },
  "images/056/03.jpg": {
   "author": "campbellfmh",
   "login": "campbellfmh",
@@ -1248,22 +924,10 @@
   "source": "https://www.inaturalist.org/observations/2e4a5ce7-d4e6-4761-bd6a-2a378fa48c26"
  },
  "images/056/04.jpg": {
-  "author": "sb2406",
-  "login": "sb2406",
-  "license": "CC-BY-NC",
-  "source": "https://www.inaturalist.org/observations/fac0b875-ad64-42df-88e8-38e7d6feacf6"
- },
- "images/056/05.jpg": {
   "author": "Suyoung Jung",
   "login": "suyoung_jung",
   "license": "CC-BY-NC",
   "source": "https://www.inaturalist.org/observations/40bc27c9-8855-4424-88dd-16880ef9649b"
- },
- "images/056/06.jpg": {
-  "author": "Haemi Lee",
-  "login": "haemi",
-  "license": "CC-BY-NC",
-  "source": "https://www.inaturalist.org/observations/b8c1a35d-f39d-4f48-b09c-60406caae704"
  },
  "images/057/02.jpg": {
   "author": "Alexander Ganse",
@@ -1283,12 +947,6 @@
   "license": "CC-BY-NC",
   "source": "https://www.inaturalist.org/observations/7d9c38a7-4e42-4ca4-b79a-29a7fe8393b3"
  },
- "images/057/05.jpg": {
-  "author": "yuki_kobayashi",
-  "login": "yuki_kobayashi",
-  "license": "CC-BY-NC",
-  "source": "https://www.inaturalist.org/observations/12599171-4951-4c70-ae36-b3f54da7de13"
- },
  "images/058/03.jpg": {
   "author": "mimsa",
   "login": "mimsa",
@@ -1300,18 +958,6 @@
   "login": "almansa",
   "license": "CC-BY-NC",
   "source": "https://www.inaturalist.org/observations/df70310a-5f42-4b4e-9b25-46f5f493bd53"
- },
- "images/058/05.jpg": {
-  "author": "onidiras-iNaturalist",
-  "login": "onidiras",
-  "license": "CC-BY-NC",
-  "source": "https://www.inaturalist.org/observations/f405fff2-6869-4566-92e8-6407047e78e7"
- },
- "images/058/06.jpg": {
-  "author": "cozritivoiu",
-  "login": "cozritivoiu",
-  "license": "CC-BY-NC",
-  "source": "https://www.inaturalist.org/observations/a9bf56fa-1258-4e64-8032-6d5866165267"
  },
  "images/059/03.jpg": {
   "author": "arbarokampo",
@@ -1326,12 +972,6 @@
   "source": "https://www.inaturalist.org/observations/d3f2c851-4f56-4064-afba-cab0f720b324"
  },
  "images/059/05.jpg": {
-  "author": "Kim, Hyun-tae",
-  "login": "pintail",
-  "license": "CC-BY-NC-SA",
-  "source": "https://www.inaturalist.org/observations/9b003cd2-614e-42e1-8a59-14ab06c9c770"
- },
- "images/059/06.jpg": {
   "author": "mister_bumble",
   "login": "mister_bumble",
   "license": "CC-BY",
@@ -1355,12 +995,6 @@
   "license": "CC-BY-NC",
   "source": "https://www.inaturalist.org/observations/2f89eed5-eb2c-415f-b00e-2c8a2462eb15"
  },
- "images/060/06.jpg": {
-  "author": "sonokong",
-  "login": "sonokong",
-  "license": "CC-BY-NC",
-  "source": "https://www.inaturalist.org/observations/79df8d4e-c675-4af3-bd37-16aeed3dfe48"
- },
  "images/061/03.jpg": {
   "author": "蔣孟",
   "login": "naturalist24188",
@@ -1374,12 +1008,6 @@
   "source": "https://www.inaturalist.org/observations/7a051c9d-53ca-427c-be97-bd5c4faa1767"
  },
  "images/061/05.jpg": {
-  "author": "Hugo Sun",
-  "login": "hugo-sun",
-  "license": "CC-BY-NC",
-  "source": "https://www.inaturalist.org/observations/4ecbf7a1-ef44-40e9-a1fa-7766f7d16dfb"
- },
- "images/061/06.jpg": {
   "author": "agileliu",
   "login": "agileliu",
   "license": "CC-BY-NC",
@@ -1396,18 +1024,6 @@
   "login": "aganse",
   "license": "CC-BY-NC",
   "source": "https://www.inaturalist.org/observations/d7e42d96-97a2-46c5-a7c5-2b263860c936"
- },
- "images/062/05.jpg": {
-  "author": "John Kees",
-  "login": "dryopteris2",
-  "license": "CC0",
-  "source": "https://www.inaturalist.org/observations/d3e2f86d-5ad9-4065-b625-8ca538c115e2"
- },
- "images/062/06.jpg": {
-  "author": "pitturpattur",
-  "login": "melephant",
-  "license": "CC-BY-NC",
-  "source": "https://www.inaturalist.org/observations/88f8ab0d-19d1-4cdb-9a0c-8c41ac208401"
  },
  "images/063/03.jpg": {
   "author": "Amaël Borzée",
@@ -1464,18 +1080,6 @@
   "source": "https://www.inaturalist.org/observations/01d7adf9-d04a-42f5-b209-ed84734cbd4f"
  },
  "images/065/03.jpg": {
-  "author": "TonyT",
-  "login": "tongks22",
-  "license": "CC-BY",
-  "source": "https://www.inaturalist.org/observations/80e2f064-7830-4b92-b013-576040c8b048"
- },
- "images/065/04.jpg": {
-  "author": "shulinchen",
-  "login": "shulinchen",
-  "license": "CC-BY-NC",
-  "source": "https://www.inaturalist.org/observations/4e7a3aea-2085-450d-8095-aa009f727293"
- },
- "images/065/05.jpg": {
   "author": "張子見",
   "login": "jacob7349",
   "license": "CC-BY-NC",
@@ -1499,12 +1103,6 @@
   "license": "CC-BY",
   "source": "https://www.inaturalist.org/observations/7cb4e4cc-b6a9-4210-8797-26d31622519f"
  },
- "images/066/05.jpg": {
-  "author": "garlice99",
-  "login": "garlice99",
-  "license": "CC-BY-NC",
-  "source": "https://www.inaturalist.org/observations/04e578ba-2299-40cd-a0cf-2e7f7af26a06"
- },
  "images/067/03.jpg": {
   "author": "学生物挺好就是课表满",
   "login": "cloud1207",
@@ -1522,12 +1120,6 @@
   "login": "wresy",
   "license": "CC-BY-NC",
   "source": "https://www.inaturalist.org/observations/890f0e0e-570a-410f-812a-4a3a7ba39bf6"
- },
- "images/067/06.jpg": {
-  "author": "wjrrrrrrr",
-  "login": "wjrrrrrrr",
-  "license": "CC-BY-NC",
-  "source": "https://www.inaturalist.org/observations/97f6213f-1444-4151-9623-4cb9956a480c"
  },
  "images/068/03.jpg": {
   "author": "yuu kii",
@@ -1560,18 +1152,12 @@
   "source": "https://www.inaturalist.org/observations/001f2dbe-c596-4a59-bf90-fdcf585f381f"
  },
  "images/069/04.jpg": {
-  "author": "Jonghwan Choi",
-  "login": "sanalbert",
-  "license": "CC-BY-NC",
-  "source": "https://www.inaturalist.org/observations/eb437e9d-3cef-4944-a0f3-027c635a8431"
- },
- "images/069/05.jpg": {
   "author": "lee-cj",
   "login": "lee-cj",
   "license": "CC-BY-NC",
   "source": "https://www.inaturalist.org/observations/14499a0e-ab62-4500-a655-341182fc151a"
  },
- "images/069/06.jpg": {
+ "images/069/05.jpg": {
   "author": "Leslie Hurteau",
   "login": "lhurteau",
   "license": "CC-BY-NC",
@@ -1590,12 +1176,6 @@
   "source": "https://www.inaturalist.org/observations/2b33efcd-0ccf-4216-9dcc-b5a52853eebc"
  },
  "images/070/05.jpg": {
-  "author": "Sangyun Kim",
-  "login": "sangyunkim",
-  "license": "CC-BY-NC",
-  "source": "https://www.inaturalist.org/observations/c6eb418f-f7ea-4955-9cf3-3fde0cb60e31"
- },
- "images/070/06.jpg": {
   "author": "Rob Macfie",
   "login": "rmacfie",
   "license": "CC-BY-NC",
@@ -1614,12 +1194,6 @@
   "source": "https://www.inaturalist.org/observations/197a205c-c5d7-44f5-a330-48ead74c7393"
  },
  "images/071/05.jpg": {
-  "author": "mister_bumble",
-  "login": "mister_bumble",
-  "license": "CC-BY",
-  "source": "https://www.inaturalist.org/observations/ef3db881-c39c-40be-9d80-a6e4ad97d919"
- },
- "images/071/06.jpg": {
   "author": "阿元",
   "login": "ao5621",
   "license": "CC-BY-NC",
@@ -1631,47 +1205,11 @@
   "license": "CC-BY-NC",
   "source": "https://www.inaturalist.org/observations/67683118-b23d-49a8-b6bf-2d69b33ae4a2"
  },
- "images/072/03.jpg": {
-  "author": "山野人",
-  "login": "kevinyu589",
-  "license": "CC-BY-NC",
-  "source": "https://www.inaturalist.org/observations/f1f7324d-ebf8-4c08-a82a-e545b1d9dbcb"
- },
- "images/072/04.jpg": {
-  "author": "onidiras-iNaturalist",
-  "login": "onidiras",
-  "license": "CC-BY-NC",
-  "source": "https://www.inaturalist.org/observations/a9844029-d7fc-47cf-b7f6-35d2633d346b"
- },
- "images/072/05.jpg": {
-  "author": "Alexander Ganse",
-  "login": "aganse",
-  "license": "CC-BY-NC",
-  "source": "https://www.inaturalist.org/observations/55c37acf-09b3-4f48-b540-6d9124199b42"
- },
  "images/073/03.jpg": {
-  "author": "JaeHu Kim",
-  "login": "cactikim",
-  "license": "CC-BY-NC",
-  "source": "https://www.inaturalist.org/observations/996f80e2-69c3-4f04-9642-72757429f394"
- },
- "images/073/04.jpg": {
-  "author": "Alexander Ganse",
-  "login": "aganse",
-  "license": "CC-BY-NC",
-  "source": "https://www.inaturalist.org/observations/453ca3fc-28fd-45ad-b8f9-3f2a61814862"
- },
- "images/073/05.jpg": {
   "author": "Татьяна Химера",
   "login": "tatiana_chimera",
   "license": "CC-BY-NC",
   "source": "https://www.inaturalist.org/observations/33d58058-da5a-446a-b005-7dac3dd0e081"
- },
- "images/073/06.jpg": {
-  "author": "gieun moon",
-  "login": "meg0911",
-  "license": "CC-BY-NC",
-  "source": "https://www.inaturalist.org/observations/496972ec-4401-47f0-906c-c3387c3c1707"
  },
  "images/074/03.jpg": {
   "author": "Alexander Ganse",
@@ -1685,18 +1223,6 @@
   "license": "CC-BY-NC",
   "source": "https://www.inaturalist.org/observations/eebfb17d-b815-4fe4-8960-a81c1c58b0b2"
  },
- "images/074/05.jpg": {
-  "author": "onidiras-iNaturalist",
-  "login": "onidiras",
-  "license": "CC-BY-NC",
-  "source": "https://www.inaturalist.org/observations/5762932b-cdf1-4734-bc31-dc7f6cf7bd83"
- },
- "images/074/06.jpg": {
-  "author": "Haemi Lee",
-  "login": "haemi",
-  "license": "CC-BY-NC",
-  "source": "https://www.inaturalist.org/observations/d6d652ec-be09-44d0-a44d-d54f010874de"
- },
  "images/075/03.jpg": {
   "author": "Rob Macfie",
   "login": "rmacfie",
@@ -1708,18 +1234,6 @@
   "login": "aganse",
   "license": "CC-BY-NC",
   "source": "https://www.inaturalist.org/observations/774ede6a-0b9f-4cb4-b30b-c7dfa3d536ff"
- },
- "images/075/05.jpg": {
-  "author": "suchihfen",
-  "login": "suchihfen",
-  "license": "CC-BY-NC",
-  "source": "https://www.inaturalist.org/observations/547f71df-ce6d-4428-ba7f-3147f1c77d93"
- },
- "images/075/06.jpg": {
-  "author": "Melissatori",
-  "login": "melissatori",
-  "license": "CC-BY-NC",
-  "source": "https://www.inaturalist.org/observations/9ef4fa93-e185-4bd1-840e-409bc5866a64"
  },
  "images/076/05.jpg": {
   "author": "ingaia",
