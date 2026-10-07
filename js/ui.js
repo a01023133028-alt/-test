@@ -14,10 +14,19 @@ const UI = (() => {
     return `<span class="tag ${f.cls[value] || ''}">${esc(value)}</span>`;
   }
 
-  /* 분류 태그 (병해는 기주 태그 먼저) */
+  /* 병원 종류별 색 (곰팡이·세균·바이러스·파이토플라스마) */
+  function pathogenClass(p) {
+    if (p.startsWith('곰팡이')) return 'p-fungus';
+    if (p.startsWith('세균')) return 'p-bacteria';
+    if (p.startsWith('바이러스')) return 'p-virus';
+    return 'p-other';
+  }
+
+  /* 분류 태그 (병해는 기주·병원 태그 먼저) */
   function tags(w) {
     const host = w.host ? `<span class="tag t-host">기주 ${esc(w.host)}</span>` : '';
-    return `<span class="tags">${host}${Subject.facets.map((f) => facetTag(f, w[f.key])).join('')}</span>`;
+    const path = w.pathogen ? `<span class="tag ${pathogenClass(w.pathogen)}">${esc(w.pathogen)}</span>` : '';
+    return `<span class="tags">${host}${path}${Subject.facets.map((f) => facetTag(f, w[f.key])).join('')}</span>`;
   }
 
   /* 사진 (불러오기 실패 시 아래 error 리스너가 자리표시로 바꿈) */

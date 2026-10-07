@@ -873,9 +873,9 @@
     renderDex();
   }
 
-  /* 정답 카드·상세에 보이는 추가 정보 (병원, 특징) */
+  /* 정답 카드·상세에 보이는 추가 정보 (병원은 태그로 표시) */
   function infoLines(w) {
-    return `${w.pathogen ? `<p class="features"><b>병원</b> ${esc(w.pathogen)}</p>` : ''}${w.features ? `<p class="features">${esc(w.features)}</p>` : ''}`;
+    return w.features ? `<p class="features">${esc(w.features)}</p>` : '';
   }
 
   function dataFileName() {
