@@ -129,6 +129,29 @@ const Quiz = (() => {
     };
   }
 
+  /* 헷갈리는 쌍 연습: 두 잡초 사진을 섞어 출제, 보기는 두 이름만 */
+  function createPairSession(pair, weeds, opts, count = 8) {
+    const both = weeds.filter((w) => w.images.length > 0);
+    if (both.length !== 2) return null;
+    const order = shuffle(Array.from({ length: count }, (_, i) => both[i % 2]));
+    const questions = order.map((w) => {
+      const q = makeQuestion(w, 'choice', weeds);
+      q.choices = shuffle(both);
+      return q;
+    });
+    return {
+      opts: { ...opts },
+      type: 'choice',
+      questions,
+      index: 0,
+      score: 0,
+      cycleKey: null,
+      newRound: false,
+      roundComplete: false,
+      pair,
+    };
+  }
+
   /* 채점. answer: { text, choiceId, morph, life } */
   function grade(session, answer) {
     const q = session.questions[session.index];
@@ -167,5 +190,5 @@ const Quiz = (() => {
     return q;
   }
 
-  return { MODES, TYPES, shuffle, typeOf, pool, cycleKey, cycleRemaining, createSession, grade };
+  return { MODES, TYPES, shuffle, typeOf, pool, cycleKey, cycleRemaining, createSession, createPairSession, grade };
 })();

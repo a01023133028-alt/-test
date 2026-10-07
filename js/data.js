@@ -13,6 +13,7 @@ const Data = (() => {
 
   const DATA_URL = 'data/weeds.json';
   const CREDITS_URL = 'data/credits.json';
+  const PAIRS_URL = 'data/pairs.json';
   const CACHE_KEY = 'cachedData';
 
   /* JSON 배열을 검사해 정리된 목록과 경고 메시지를 돌려줌 */
@@ -101,9 +102,20 @@ const Data = (() => {
     }
   }
 
+  /* 헷갈리는 쌍 [{ ids: [a, b], a, b, common }] (없어도 동작) */
+  async function loadPairs() {
+    try {
+      const res = await fetch(PAIRS_URL, { cache: 'no-cache' });
+      const json = res.ok ? await res.json() : [];
+      return Array.isArray(json) ? json.filter((p) => Array.isArray(p.ids) && p.ids.length === 2) : [];
+    } catch (e) {
+      return [];
+    }
+  }
+
   function clearCache() {
     Storage.remove(CACHE_KEY);
   }
 
-  return { MORPHS, LIFES, MORPH_CLASS, LIFE_CLASS, validate, load, loadFromFile, loadCredits, clearCache };
+  return { MORPHS, LIFES, MORPH_CLASS, LIFE_CLASS, validate, load, loadFromFile, loadCredits, loadPairs, clearCache };
 })();
