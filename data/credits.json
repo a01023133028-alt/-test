@@ -1282,5 +1282,521 @@
   "login": "koubai",
   "license": "CC-BY-NC",
   "source": "https://www.inaturalist.org/observations/e1298af7-7f5a-41a5-bcca-a6939917cd2b"
+ },
+ "images/disease/003/02.jpg": {
+  "author": "Alex",
+  "login": "pbaff",
+  "license": "CC0",
+  "source": "https://www.inaturalist.org/observations/d2c6a5a3-100f-43c2-bc76-a86a3431b87e"
+ },
+ "images/disease/005/02.jpg": {
+  "author": "大肚魚",
+  "login": "wallacechen",
+  "license": "CC-BY-NC",
+  "source": "https://www.inaturalist.org/observations/2c880638-2aaf-4ab1-9873-22560f2c678f"
+ },
+ "images/disease/005/03.jpg": {
+  "author": "Thomas Mesaglio",
+  "login": "thebeachcomber",
+  "license": "CC-BY",
+  "source": "https://www.inaturalist.org/observations/3aba78ba-30aa-4129-89ca-0e8093ed561e"
+ },
+ "images/disease/009/02.jpg": {
+  "author": "Xymene iv",
+  "login": "xymene_iv",
+  "license": "CC-BY-NC",
+  "source": "https://www.inaturalist.org/observations/13a25976-fdc1-46bb-a385-204b73a8068b"
+ },
+ "images/disease/009/03.jpg": {
+  "author": "VitordaSilva",
+  "login": "amanithor",
+  "license": "CC-BY-NC-SA",
+  "source": "https://www.inaturalist.org/observations/19df5e33-c91a-4a3b-b69e-5093fbddfa30"
+ },
+ "images/disease/009/04.jpg": {
+  "author": "Charcos Companhia",
+  "login": "charcoscompanhia",
+  "license": "CC-BY-NC",
+  "source": "https://www.inaturalist.org/observations/f38e9f8d-4e90-4186-88c7-d2fbbc8d1f7f"
+ },
+ "images/disease/009/05.jpg": {
+  "author": "Dave Holland",
+  "login": "dave_holland",
+  "license": "CC-BY-NC",
+  "source": "https://www.inaturalist.org/observations/05187285-355d-4f20-8c09-c3cd728a94fe"
+ },
+ "images/disease/014/02.jpg": {
+  "author": "Michel Langeveld",
+  "login": "rudolphous",
+  "license": "CC-BY",
+  "source": "https://www.inaturalist.org/observations/54863369-d2c7-4095-956f-f88901ec2bc4"
+ },
+ "images/disease/014/03.jpg": {
+  "author": "Krylenko VV",
+  "login": "krylenkosl",
+  "license": "CC-BY-NC",
+  "source": "https://www.inaturalist.org/observations/506981f0-611b-4aad-8908-4317208c8eb5"
+ },
+ "images/disease/014/04.jpg": {
+  "author": "Daniel Ellehammer Larsen",
+  "login": "danielellehammerlarsen",
+  "license": "CC-BY",
+  "source": "https://www.inaturalist.org/observations/16988d65-58a6-4733-a4c1-79a3438194b1"
+ },
+ "images/disease/014/05.jpg": {
+  "author": "Cara Ennis",
+  "login": "cryptomarasmius",
+  "license": "CC-BY",
+  "source": "https://www.inaturalist.org/observations/e0c36c57-abab-4725-9c4d-c44f32722755"
+ },
+ "images/disease/019/02.jpg": {
+  "author": "Che-Chih Chen",
+  "login": "che-chih_chen",
+  "license": "CC-BY-NC",
+  "source": "https://www.inaturalist.org/observations/adddeb95-b719-4f4a-9a57-de2b04dcc41a"
+ },
+ "images/disease/019/03.jpg": {
+  "author": "stephanie_lee8",
+  "login": "stephanie_lee8",
+  "license": "CC-BY-NC",
+  "source": "https://www.inaturalist.org/observations/60eae7e9-13dd-4bc2-9bd8-c51fee8025e7"
+ },
+ "images/disease/019/04.jpg": {
+  "author": "guypaints",
+  "login": "guypaints",
+  "license": "CC-BY-NC",
+  "source": "https://www.inaturalist.org/observations/57638e85-1145-44a7-97a9-447032e318df"
+ },
+ "images/disease/019/05.jpg": {
+  "author": "vyatka",
+  "login": "vyatka",
+  "license": "CC-BY-NC",
+  "source": "https://www.inaturalist.org/observations/9d11bc2e-c760-4679-a870-b8ce4018c92c"
+ },
+ "images/disease/019/06.jpg": {
+  "author": "Anahís Villegas",
+  "login": "anahisvillegas",
+  "license": "CC-BY-NC",
+  "source": "https://www.inaturalist.org/observations/599c63c3-319a-453f-955c-1438c7c26555"
+ },
+ "images/disease/020/02.jpg": {
+  "author": "snow-drop",
+  "login": "snow-drop",
+  "license": "CC-BY-NC",
+  "source": "https://www.inaturalist.org/observations/071d3d6c-d24d-4ae3-8877-dffb54509d12"
+ },
+ "images/disease/020/03.jpg": {
+  "author": "obplover",
+  "login": "obplover",
+  "license": "CC-BY-NC",
+  "source": "https://www.inaturalist.org/observations/fc1c4930-3a75-432f-8c68-75046f2bcceb"
+ },
+ "images/disease/020/04.jpg": {
+  "author": "Reiner Richter",
+  "login": "reiner",
+  "license": "CC-BY-NC-SA",
+  "source": "https://www.inaturalist.org/observations/4121ca79-4345-45f5-97a8-92ab077b6ede"
+ },
+ "images/disease/020/05.jpg": {
+  "author": "Andy Donegan",
+  "login": "andydonegan",
+  "license": "CC-BY-NC",
+  "source": "https://www.inaturalist.org/observations/f6f77227-80e1-4221-991a-aa5b0a840959"
+ },
+ "images/disease/026/02.jpg": {
+  "author": "Andrew Miller",
+  "login": "entoandrew",
+  "license": "CC-BY-NC",
+  "source": "https://www.inaturalist.org/observations/c03c3bce-df8d-4a6c-bccd-26c7a539a37b"
+ },
+ "images/disease/026/03.jpg": {
+  "author": "Cat Chang",
+  "login": "catchang",
+  "license": "CC-BY-NC",
+  "source": "https://www.inaturalist.org/observations/c6e9c66f-5f31-4d25-be5d-09d794383d07"
+ },
+ "images/disease/026/04.jpg": {
+  "author": "Reid Hardin",
+  "login": "reidhardin",
+  "license": "CC-BY",
+  "source": "https://www.inaturalist.org/observations/0f0bf337-27da-4bb5-ae27-d53de04f73dd"
+ },
+ "images/disease/027/02.jpg": {
+  "author": "Jani Järvi",
+  "login": "janijarvi",
+  "license": "CC-BY-NC",
+  "source": "https://www.inaturalist.org/observations/a1a49ba6-f409-43d6-853b-6df294e03893"
+ },
+ "images/disease/027/03.jpg": {
+  "author": "Naturschutzbund NÖ",
+  "login": "naturschutzbundnoe",
+  "license": "CC-BY-NC",
+  "source": "https://www.inaturalist.org/observations/21c8c088-c9c4-48d7-88f6-b31265d9cfd8"
+ },
+ "images/disease/027/04.jpg": {
+  "author": "Axel Gosseries",
+  "login": "axelgosseries",
+  "license": "CC-BY-NC",
+  "source": "https://www.inaturalist.org/observations/b4b735b7-7bb4-46e6-9741-b6b9769a6f44"
+ },
+ "images/disease/027/05.jpg": {
+  "author": "Dávid Horváth",
+  "login": "dvid_horvath",
+  "license": "CC-BY",
+  "source": "https://www.inaturalist.org/observations/a34360c1-5da2-46ae-a15a-17f711ac3209"
+ },
+ "images/disease/029/02.jpg": {
+  "author": "Joanne Muis Redwood",
+  "login": "jemredwood",
+  "license": "CC-BY-NC",
+  "source": "https://www.inaturalist.org/observations/a886033c-1e09-47d6-9bbf-c5a16472ae95"
+ },
+ "images/disease/029/03.jpg": {
+  "author": "Jackson W.F. Chu",
+  "login": "jackson_chu",
+  "license": "CC-BY-NC-SA",
+  "source": "https://www.inaturalist.org/observations/0095d42d-6609-488f-952b-591094dfcb56"
+ },
+ "images/disease/029/04.jpg": {
+  "author": "Mateo Hernandez Schmidt",
+  "login": "mateohernandezschmidt",
+  "license": "CC-BY-NC-SA",
+  "source": "https://www.inaturalist.org/observations/40717054-09f9-47f4-86f5-0e97908effb3"
+ },
+ "images/disease/029/05.jpg": {
+  "author": "PlantVillage",
+  "login": "",
+  "license": "CC0",
+  "source": "https://github.com/spMohanty/PlantVillage-Dataset"
+ },
+ "images/disease/029/06.jpg": {
+  "author": "PlantVillage",
+  "login": "",
+  "license": "CC0",
+  "source": "https://github.com/spMohanty/PlantVillage-Dataset"
+ },
+ "images/disease/030/02.jpg": {
+  "author": "Scott Mincemoyer",
+  "login": "scott_mt",
+  "license": "CC-BY-NC",
+  "source": "https://www.inaturalist.org/observations/fb7f774b-6255-476b-ad33-4df0cd54de33"
+ },
+ "images/disease/030/03.jpg": {
+  "author": "Jenny Feick",
+  "login": "jenny_feick",
+  "license": "CC-BY-NC",
+  "source": "https://www.inaturalist.org/observations/bde4195b-7329-4cca-ac8f-48b9cf564d1e"
+ },
+ "images/disease/030/04.jpg": {
+  "author": "Jon Fearns",
+  "login": "jfearns",
+  "license": "CC-BY-NC",
+  "source": "https://www.inaturalist.org/observations/791fb50e-7daf-40a7-a7c9-1e1bf14504ec"
+ },
+ "images/disease/030/05.jpg": {
+  "author": "Patrick Morgan",
+  "login": "bluehawk314",
+  "license": "CC-BY-NC",
+  "source": "https://www.inaturalist.org/observations/95df1fcd-f23c-4400-a466-24dba1d4fe78"
+ },
+ "images/disease/036/02.jpg": {
+  "author": "marsblast",
+  "login": "marsblast",
+  "license": "CC-BY-NC",
+  "source": "https://www.inaturalist.org/observations/41767f92-44de-48a3-9095-f8220aecd8a8"
+ },
+ "images/disease/036/03.jpg": {
+  "author": "Мирослав Харьков",
+  "login": "uroboros",
+  "license": "CC-BY-NC",
+  "source": "https://www.inaturalist.org/observations/7bba19d1-7fb9-4d24-bab4-9add0bf02f5a"
+ },
+ "images/disease/036/04.jpg": {
+  "author": "Věra Kafková",
+  "login": "orsejka",
+  "license": "CC-BY-NC",
+  "source": "https://www.inaturalist.org/observations/a627de5e-f1a5-481b-a5f7-f78fdb0ddd09"
+ },
+ "images/disease/037/02.jpg": {
+  "author": "Andy Donegan",
+  "login": "andydonegan",
+  "license": "CC-BY-NC",
+  "source": "https://www.inaturalist.org/observations/de9d24a7-c9de-47af-8e1a-94820af9d75e"
+ },
+ "images/disease/037/03.jpg": {
+  "author": "Hild",
+  "login": "boklk",
+  "license": "CC-BY-NC",
+  "source": "https://www.inaturalist.org/observations/cbf8c6e2-e6b2-4ab3-8d11-486be61c8825"
+ },
+ "images/disease/041/02.jpg": {
+  "author": "Paleoraptor_",
+  "login": "eumaniraptora_guy",
+  "license": "CC-BY-NC",
+  "source": "https://www.inaturalist.org/observations/fd74618d-73a2-405f-bee9-523ef735883f"
+ },
+ "images/disease/041/03.jpg": {
+  "author": "Sam R",
+  "login": "sbushes",
+  "license": "CC-BY-NC",
+  "source": "https://www.inaturalist.org/observations/347f9059-7203-4b4e-9033-6eaf2ba3e041"
+ },
+ "images/disease/042/02.jpg": {
+  "author": "PlantVillage",
+  "login": "",
+  "license": "CC0",
+  "source": "https://github.com/spMohanty/PlantVillage-Dataset"
+ },
+ "images/disease/042/03.jpg": {
+  "author": "PlantVillage",
+  "login": "",
+  "license": "CC0",
+  "source": "https://github.com/spMohanty/PlantVillage-Dataset"
+ },
+ "images/disease/043/02.jpg": {
+  "author": "Xymene iv",
+  "login": "xymene_iv",
+  "license": "CC-BY-NC",
+  "source": "https://www.inaturalist.org/observations/a9a2dbe7-16b2-4d10-b046-531271a6bb6e"
+ },
+ "images/disease/043/03.jpg": {
+  "author": "Sokolov Yuriy Ivanovich",
+  "login": "yuriysokolov73",
+  "license": "CC-BY-NC",
+  "source": "https://www.inaturalist.org/observations/fe956138-675e-496b-bd59-5796f8c6573a"
+ },
+ "images/disease/043/04.jpg": {
+  "author": "Max Miller",
+  "login": "mlmiller654",
+  "license": "CC-BY-NC",
+  "source": "https://www.inaturalist.org/observations/e72a876c-e1e0-42bf-916c-554eee50bec2"
+ },
+ "images/disease/043/05.jpg": {
+  "author": "PlantVillage",
+  "login": "",
+  "license": "CC0",
+  "source": "https://github.com/spMohanty/PlantVillage-Dataset"
+ },
+ "images/disease/043/06.jpg": {
+  "author": "PlantVillage",
+  "login": "",
+  "license": "CC0",
+  "source": "https://github.com/spMohanty/PlantVillage-Dataset"
+ },
+ "images/disease/044/02.jpg": {
+  "author": "Nick",
+  "login": "nickvolesky",
+  "license": "CC-BY-NC",
+  "source": "https://www.inaturalist.org/observations/f38acb09-2b19-498c-ac1b-c32faf3b3d79"
+ },
+ "images/disease/046/02.jpg": {
+  "author": "faluke",
+  "login": "faluke",
+  "license": "CC-BY-NC",
+  "source": "https://www.inaturalist.org/observations/7da05d30-4782-44c0-a763-5f2e45ffbf81"
+ },
+ "images/disease/046/03.jpg": {
+  "author": "Dávid Horváth",
+  "login": "dvid_horvath",
+  "license": "CC-BY",
+  "source": "https://www.inaturalist.org/observations/591ab053-b199-4750-90a8-a0f167d66fb6"
+ },
+ "images/disease/046/04.jpg": {
+  "author": "PlantVillage",
+  "login": "",
+  "license": "CC0",
+  "source": "https://github.com/spMohanty/PlantVillage-Dataset"
+ },
+ "images/disease/046/05.jpg": {
+  "author": "PlantVillage",
+  "login": "",
+  "license": "CC0",
+  "source": "https://github.com/spMohanty/PlantVillage-Dataset"
+ },
+ "images/disease/048/02.jpg": {
+  "author": "gailtv",
+  "login": "gailtv",
+  "license": "CC-BY-NC",
+  "source": "https://www.inaturalist.org/observations/829f83bb-1b0c-4230-921e-0e35d29d6889"
+ },
+ "images/disease/048/03.jpg": {
+  "author": "Sokolov Yuriy Ivanovich",
+  "login": "yuriysokolov73",
+  "license": "CC-BY-NC",
+  "source": "https://www.inaturalist.org/observations/c4da70ed-51cb-4500-8e62-7e74fa70a729"
+ },
+ "images/disease/048/04.jpg": {
+  "author": "Joseph Knight",
+  "login": "joknight_nz",
+  "license": "CC-BY-NC",
+  "source": "https://www.inaturalist.org/observations/bb485d27-3ec0-4341-aef0-026fe42422e5"
+ },
+ "images/disease/049/02.jpg": {
+  "author": "Robert Hoard",
+  "login": "bobhoard",
+  "license": "CC-BY",
+  "source": "https://www.inaturalist.org/observations/20d046a9-0623-435e-96a4-26f08531d9bf"
+ },
+ "images/disease/049/03.jpg": {
+  "author": "Nathan T. Jones",
+  "login": "americanisopodologist",
+  "license": "CC-BY",
+  "source": "https://www.inaturalist.org/observations/9cb51c4e-9c22-493a-8f9f-ba76f8357f77"
+ },
+ "images/disease/049/04.jpg": {
+  "author": "Sokolov Yuriy Ivanovich",
+  "login": "yuriysokolov73",
+  "license": "CC-BY-NC",
+  "source": "https://www.inaturalist.org/observations/601d62b0-47bf-4e1d-b978-06ab4879034d"
+ },
+ "images/disease/049/05.jpg": {
+  "author": "romanvrbicek",
+  "login": "romanvrbicek",
+  "license": "CC-BY-NC",
+  "source": "https://www.inaturalist.org/observations/b4077a1b-473a-457c-83be-a9e630522b20"
+ },
+ "images/disease/050/02.jpg": {
+  "author": "John P",
+  "login": "astrapia",
+  "license": "CC-BY-NC",
+  "source": "https://www.inaturalist.org/observations/61d5fe36-d925-48f1-a9fd-370e2ec91b17"
+ },
+ "images/disease/050/03.jpg": {
+  "author": "hafren",
+  "login": "hafren",
+  "license": "CC-BY-NC",
+  "source": "https://www.inaturalist.org/observations/1c1905b7-89bb-47f9-b79a-f4d77ebb383b"
+ },
+ "images/disease/050/04.jpg": {
+  "author": "elaine_rds",
+  "login": "elaine_rds",
+  "license": "CC-BY-NC",
+  "source": "https://www.inaturalist.org/observations/6e8c6797-925e-4d81-a727-c059a645c2ce"
+ },
+ "images/disease/050/05.jpg": {
+  "author": "Татьяна Абазова",
+  "login": "tanniii66",
+  "license": "CC-BY-NC",
+  "source": "https://www.inaturalist.org/observations/dd355469-211a-4741-86a8-d991a69ad1c6"
+ },
+ "images/disease/051/02.jpg": {
+  "author": "zgy",
+  "login": "zgy",
+  "license": "CC-BY-NC",
+  "source": "https://www.inaturalist.org/observations/3ad2bc65-353f-4b24-b096-70ed463fddf5"
+ },
+ "images/disease/051/03.jpg": {
+  "author": "Simba",
+  "login": "simbason",
+  "license": "CC-BY-NC",
+  "source": "https://www.inaturalist.org/observations/4933c0ce-53bf-4f25-bb03-1e54303c1ecd"
+ },
+ "images/disease/051/04.jpg": {
+  "author": "刘光裕 Liu Guangyu",
+  "login": "liuguangyu",
+  "license": "CC-BY-NC",
+  "source": "https://www.inaturalist.org/observations/9533c69e-5381-4655-b175-ad79c0b630ca"
+ },
+ "images/disease/054/02.jpg": {
+  "author": "ruslan",
+  "login": "kastani",
+  "license": "CC-BY-NC",
+  "source": "https://www.inaturalist.org/observations/3998b97b-bed9-4d9c-ab5a-919c1199e0d1"
+ },
+ "images/disease/055/02.jpg": {
+  "author": "ken_pa77",
+  "login": "ken_pa77",
+  "license": "CC-BY-NC",
+  "source": "https://www.inaturalist.org/observations/41701923-46d2-45d1-8fd2-9293d23c3726"
+ },
+ "images/disease/059/02.jpg": {
+  "author": "Juha Tuomola",
+  "login": "juhatuomola",
+  "license": "CC-BY-NC",
+  "source": "https://www.inaturalist.org/observations/20a7a07d-41e6-4e0e-b9cc-9373ebcd17b7"
+ },
+ "images/disease/059/03.jpg": {
+  "author": "DeeF",
+  "login": "deefault",
+  "license": "CC-BY",
+  "source": "https://www.inaturalist.org/observations/dc6fb53a-9cc1-4754-bdfb-db46afb69ae6"
+ },
+ "images/disease/059/04.jpg": {
+  "author": "Krissa Klein",
+  "login": "graysquirrel",
+  "license": "CC-BY-NC",
+  "source": "https://www.inaturalist.org/observations/af26a11b-d11a-4906-9b00-b48eb13f5640"
+ },
+ "images/disease/059/05.jpg": {
+  "author": "maria_sadykova",
+  "login": "maria_sadykova",
+  "license": "CC-BY-NC",
+  "source": "https://www.inaturalist.org/observations/abf6d75d-2d9f-4538-abfd-74cd97cc9f74"
+ },
+ "images/disease/060/02.jpg": {
+  "author": "Alex Uematsu",
+  "login": "severalfoxes",
+  "license": "CC-BY-NC",
+  "source": "https://www.inaturalist.org/observations/be6435ac-fe0f-4c76-9aab-9f8926eb6118"
+ },
+ "images/disease/060/03.jpg": {
+  "author": "Curious Questioner",
+  "login": "curious_questioner",
+  "license": "CC-BY-NC",
+  "source": "https://www.inaturalist.org/observations/bcc779c9-5801-4c47-8a25-6b37d6ca05be"
+ },
+ "images/disease/061/02.jpg": {
+  "author": "大肚魚",
+  "login": "wallacechen",
+  "license": "CC-BY-NC",
+  "source": "https://www.inaturalist.org/observations/dbb075d5-acc3-4dcd-9d18-842ddc5be09e"
+ },
+ "images/disease/061/03.jpg": {
+  "author": "anna_gasperl",
+  "login": "anna_gasperl",
+  "license": "CC-BY-NC",
+  "source": "https://www.inaturalist.org/observations/c746a8b8-00ca-4bc0-a7fe-5fea200bfbb0"
+ },
+ "images/disease/061/04.jpg": {
+  "author": "PlantVillage",
+  "login": "",
+  "license": "CC0",
+  "source": "https://github.com/spMohanty/PlantVillage-Dataset"
+ },
+ "images/disease/061/05.jpg": {
+  "author": "PlantVillage",
+  "login": "",
+  "license": "CC0",
+  "source": "https://github.com/spMohanty/PlantVillage-Dataset"
+ },
+ "images/disease/063/02.jpg": {
+  "author": "Gennadiy Okatov",
+  "login": "gen_ok",
+  "license": "CC-BY-NC",
+  "source": "https://www.inaturalist.org/observations/43f84ee6-c96a-4b7b-9a84-4b6bf401f843"
+ },
+ "images/disease/063/03.jpg": {
+  "author": "Steven Kurniawidjaja",
+  "login": "neontetraploid",
+  "license": "CC-BY-NC",
+  "source": "https://www.inaturalist.org/observations/ab3f3a7b-2ccf-4e44-8a8f-b47b1be97440"
+ },
+ "images/disease/063/04.jpg": {
+  "author": "Inita Daniele",
+  "login": "inita",
+  "license": "CC-BY-NC",
+  "source": "https://www.inaturalist.org/observations/7d2c2d8c-a6a3-4dba-8205-826f098b2036"
+ },
+ "images/disease/063/05.jpg": {
+  "author": "PlantVillage",
+  "login": "",
+  "license": "CC0",
+  "source": "https://github.com/spMohanty/PlantVillage-Dataset"
+ },
+ "images/disease/063/06.jpg": {
+  "author": "PlantVillage",
+  "login": "",
+  "license": "CC0",
+  "source": "https://github.com/spMohanty/PlantVillage-Dataset"
  }
 }
