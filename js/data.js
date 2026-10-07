@@ -11,14 +11,13 @@ const Data = (() => {
     다년생: 'l-perennial',
   };
 
-  const DATA_URL = 'data/weeds.json';
   const CREDITS_URL = 'data/credits.json';
   const PAIRS_URL = 'data/pairs.json';
   const CACHE_KEY = 'cachedData';
 
   /* JSON 배열을 검사해 정리된 목록과 경고 메시지를 돌려줌 */
   function validate(raw) {
-    if (!Array.isArray(raw)) throw new Error('weeds.json의 최상위는 배열([ ])이어야 합니다.');
+    if (!Array.isArray(raw)) throw new Error('데이터 파일의 최상위는 배열([ ])이어야 합니다.');
     const warnings = [];
     const seen = new Set();
     const weeds = [];
@@ -41,17 +40,21 @@ const Data = (() => {
         warnings.push(`${where}: name이 없어서 건너뜀`);
         return;
       }
-      if (!MORPHS.includes(w.morph)) warnings.push(`${w.name}: morph "${w.morph}"는 알 수 없는 값`);
-      if (!LIFES.includes(w.life)) warnings.push(`${w.name}: life "${w.life}"는 알 수 없는 값`);
-      seen.add(id);
-      weeds.push({
+      const item = {
         id,
         name: w.name.trim(),
-        morph: w.morph,
-        life: w.life,
         features: typeof w.features === 'string' ? w.features.trim() : '',
         images: Array.isArray(w.images) ? w.images.filter((p) => typeof p === 'string' && p.trim()) : [],
+      };
+      Subject.facets.forEach((f) => {
+        if (!f.values.includes(w[f.key])) warnings.push(`${w.name}: ${f.key} "${w[f.key]}"는 알 수 없는 값`);
+        item[f.key] = w[f.key];
       });
+      // 병해 전용: 기주·병원
+      if (typeof w.host === 'string' && w.host.trim()) item.host = w.host.trim();
+      if (typeof w.pathogen === 'string' && w.pathogen.trim()) item.pathogen = w.pathogen.trim();
+      seen.add(id);
+      weeds.push(item);
     });
     weeds.sort((a, b) => a.id - b.id);
     return { weeds, warnings };
@@ -60,14 +63,14 @@ const Data = (() => {
   /* 서버에서 불러오기. 실패하면(file:// 등) 이전에 파일 선택으로 저장한 데이터 사용 */
   async function load() {
     try {
-      const res = await fetch(DATA_URL, { cache: 'no-cache' });
+      const res = await fetch(Subject.dataUrl, { cache: 'no-cache' });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const json = await res.json();
       return { ...validate(json), source: 'server' };
     } catch (err) {
       const cached = Storage.get(CACHE_KEY, null);
       if (cached) return { ...validate(cached), source: 'cache' };
-      const e = new Error('weeds.json을 불러오지 못했습니다.');
+      const e = new Error(`${Subject.dataUrl}을 불러오지 못했습니다.`);
       e.cause = err;
       throw e;
     }
@@ -104,6 +107,7 @@ const Data = (() => {
 
   /* 헷갈리는 쌍 [{ ids: [a, b], a, b, common }] (없어도 동작) */
   async function loadPairs() {
+    if (!Subject.hasPairs) return [];
     try {
       const res = await fetch(PAIRS_URL, { cache: 'no-cache' });
       const json = res.ok ? await res.json() : [];

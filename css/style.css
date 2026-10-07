@@ -29,6 +29,10 @@
   --winter-bg: #e0f4f1;
   --perennial: #e65100;
   --perennial-bg: #fff0e0;
+  --food: #a15c00;
+  --food-bg: #fbefd9;
+  --fruit: #c2185b;
+  --fruit-bg: #fce4ec;
 
   --radius: 14px;
   --tabbar-h: 60px;
@@ -65,6 +69,10 @@
     --winter-bg: #163330;
     --perennial: #ffa552;
     --perennial-bg: #3a2914;
+    --food: #e0b060;
+    --food-bg: #3a2e18;
+    --fruit: #f48fb1;
+    --fruit-bg: #3a1f2a;
     color-scheme: dark;
   }
 }
@@ -96,6 +104,10 @@
   --winter-bg: #163330;
   --perennial: #ffa552;
   --perennial-bg: #3a2914;
+  --food: #e0b060;
+  --food-bg: #3a2e18;
+  --fruit: #f48fb1;
+  --fruit-bg: #3a1f2a;
   color-scheme: dark;
 }
 
@@ -105,6 +117,12 @@
 .l-summer { --c: var(--summer); --c-bg: var(--summer-bg); }
 .l-winter { --c: var(--winter); --c-bg: var(--winter-bg); }
 .l-perennial { --c: var(--perennial); --c-bg: var(--perennial-bg); }
+/* 병해: 작물 구분 */
+.c-food { --c: var(--food); --c-bg: var(--food-bg); }
+.c-veg { --c: var(--grass); --c-bg: var(--grass-bg); }
+.c-fruit { --c: var(--fruit); --c-bg: var(--fruit-bg); }
+.c-tree { --c: var(--winter); --c-bg: var(--winter-bg); }
+.t-host { --c: var(--text); --c-bg: var(--surface-2); }
 
 /* ========== 기본 ========== */
 *, *::before, *::after { box-sizing: border-box; }
@@ -799,3 +817,25 @@ body[data-route="home"] .action-bar { bottom: calc(var(--tabbar-h) + var(--safe-
 }
 .pair-common { margin: 10px 0 0; font-size: 0.9rem; font-weight: 600; }
 .pair-practice { margin-top: 10px; }
+
+/* ========== 과목 전환·기주 표시 ========== */
+.topbar-right { display: flex; align-items: center; gap: 4px; }
+.subject-switch {
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+  padding: 4px 12px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: var(--text);
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.subject-switch:active { background: var(--surface-2); }
+.host-label {
+  padding: 8px 16px;
+  background: var(--surface-2);
+  font-size: 1.05rem;
+}
