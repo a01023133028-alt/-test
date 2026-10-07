@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#2e7d32">
+  <title>잡초 사진 퀴즈</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌱</text></svg>">
+  <link rel="stylesheet" href="css/style.css">
+  <script>
+    /* 저장된 테마를 먼저 적용해 깜빡임 방지 */
+    try {
+      var t = JSON.parse(localStorage.getItem('weedquiz:theme'));
+      if (t === 'dark' || t === 'light') document.documentElement.dataset.theme = t;
+    } catch (e) {}
+  </script>
+</head>
+<body>
+  <header class="topbar">
+    <a href="#home" class="brand">🌱 잡초 퀴즈</a>
+    <button type="button" id="themeToggle" class="icon-btn" aria-label="다크 모드로 전환">🌙</button>
+  </header>
+
+  <main id="app">
+    <section id="screen-loading" class="screen active"><p class="center muted loading">불러오는 중…</p></section>
+    <section id="screen-loadfile" class="screen"></section>
+    <section id="screen-home" class="screen"></section>
+    <section id="screen-quiz" class="screen"></section>
+    <section id="screen-result" class="screen"></section>
+    <section id="screen-stats" class="screen"></section>
+    <section id="screen-dex" class="screen"></section>
+  </main>
+
+  <nav class="tabbar" id="tabbar" hidden>
+    <a href="#home" data-tab="home"><span aria-hidden="true">🧩</span>퀴즈</a>
+    <a href="#dex" data-tab="dex"><span aria-hidden="true">📖</span>도감</a>
+    <a href="#stats" data-tab="stats"><span aria-hidden="true">📊</span>기록</a>
+  </nav>
+
+  <div id="lightbox" class="lightbox" hidden role="dialog" aria-label="사진 확대">
+    <div class="lb-img"></div>
+    <button type="button" class="lb-prev" aria-label="이전 사진">‹</button>
+    <button type="button" class="lb-next" aria-label="다음 사진">›</button>
+    <div class="lb-bottom"><span class="lb-count"></span><span>탭하면 닫혀요</span></div>
+  </div>
+
+  <div id="modal" class="modal" hidden role="dialog" aria-modal="true">
+    <div class="modal-sheet">
+      <button type="button" class="modal-close icon-btn" aria-label="닫기">✕</button>
+      <div class="modal-body"></div>
+    </div>
+  </div>
+
+  <script src="js/storage.js"></script>
+  <script src="js/grading.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/quiz.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
