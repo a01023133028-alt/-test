@@ -2,9 +2,15 @@
 const Storage = (() => {
   const PREFIX = 'weedquiz:';
 
+  /* 잡초 기록은 예전 키 그대로, 병해 등 다른 과목은 'disease:' 같은 접두어를 붙인다 */
+  function fullKey(key) {
+    const ns = key === 'theme' || typeof Subject === 'undefined' ? '' : Subject.storageNs;
+    return PREFIX + ns + key;
+  }
+
   function get(key, fallback) {
     try {
-      const raw = localStorage.getItem(PREFIX + key);
+      const raw = localStorage.getItem(fullKey(key));
       return raw == null ? fallback : JSON.parse(raw);
     } catch (e) {
       return fallback;
@@ -13,7 +19,7 @@ const Storage = (() => {
 
   function set(key, value) {
     try {
-      localStorage.setItem(PREFIX + key, JSON.stringify(value));
+      localStorage.setItem(fullKey(key), JSON.stringify(value));
     } catch (e) {
       /* 저장 공간 부족·사생활 보호 모드 등은 무시 */
     }
@@ -21,7 +27,7 @@ const Storage = (() => {
 
   function remove(key) {
     try {
-      localStorage.removeItem(PREFIX + key);
+      localStorage.removeItem(fullKey(key));
     } catch (e) {}
   }
 

@@ -1,6 +1,6 @@
 # 잡초 사진 퀴즈
 
-대학 잡초 식별 시험(77종) 대비용 정적 사이트. HTML + CSS + 바닐라 JS, 빌드 도구 없음.
+대학 잡초 식별(77종)·병해 식별(63개) 시험 대비용 정적 사이트. HTML + CSS + 바닐라 JS, 빌드 도구 없음.
 GitHub Pages(`main` 브랜치, `/` 루트)로 배포되며 `main`에 머지되면 자동 재배포된다.
 
 ## 작업 규칙
@@ -13,7 +13,9 @@ GitHub Pages(`main` 브랜치, `/` 루트)로 배포되며 `main`에 머지되�
 ## 구조
 
 - `index.html`, `css/style.css`, `js/*.js` — 화면과 로직 (`js/app.js`가 시작점)
+- `js/subject.js` — 과목 설정. 잡초(기본)와 병해(`?s=disease`)가 같은 화면 코드를 쓰고, 문구·데이터 파일·분류 기준만 여기서 갈린다. 과목별 문구를 화면 코드에 직접 쓰지 않는다.
 - `data/weeds.json` — 77종 데이터 (`id`, `name`, `morph`, `life`, `features`, `images`)
+- `data/diseases.json` — 병해 63개 (`id`, `name`, `host`(기주), `crop`(작물 구분), `pathogen`(병원), `features`, `images`). 사진은 `images/disease/{3자리 id}/`
 - `data/pairs.json` — 헷갈리는 쌍(비교 탭) 목록과 구분 포인트
 - `data/credits.json` — iNaturalist에서 추가한 사진의 촬영자·라이선스·원본 링크
 - `images/{3자리 id}/01.jpg …` — 잡초별 사진. 추가·삭제하면 `weeds.json`의 `images`와 `credits.json`도 함께 고친다.

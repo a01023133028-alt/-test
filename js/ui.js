@@ -10,20 +10,18 @@ const UI = (() => {
     })[c]);
   }
 
-  function morphTag(morph) {
-    return `<span class="tag ${Data.MORPH_CLASS[morph] || ''}">${esc(morph)}</span>`;
+  function facetTag(f, value) {
+    return `<span class="tag ${f.cls[value] || ''}">${esc(value)}</span>`;
   }
 
-  function lifeTag(life) {
-    return `<span class="tag ${Data.LIFE_CLASS[life] || ''}">${esc(life)}</span>`;
-  }
-
+  /* 분류 태그 (병해는 기주 태그 먼저) */
   function tags(w) {
-    return `<span class="tags">${morphTag(w.morph)}${lifeTag(w.life)}</span>`;
+    const host = w.host ? `<span class="tag t-host">기주 ${esc(w.host)}</span>` : '';
+    return `<span class="tags">${host}${Subject.facets.map((f) => facetTag(f, w[f.key])).join('')}</span>`;
   }
 
   /* 사진 (불러오기 실패 시 아래 error 리스너가 자리표시로 바꿈) */
-  function img(src, cls = '', alt = '잡초 사진', extra = '') {
+  function img(src, cls = '', alt = `${Subject.noun} 사진`, extra = '') {
     if (!src) return `<div class="img-missing ${cls}">사진 없음</div>`;
     return `<img class="wimg ${cls}" src="${esc(src)}" alt="${esc(alt)}" loading="lazy" ${extra}>`;
   }
@@ -173,8 +171,7 @@ const UI = (() => {
 
   return {
     esc,
-    morphTag,
-    lifeTag,
+    facetTag,
     tags,
     img,
     thumbs,

@@ -19,7 +19,10 @@
 <body>
   <header class="topbar">
     <a href="#home" class="brand">🌱 잡초 퀴즈</a>
-    <button type="button" id="themeToggle" class="icon-btn" aria-label="다크 모드로 전환">🌙</button>
+    <div class="topbar-right">
+      <a id="subjectSwitch" class="subject-switch" href="?s=disease#home">🦠 병해</a>
+      <button type="button" id="themeToggle" class="icon-btn" aria-label="다크 모드로 전환">🌙</button>
+    </div>
   </header>
 
   <main id="app">
@@ -58,6 +61,7 @@
   <script src="js/storage.js"></script>
   <script src="js/grading.js"></script>
   <script src="js/data.js"></script>
+  <script src="js/subject.js"></script>
   <script src="js/quiz.js"></script>
   <script src="js/ui.js"></script>
   <script src="js/app.js"></script>

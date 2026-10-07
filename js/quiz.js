@@ -1,13 +1,19 @@
 /* 출제·채점 엔진 (화면과 무관한 로직) */
 const Quiz = (() => {
-  const MODES = {
-    write: { label: '사진 → 이름 쓰기', desc: '사진을 보고 이름을 직접 입력', photo: true },
-    choice: { label: '사진 → 4지선다', desc: '같은 분류의 헷갈리는 보기 중 고르기', photo: true },
-    class: { label: '이름 → 분류·생활형', desc: '이름을 보고 형태적 분류와 생활형 고르기', photo: false },
-    real: { label: '실전 모드', desc: '사진 → 이름 + 분류 + 생활형 한꺼번에', photo: true },
-    wrong: { label: '오답만 다시 풀기', desc: '틀린 뒤 아직 다시 맞히지 못한 잡초만', photo: false },
-  };
-  const TYPES = ['write', 'choice', 'class', 'real'];
+  const ALL_MODES = Subject.id === 'disease'
+    ? {
+        write: { label: '사진 → 병명 쓰기', desc: '사진과 기주를 보고 병명을 직접 입력', photo: true },
+        choice: { label: '사진 → 4지선다', desc: '같은 기주·작물의 헷갈리는 병명 중 고르기', photo: true },
+      }
+    : {
+        write: { label: '사진 → 이름 쓰기', desc: '사진을 보고 이름을 직접 입력', photo: true },
+        choice: { label: '사진 → 4지선다', desc: '같은 분류의 헷갈리는 보기 중 고르기', photo: true },
+        class: { label: '이름 → 분류·생활형', desc: '이름을 보고 형태적 분류와 생활형 고르기', photo: false },
+        real: { label: '실전 모드', desc: '사진 → 이름 + 분류 + 생활형 한꺼번에', photo: true },
+      };
+  const TYPES = Subject.types;
+  const MODES = { ...ALL_MODES };
+  MODES.wrong = { label: '오답만 다시 풀기', desc: `틀린 뒤 아직 다시 맞히지 못한 ${Subject.noun}만`, photo: false };
 
   function shuffle(arr) {
     const a = arr.slice();
@@ -30,7 +36,7 @@ const Quiz = (() => {
   /* 옵션에 맞는 출제 후보 */
   function pool(weeds, opts) {
     const type = typeOf(opts);
-    let list = weeds.filter((w) => opts.morphs.includes(w.morph) && opts.lifes.includes(w.life));
+    let list = weeds.filter((w) => Subject.facets.every((f) => (opts.filters[f.key] || []).includes(w[f.key])));
     if (MODES[type].photo) list = list.filter((w) => w.images.length > 0);
     if (opts.mode === 'wrong') {
       const wrong = new Set(Storage.getWrongIds());
@@ -40,7 +46,7 @@ const Quiz = (() => {
   }
 
   function cycleKey(opts) {
-    return [typeOf(opts), opts.morphs.join(','), opts.lifes.join(',')].join('|');
+    return [typeOf(opts), ...Subject.facets.map((f) => (opts.filters[f.key] || []).join(','))].join('|');
   }
 
   /* 한 바퀴 모드에서 이번 바퀴에 남은 수 (새 바퀴면 null) */
@@ -52,13 +58,17 @@ const Quiz = (() => {
     return n || null;
   }
 
-  /* 4지선다 보기: 같은 형태적 분류 우선 */
+  /* 4지선다 보기: 비슷한 것(잡초는 같은 형태적 분류, 병해는 같은 기주 → 같은 작물 구분) 우선 */
   function makeChoices(weed, all) {
     const names = new Set([weed.name]);
     const pick = [];
-    const same = shuffle(all.filter((w) => w.id !== weed.id && w.morph === weed.morph));
-    const other = shuffle(all.filter((w) => w.id !== weed.id && w.morph !== weed.morph));
-    for (const w of [...same, ...other]) {
+    const keys = Subject.similarKeys;
+    const rank = (w) => {
+      const i = keys.findIndex((k) => w[k] && w[k] === weed[k]);
+      return i < 0 ? keys.length : i;
+    };
+    const ordered = shuffle(all.filter((w) => w.id !== weed.id)).sort((a, b) => rank(a) - rank(b));
+    for (const w of ordered) {
       if (pick.length >= 3) break;
       if (names.has(w.name)) continue;
       names.add(w.name);
@@ -84,7 +94,7 @@ const Quiz = (() => {
 
   /*
    * 세션 생성
-   * opts: { mode, wrongType, count: '10'|'20'|'all', morphs, lifes, cycle }
+   * opts: { mode, wrongType, count: '10'|'20'|'all', filters: { [facet]: [...] }, cycle }
    * onlyIds: 지정 시 해당 잡초만 (결과 화면의 "틀린 문제 다시 풀기")
    */
   function createSession(weeds, opts, onlyIds) {
@@ -152,6 +162,17 @@ const Quiz = (() => {
     };
   }
 
+  /* 이름 채점: 병해는 "배추 탄저병"처럼 기주를 붙여 써도 정답 */
+  function nameMatches(text, w) {
+    if (Grading.isNameCorrect(text, w.name)) return true;
+    if (!w.host) return false;
+    const t = Grading.normalize(text);
+    return w.host.split('/').some((h) => {
+      const hn = Grading.normalize(h);
+      return hn && t.startsWith(hn) && Grading.isNameCorrect(t.slice(hn.length), w.name);
+    });
+  }
+
   /* 채점. answer: { text, choiceId, morph, life } */
   function grade(session, answer) {
     const q = session.questions[session.index];
@@ -160,7 +181,7 @@ const Quiz = (() => {
     let parts;
     switch (q.type) {
       case 'write':
-        parts = { name: Grading.isNameCorrect(answer.text, w.name) };
+        parts = { name: nameMatches(answer.text, w) };
         break;
       case 'choice':
         parts = { name: answer.choiceId === w.id };
@@ -170,7 +191,7 @@ const Quiz = (() => {
         break;
       case 'real':
         parts = {
-          name: Grading.isNameCorrect(answer.text, w.name),
+          name: nameMatches(answer.text, w),
           morph: answer.morph === w.morph,
           life: answer.life === w.life,
         };
