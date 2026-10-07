@@ -74,7 +74,7 @@ const UI = (() => {
   function creditHtml(src) {
     const c = credits[src];
     if (!c) return '';
-    return `📷 ${esc(c.author || c.login || '알 수 없음')} · ${esc(c.license)} · <a href="${esc(c.source)}" target="_blank" rel="noopener">iNaturalist</a>`;
+    return `📷 ${esc(c.author || c.login || '알 수 없음')} · ${esc(c.license)} · <a href="${esc(c.source)}" target="_blank" rel="noopener">${c.source.includes('inaturalist') ? 'iNaturalist' : '출처'}</a>`;
   }
 
   function openLightbox(list, index = 0) {
