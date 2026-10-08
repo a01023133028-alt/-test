@@ -73,6 +73,20 @@ const Storage = (() => {
     remove('mastered');
   }
 
+  /* 즐겨찾기: 다시 보고 싶은 id 목록 (과목별) */
+  function getFavorites() {
+    return new Set(get('favorites', []));
+  }
+
+  function toggleFavorite(id) {
+    const s = getFavorites();
+    const on = !s.has(id);
+    if (on) s.add(id);
+    else s.delete(id);
+    set('favorites', [...s]);
+    return on;
+  }
+
   /* 한 바퀴 모드: 출제 조건별로 아직 안 나온 id 목록 */
   function getCycle(key) {
     return get('cycles', {})[key] || null;
@@ -113,5 +127,7 @@ const Storage = (() => {
     getMastered,
     setMastered,
     clearMastered,
+    getFavorites,
+    toggleFavorite,
   };
 })();

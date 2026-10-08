@@ -30,6 +30,7 @@
     filters: Object.fromEntries(Subject.facets.map((f) => [f.key, f.values.slice()])),
     cycle: false,
     skipMastered: true,
+    favOnly: false,
   };
 
   const state = {
@@ -46,6 +47,7 @@
     pairs: [],
     pairKind: '전체',
     checkFilter: '전체',
+    dexFavOnly: false,
     checkHide: false,
     checkRevealed: new Set(),
   };
@@ -208,8 +210,14 @@
     const skipOn = o.skipMastered !== false;
     const cycleOn = o.cycle && !isWrong;
     const rem = cycleOn && pool.length ? Quiz.cycleRemaining(state.weeds, o) : null;
+    const favN = favCount();
+    const favOn = !!o.favOnly;
     const toggles = `
-      <div class="quick-toggles">
+      <div class="quick-toggles three">
+        <button type="button" class="qt fav ${favOn ? 'on' : ''}" data-toggle="favOnly" aria-pressed="${favOn}">
+          <span class="qt-box" aria-hidden="true"></span>
+          <span class="qt-text"><b>⭐ 즐겨찾기만</b><small>${favN}${Subject.unit}</small></span>
+        </button>
         <button type="button" class="qt ${skipOn ? 'on' : ''}" data-toggle="skipMastered" aria-pressed="${skipOn}">
           <span class="qt-box" aria-hidden="true"></span>
           <span class="qt-text"><b>외운 것 빼기</b><small>${masteredCount()}${Subject.unit} 제외</small></span>
@@ -295,7 +303,7 @@
         ${toggles}
         <div class="pool-info">${pool.length
           ? `출제 가능 ${pool.length}${Subject.unit} · 이번에 <b>${o.cycle && !isWrong ? Math.min(limit, Quiz.cycleRemaining(state.weeds, o) || pool.length) : limit}문제</b>`
-          : `<span class="warn-text">조건에 맞는 ${Subject.noun}가 없어요${o.skipMastered !== false && masteredCount() ? ' (외운 것 제외 중)' : ''}</span>`}</div>
+          : `<span class="warn-text">${o.favOnly && !favN ? `즐겨찾기한 ${Subject.noun}가 없어요 · 도감에서 ☆를 눌러 추가하세요` : `조건에 맞는 ${Subject.noun}가 없어요${o.favOnly ? ' (즐겨찾기만 출제 중)' : ''}${o.skipMastered !== false && masteredCount() ? ' (외운 것 제외 중)' : ''}`}</span>`}</div>
         <button type="button" class="btn btn-primary btn-block btn-lg" data-action="start" ${pool.length ? '' : 'disabled'}>퀴즈 시작</button>
       </div>`;
   }
@@ -334,6 +342,8 @@
       o.count = t.dataset.count;
     } else if (t.dataset.toggle === 'skipMastered') {
       o.skipMastered = o.skipMastered === false;
+    } else if (t.dataset.toggle === 'favOnly') {
+      o.favOnly = !o.favOnly;
     } else if (t.dataset.toggle === 'cycle') {
       o.cycle = !o.cycle;
     } else if (t.dataset.action === 'reset-cycle') {
@@ -514,7 +524,7 @@
   function answerCard(w) {
     return `
       <div class="answer-card">
-        <div class="answer-name">${esc(w.name)} <small class="muted">No.${w.id}</small></div>
+        <div class="answer-name">${esc(w.name)} <small class="muted">No.${w.id}</small>${favButton(w.id)}</div>
         ${UI.tags(w)}
         ${infoLines(w)}
         ${UI.thumbs(w)}
@@ -802,6 +812,8 @@
           ${Subject.dexGroups.map((g) => `<button type="button" class="seg-btn ${state.dexGroup === g.key ? 'selected' : ''}" data-group="${g.key}">${g.label}</button>`).join('')}
         </div>
         <div class="dex-fold-all">
+          <button type="button" class="fav-filter ${state.dexFavOnly ? 'on' : ''}" data-dex-fav aria-pressed="${state.dexFavOnly}">⭐ 즐겨찾기만 <b>${favCount()}</b></button>
+          <span class="spacer"></span>
           <button type="button" class="link-btn" data-fold-all="open">모두 펴기</button>
           <button type="button" class="link-btn" data-fold-all="close">모두 접기</button>
         </div>
@@ -812,8 +824,10 @@
 
   function renderDexBody() {
     const q = Grading.normalize(state.dexQuery);
-    const list = state.weeds.filter((w) => !q || Grading.normalize(w.name).includes(q)
-      || (w.host && Grading.normalize(w.host).includes(q)) || String(w.id) === q);
+    const favs = Storage.getFavorites();
+    const list = state.weeds.filter((w) => (!q || Grading.normalize(w.name).includes(q)
+      || (w.host && Grading.normalize(w.host).includes(q)) || String(w.id) === q)
+      && (!state.dexFavOnly || favs.has(w.id)));
     const group = Subject.dexGroups.find((g) => g.key === state.dexGroup) || Subject.dexGroups[0];
     const outerKey = group.key;
     const innerKey = group.inner;
@@ -826,7 +840,7 @@
     const known = new Set(outer);
     const others = list.filter((w) => !known.has(w[outerKey]));
     // 검색 중에는 결과가 가려지지 않게 모두 펼쳐서 보여줌
-    const folded = q ? new Set() : dexFolded();
+    const folded = q || state.dexFavOnly ? new Set() : dexFolded();
     const foldBtn = (key, open) => `data-fold="${esc(key)}" aria-expanded="${open}"`;
 
     let html = outer.map((o) => {
@@ -876,14 +890,14 @@
   }
 
   function dexCard(w, r) {
-    return `<button type="button" class="dex-card" data-weed-detail="${w.id}">
+    return `<div class="dex-cell">${favButton(w.id)}<button type="button" class="dex-card" data-weed-detail="${w.id}">
       <span class="dex-img">${UI.img(w.images[0], '', w.name)}
         ${w.images.length > 1 ? `<span class="img-count">📷 ${w.images.length}</span>` : ''}</span>
       <span class="dex-info">
         <b>${esc(w.name)}</b>
         <small class="muted">No.${w.id}${r ? ` · 정답률 ${UI.pct(r.correct, r.tries)}%` : ''}</small>
         ${UI.tags(w)}
-      </span></button>`;
+      </span></button></div>`;
   }
 
   /* ================= 헷갈리는 쌍 ================= */
@@ -1025,6 +1039,16 @@
     return state.weeds.filter((w) => done.has(w.id)).length;
   }
 
+  /* 즐겨찾기 */
+  function favCount() {
+    const fav = Storage.getFavorites();
+    return state.weeds.filter((w) => fav.has(w.id)).length;
+  }
+
+  function favButton(id, on = Storage.getFavorites().has(id)) {
+    return `<button type="button" class="fav-btn ${on ? 'on' : ''}" data-fav="${id}" aria-pressed="${on}" aria-label="${on ? '즐겨찾기 해제' : '즐겨찾기에 추가'}">${on ? '★' : '☆'}</button>`;
+  }
+
   function masterButton(w, done = Storage.getMastered().has(w.id)) {
     return `<button type="button" class="btn btn-block master-btn ${done ? 'is-on' : ''}" data-master="${w.id}" aria-pressed="${done}">
       ${done ? '✅ 외웠어요 (문제에서 빠짐)' : '⬜ 외웠으면 체크'}</button>`;
@@ -1035,7 +1059,8 @@
     const total = state.weeds.length;
     const n = state.weeds.filter((w) => done.has(w.id)).length;
     const f = state.checkFilter;
-    const list = state.weeds.filter((w) => f === '전체' || (f === '외운 것') === done.has(w.id));
+    const favs = Storage.getFavorites();
+    const list = state.weeds.filter((w) => f === '전체' || (f === '⭐' ? favs.has(w.id) : (f === '외운 것') === done.has(w.id)));
     const hide = state.checkHide;
     screen('check').innerHTML = `
       <h1>암기 체크</h1>
@@ -1045,7 +1070,7 @@
         <div class="progress-bar"><div style="width:${UI.pct(n, total)}%"></div></div>
       </div>
       <div class="seg check-filter">
-        ${['전체', '안 외운 것', '외운 것'].map((k) => `<button type="button" class="seg-btn ${f === k ? 'selected' : ''}" data-check-filter="${k}">${k}</button>`).join('')}
+        ${['전체', '안 외운 것', '외운 것', '⭐'].map((k) => `<button type="button" class="seg-btn ${f === k ? 'selected' : ''}" data-check-filter="${k}">${k}</button>`).join('')}
       </div>
       <label class="switch-row check-hide">
         <span><b>이름 가리기</b><small>사진만 보고 떠올린 뒤, 이름 칸을 눌러 확인하세요</small></span>
@@ -1057,6 +1082,7 @@
           const on = done.has(w.id);
           const shown = !hide || state.checkRevealed.has(w.id);
           return `<div class="check-card ${on ? 'is-on' : ''}">
+            ${favButton(w.id, favs.has(w.id))}
             <button type="button" class="check-img" data-zoom-weed="${w.id}" data-zoom-index="0" aria-label="사진 ${w.images.length}장 크게 보기">
               ${UI.img(w.images[0], '', shown ? w.name : `${Subject.noun} 사진`)}
               ${w.images.length > 1 ? `<span class="img-count">📷 ${w.images.length}</span>` : ''}
@@ -1066,7 +1092,7 @@
               : `<button type="button" class="check-name is-hidden" data-reveal="${w.id}">${w.host ? `<small class="muted">기주 ${esc(w.host)}</small>` : ''}<b>❓ 눌러서 확인</b></button>`}
             <button type="button" class="check-toggle" data-master="${w.id}" aria-pressed="${on}">${on ? '✅ 외웠음' : '⬜ 체크'}</button>
           </div>`;
-        }).join('') || `<p class="muted center">${f === '외운 것' ? '아직 체크한 게 없어요.' : '전부 외웠어요! 🎉'}</p>`}
+        }).join('') || `<p class="muted center">${f === '외운 것' ? '아직 체크한 게 없어요.' : f === '⭐' ? '즐겨찾기가 없어요. 카드의 ☆를 눌러 추가하세요.' : '전부 외웠어요! 🎉'}</p>`}
       </div>
       ${n ? '<button type="button" class="btn btn-ghost btn-block check-reset" data-action="clear-mastered">체크 모두 해제</button>' : ''}`;
   }
@@ -1101,7 +1127,7 @@
     if (!w) return;
     const r = Storage.getStats()[w.id];
     UI.openModal(`
-      <h2 class="detail-name">${esc(w.name)} <small class="muted">No.${w.id}</small></h2>
+      <h2 class="detail-name">${esc(w.name)} <small class="muted">No.${w.id}</small>${favButton(w.id)}</h2>
       ${UI.tags(w)}
       ${infoLines(w)}
       ${masterButton(w)}
@@ -1174,6 +1200,26 @@
 
     // 썸네일 확대, 잡초 상세 (모든 화면·모달 공통)
     document.addEventListener('click', (e) => {
+      // 즐겨찾기 별 (도감·암기·정답 카드·상세 모달 공통)
+      const fb = e.target.closest('[data-fav]');
+      if (fb) {
+        const id = Number(fb.dataset.fav);
+        const on = Storage.toggleFavorite(id);
+        document.querySelectorAll(`.fav-btn[data-fav="${id}"]`).forEach((b) => {
+          b.outerHTML = favButton(id, on);
+        });
+        const n = favCount();
+        document.querySelectorAll('[data-dex-fav] b').forEach((b) => (b.textContent = n));
+        if (state.route === 'home') renderHome();
+        if (state.route === 'dex' && state.dexFavOnly && !UI.isModalOpen()) renderDexBody();
+        if (state.route === 'check' && state.checkFilter === '⭐' && !UI.isModalOpen()) renderCheck();
+        return;
+      }
+      if (e.target.closest('[data-dex-fav]')) {
+        state.dexFavOnly = !state.dexFavOnly;
+        renderDex();
+        return;
+      }
       // 외웠어요 체크 (암기 탭·정답 카드·상세 모달 공통)
       const mb = e.target.closest('[data-master]');
       if (mb) {
