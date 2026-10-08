@@ -783,6 +783,10 @@
         <div class="seg">
           ${Subject.dexGroups.map((g) => `<button type="button" class="seg-btn ${state.dexGroup === g.key ? 'selected' : ''}" data-group="${g.key}">${g.label}</button>`).join('')}
         </div>
+        <div class="dex-fold-all">
+          <button type="button" class="link-btn" data-fold-all="open">모두 펴기</button>
+          <button type="button" class="link-btn" data-fold-all="close">모두 접기</button>
+        </div>
       </div>
       <div id="dexBody"></div>`;
     renderDexBody();
@@ -803,21 +807,30 @@
 
     const known = new Set(outer);
     const others = list.filter((w) => !known.has(w[outerKey]));
+    // 검색 중에는 결과가 가려지지 않게 모두 펼쳐서 보여줌
+    const folded = q ? new Set() : dexFolded();
+    const foldBtn = (key, open) => `data-fold="${esc(key)}" aria-expanded="${open}"`;
 
     let html = outer.map((o) => {
       const g = list.filter((w) => w[outerKey] === o);
       if (!g.length) return '';
+      const oKey = `${outerKey}|${o}`;
+      const oOpen = !folded.has(oKey);
       const subs = inner.map((i) => {
         const sg = g.filter((w) => w[innerKey] === i);
         if (!sg.length) return '';
-        return `<h3 class="dex-sub"><span class="dot ${innerCls[i] || ''}"></span>${esc(i)} <small>${sg.length}${Subject.unit}</small></h3>
-          <div class="dex-grid">${sg.map((w) => dexCard(w, stats[w.id])).join('')}</div>`;
+        const iKey = `${oKey}|${i}`;
+        const iOpen = !folded.has(iKey);
+        return `<h3 class="dex-sub"><button type="button" class="fold-btn" ${foldBtn(iKey, iOpen)}>
+            <span class="fold-arrow">${iOpen ? '▾' : '▸'}</span><span class="dot ${innerCls[i] || ''}"></span>${esc(i)} <small>${sg.length}${Subject.unit}</small></button></h3>
+          ${iOpen ? `<div class="dex-grid">${sg.map((w) => dexCard(w, stats[w.id])).join('')}</div>` : ''}`;
       }).join('');
       const rest = g.filter((w) => !inner.includes(w[innerKey]));
       return `<section class="dex-group">
-        <h2 class="dex-head ${outerCls[o] || ''}">${esc(o)} <small>${g.length}${Subject.unit}</small></h2>
-        ${subs}
-        ${rest.length ? `<div class="dex-grid">${rest.map((w) => dexCard(w, stats[w.id])).join('')}</div>` : ''}
+        <h2 class="dex-head ${outerCls[o] || ''}"><button type="button" class="fold-btn" ${foldBtn(oKey, oOpen)}>
+          <span class="fold-arrow">${oOpen ? '▾' : '▸'}</span>${esc(o)} <small>${g.length}${Subject.unit}</small></button></h2>
+        ${oOpen ? `${subs}
+        ${rest.length ? `<div class="dex-grid">${rest.map((w) => dexCard(w, stats[w.id])).join('')}</div>` : ''}` : ''}
       </section>`;
     }).join('');
     if (others.length) {
@@ -943,7 +956,36 @@
     if (t) startPairQuiz(Number(t.dataset.pair));
   }
 
+  /* 도감 묶음 접기 상태: '기준|값' 또는 '기준|값|소분류' 키 목록 (과목별 저장) */
+  function dexFolded() {
+    return new Set(Storage.get('dexFolded', []));
+  }
+
+  function setDexFolded(set) {
+    Storage.set('dexFolded', [...set]);
+  }
+
   function onDexClick(e) {
+    const fb = e.target.closest('[data-fold]');
+    if (fb) {
+      const set = dexFolded();
+      const k = fb.dataset.fold;
+      if (set.has(k)) set.delete(k);
+      else set.add(k);
+      setDexFolded(set);
+      renderDexBody();
+      return;
+    }
+    const fa = e.target.closest('[data-fold-all]');
+    if (fa) {
+      const group = Subject.dexGroups.find((g) => g.key === state.dexGroup) || Subject.dexGroups[0];
+      const prefix = `${group.key}|`;
+      const set = new Set([...dexFolded()].filter((k) => !k.startsWith(prefix)));
+      if (fa.dataset.foldAll === 'close') groupValues(group.key).forEach((v) => set.add(prefix + v));
+      setDexFolded(set);
+      renderDexBody();
+      return;
+    }
     const t = e.target.closest('[data-group]');
     if (!t) return;
     state.dexGroup = t.dataset.group;
