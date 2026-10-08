@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 휴대폰이 다크 모드면 사이트도 다크 모드로 보이게 -->
+    <style name="AppTheme" parent="@android:style/Theme.Material.NoActionBar">
+        <item name="android:colorPrimary">#3ccb7f</item>
+        <item name="android:colorPrimaryDark">#0c130f</item>
+        <item name="android:colorAccent">#3ccb7f</item>
+        <item name="android:windowBackground">@android:color/black</item>
+        <item name="android:statusBarColor">#0c130f</item>
+    </style>
+</resources>

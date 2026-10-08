@@ -22,6 +22,11 @@ GitHub Pages(`main` 브랜치, `/` 루트)로 배포되며 `main`에 머지되�
 - `data/credits.json` — iNaturalist에서 추가한 사진의 촬영자·라이선스·원본 링크
 - `images/{3자리 id}/01.jpg …` — 잡초별 사진. 추가·삭제하면 `weeds.json`의 `images`와 `credits.json`도 함께 고친다.
 
+## 안드로이드 앱
+
+- `android/`는 사이트를 assets로 넣은 WebView 앱이다. 빌드할 때 저장소 루트의 `index.html`, `version.json`, `css/`, `js/`, `data/`, `images/`를 자동 복사하므로 사이트만 고치면 된다. 새 폴더를 추가하면 `android/app/build.gradle`의 `copyWeb` include 목록에도 넣는다.
+- `.github/workflows/android-apk.yml`: `main` 푸시마다 APK를 빌드해 Releases(`apk-실행번호`, latest)에 올린다. 작업 브랜치(`claude/**`)는 빌드만 확인한다. 이 작업 환경에는 안드로이드 SDK가 없으니 빌드 확인은 Actions 결과로 한다.
+
 ## 디자인
 
 - 초록 기반. 색은 `css/style.css` 맨 위 토큰(`--primary`, `--primary-strong`(입체 버튼 아래 테두리), `--primary-soft`, `--hero`(초록 그라데이션) 등)만 고치고, 라이트·다크(두 군데) 값을 함께 바꾼다.
