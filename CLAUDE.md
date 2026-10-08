@@ -16,7 +16,7 @@ GitHub Pages(`main` 브랜치, `/` 루트)로 배포되며 `main`에 머지되�
 - `index.html`, `css/style.css`, `js/*.js` — 화면과 로직 (`js/app.js`가 시작점)
 - `js/subject.js` — 과목 설정. 잡초(기본)와 병해(`?s=disease`)가 같은 화면 코드를 쓰고, 문구·데이터 파일·분류 기준만 여기서 갈린다. 과목별 문구를 화면 코드에 직접 쓰지 않는다.
 - `data/weeds.json` — 77종 데이터 (`id`, `name`, `morph`, `life`, `features`, `images`)
-- `data/diseases.json` — 병해 63개 (`id`, `name`, `host`(기주), `crop`(작물 구분), `pathogen`(병원), `features`, `images`). 사진은 `images/disease/{3자리 id}/`
+- `data/diseases.json` — 병해 63개 (`id`, `name`, `host`(기주), `crop`(작물 구분), `pathogen`(병원: 곰팡이(병꼴균·접합균·자낭균·담자균·불완전균)/난균류/세균/파이토플라스마/바이러스/바이로이드 — 6강 강의자료 기준), `features`, `images`). 사진은 `images/disease/{3자리 id}/`
 - 암기 체크는 localStorage `mastered`(과목별)에 저장되고, `Quiz.pool`이 `opts.skipMastered`가 켜져 있으면 제외한다.
 - `data/pairs.json` — 헷갈리는 쌍(비교 탭) 목록과 구분 포인트
 - `data/credits.json` — iNaturalist에서 추가한 사진의 촬영자·라이선스·원본 링크

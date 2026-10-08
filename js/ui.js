@@ -14,9 +14,10 @@ const UI = (() => {
     return `<span class="tag ${f.cls[value] || ''}">${esc(value)}</span>`;
   }
 
-  /* 병원 종류별 색 (곰팡이·세균·바이러스·파이토플라스마) */
+  /* 병원 종류별 색 (곰팡이·난균류·세균·바이러스·파이토플라스마·바이로이드) */
   function pathogenClass(p) {
     if (p.startsWith('곰팡이')) return 'p-fungus';
+    if (p.startsWith('난균')) return 'p-oomycete';
     if (p.startsWith('세균')) return 'p-bacteria';
     if (p.startsWith('바이러스')) return 'p-virus';
     return 'p-other';
