@@ -35,6 +35,17 @@
 - 기록(정답률·오답 목록·한 바퀴 진행)은 잡초와 따로 저장됩니다.
 - 데이터는 `data/diseases.json`(`id`, `name`, `host`, `crop`, `pathogen`, `features`, `images`), 사진은 `images/disease/{3자리 id}/01.jpg`입니다. `pathogen`(병원 종류)은 기주 옆 태그로 정답 화면과 도감에 표시됩니다.
 
+## 안드로이드 앱(APK)
+
+사이트 전체(사진·데이터 포함)를 앱 안에 넣은 안드로이드 앱입니다. **인터넷 없이도** 퀴즈·도감·암기 체크를 쓸 수 있습니다.
+
+- **받는 곳:** <https://github.com/a01023133028-alt/-test/releases/latest/download/weedquiz.apk> (휴대폰 브라우저에서 열면 바로 내려받음)
+- **설치:** 받은 `weedquiz.apk`를 누르고, "출처를 알 수 없는 앱 설치"를 허용하면 됩니다.
+- **업데이트:** `main`이 바뀔 때마다 GitHub Actions가 새 APK를 자동으로 만들어 Releases에 올립니다. 위 주소에서 다시 받아 설치하면 기록은 그대로 두고 업데이트됩니다.
+- **기록:** 앱과 웹사이트의 기록(정답률·암기 체크)은 따로 저장됩니다.
+- **글꼴:** Pretendard는 인터넷이 될 때만 받아 오고, 오프라인이면 기본 글꼴로 보입니다.
+- **만드는 곳:** `android/` 폴더(WebView 앱), `.github/workflows/android-apk.yml`(자동 빌드). 서명 키 `android/app/weedquiz.keystore`는 개인 배포용입니다.
+
 ## 실행 방법
 
 ### 방법 1. 로컬 서버로 열기 (권장)
