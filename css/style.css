@@ -1162,3 +1162,45 @@ h2 { font-weight: 800; letter-spacing: -0.02em; }
 .pair-filter { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; }
 .pair-filter::-webkit-scrollbar { display: none; }
 .pair-filter .seg-btn { flex: 1 0 auto; min-width: 0; padding: 8px 12px; white-space: nowrap; }
+
+/* 홈 하단 고정 토글 (외운 것 빼기 · 한 바퀴) */
+#screen-home { padding-bottom: calc(var(--tabbar-h) + 184px + var(--safe-b) + 16px); }
+.quick-toggles { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px; }
+.qt {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 52px;
+  padding: 8px 12px;
+  border: 2px solid var(--border);
+  border-bottom-width: 4px;
+  border-radius: 16px;
+  background: var(--surface);
+  text-align: left;
+  transition: border-color 0.15s, background 0.15s, transform 0.06s;
+}
+.qt:active:not(:disabled) { transform: translateY(2px); border-bottom-width: 2px; }
+.qt:disabled { opacity: 0.45; }
+.qt-box {
+  flex: none;
+  width: 24px;
+  height: 24px;
+  border: 2px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+}
+.qt.on { border-color: var(--primary); background: var(--primary-soft); }
+.qt.on .qt-box {
+  border-color: var(--primary);
+  background: var(--primary) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5'/%3E%3C/svg%3E") center / 15px no-repeat;
+}
+.qt-text { display: flex; flex-direction: column; line-height: 1.25; min-width: 0; }
+.qt-text b { font-size: 0.98rem; white-space: nowrap; }
+.qt-text small { color: var(--muted); font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.qt.on .qt-text small { color: var(--primary); }
+.opt-help { margin: 18px 2px 0; line-height: 1.6; }
+.pool-info { margin-bottom: 8px; }
+
+.seg-grid { display: grid; grid-template-columns: 1fr 1fr; }
+.seg-grid .seg-btn { min-width: 0; font-size: 0.88rem; padding: 8px 6px; }
+.tabbar { background: color-mix(in srgb, var(--surface) 97%, transparent); }
