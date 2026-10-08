@@ -27,7 +27,14 @@ const Subject = (() => {
       { key: 'morph', label: '분류별', inner: 'life' },
       { key: 'life', label: '생활형별', inner: 'morph' },
     ],
-    hasPairs: true,
+    pairsUrl: 'data/pairs.json',
+    // 비교 탭: 헷갈리는 이유별 묶음 (kind가 없는 쌍은 첫 번째)
+    pairKinds: [
+      { key: '생김새', desc: '모양이 비슷해서 사진으로 헷갈리는 쌍' },
+      { key: '이름', desc: '이름이 비슷하거나 세트로 외우는 쌍' },
+      { key: '생활형·분류', desc: '비슷한데 생활형·분류가 달라 함정이 되는 쌍' },
+      { key: '키워드', desc: '같은 키워드로 묶여서 헷갈리는 쌍' },
+    ],
   };
 
   const DISEASE = {
@@ -42,7 +49,7 @@ const Subject = (() => {
     heroIcon: '🍃',
     dataUrl: 'data/diseases.json',
     storageNs: 'disease:',
-    types: ['write', 'choice'],
+    types: ['write', 'choice', 'pathogen'],
     facets: [
       {
         key: 'crop',
@@ -65,7 +72,13 @@ const Subject = (() => {
       ],
     },
     showHost: true,
-    hasPairs: false,
+    pairsUrl: 'data/disease-pairs.json',
+    pairKinds: [
+      { key: '같은 병명', desc: '병명은 같은데 기주마다 모습이 다른 묶음' },
+      { key: '병징', desc: '병든 모습이 비슷해서 사진으로 헷갈리는 쌍' },
+      { key: '같은 기주', desc: '한 작물에 생기는 병끼리 헷갈리는 쌍' },
+      { key: '병원', desc: '이름은 비슷한데 병원이 달라 함정이 되는 쌍' },
+    ],
   };
 
   // 다른 과목으로 가는 링크는 서로 반대쪽을 가리킨다

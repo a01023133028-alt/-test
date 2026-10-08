@@ -12,7 +12,6 @@ const Data = (() => {
   };
 
   const CREDITS_URL = 'data/credits.json';
-  const PAIRS_URL = 'data/pairs.json';
   const CACHE_KEY = 'cachedData';
 
   /* JSON 배열을 검사해 정리된 목록과 경고 메시지를 돌려줌 */
@@ -53,6 +52,7 @@ const Data = (() => {
       // 병해 전용: 기주·병원
       if (typeof w.host === 'string' && w.host.trim()) item.host = w.host.trim();
       if (typeof w.pathogen === 'string' && w.pathogen.trim()) item.pathogen = w.pathogen.trim();
+      if (typeof w.genus === 'string' && w.genus.trim()) item.genus = w.genus.trim();
       seen.add(id);
       weeds.push(item);
     });
@@ -105,13 +105,13 @@ const Data = (() => {
     }
   }
 
-  /* 헷갈리는 쌍 [{ ids: [a, b(, c)], a, b 또는 notes: [...], common }] (없어도 동작) */
+  /* 헷갈리는 쌍 [{ ids: [a, b(, c, d)], a, b 또는 notes: [...], common }] (없어도 동작) */
   async function loadPairs() {
-    if (!Subject.hasPairs) return [];
+    if (!Subject.pairsUrl) return [];
     try {
-      const res = await fetch(PAIRS_URL, { cache: 'no-cache' });
+      const res = await fetch(Subject.pairsUrl, { cache: 'no-cache' });
       const json = res.ok ? await res.json() : [];
-      return Array.isArray(json) ? json.filter((p) => Array.isArray(p.ids) && p.ids.length >= 2 && p.ids.length <= 3) : [];
+      return Array.isArray(json) ? json.filter((p) => Array.isArray(p.ids) && p.ids.length >= 2 && p.ids.length <= 4) : [];
     } catch (e) {
       return [];
     }
