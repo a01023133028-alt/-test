@@ -204,14 +204,21 @@
     const isWrong = o.mode === 'wrong';
     const limit = o.count === 'all' ? pool.length : Math.min(Number(o.count), pool.length);
 
-    let cycleInfo = '';
-    if (o.cycle && !isWrong && pool.length) {
-      const rem = Quiz.cycleRemaining(state.weeds, o);
-      cycleInfo = rem
-        ? `<div class="cycle-info">이번 바퀴 남은 ${Subject.noun} <b>${rem}</b> / ${pool.length}${Subject.unit}
-             <button type="button" class="link-btn" data-action="reset-cycle">처음부터</button></div>`
-        : `<div class="cycle-info">새 바퀴 시작 · ${pool.length}${Subject.unit} 모두 중복 없이 출제</div>`;
-    }
+    // 하단 고정 토글 2개: 외운 것 빼기 / 한 바퀴
+    const skipOn = o.skipMastered !== false;
+    const cycleOn = o.cycle && !isWrong;
+    const rem = cycleOn && pool.length ? Quiz.cycleRemaining(state.weeds, o) : null;
+    const toggles = `
+      <div class="quick-toggles">
+        <button type="button" class="qt ${skipOn ? 'on' : ''}" data-toggle="skipMastered" aria-pressed="${skipOn}">
+          <span class="qt-box" aria-hidden="true"></span>
+          <span class="qt-text"><b>외운 것 빼기</b><small>${masteredCount()}${Subject.unit} 제외</small></span>
+        </button>
+        <button type="button" class="qt ${cycleOn ? 'on' : ''}" data-toggle="cycle" aria-pressed="${cycleOn}" ${isWrong ? 'disabled' : ''}>
+          <span class="qt-box" aria-hidden="true"></span>
+          <span class="qt-text"><b>한 바퀴</b><small>${isWrong ? '오답 모드엔 없음' : cycleOn ? (rem ? `${rem}${Subject.unit} 남음` : '중복 없이') : '중복 없이'}</small></span>
+        </button>
+      </div>`;
 
     const resume = state.session
       ? `<div class="card resume">
@@ -258,7 +265,7 @@
         </div>
         ${isWrong ? `
           <h3>오답 문제를 어떤 유형으로 풀까요?</h3>
-          <div class="seg">
+          <div class="seg seg-grid">
             ${Quiz.TYPES.map((t) => `<button type="button" class="seg-btn ${o.wrongType === t ? 'selected' : ''}" data-wrongtype="${t}">${Quiz.MODES[t].label}</button>`).join('')}
           </div>` : ''}
       </section>
@@ -280,27 +287,12 @@
           </div>`).join('')}
       </section>
 
-      <section class="opt-section">
-        <label class="switch-row">
-          <span><b>✅ 외운 것 빼고 출제</b><small>암기 탭에서 체크한 ${Subject.noun}(${masteredCount()}${Subject.unit})는 문제에 안 나와요</small></span>
-          <input type="checkbox" id="skipMasteredToggle" ${o.skipMastered !== false ? 'checked' : ''}>
-          <span class="switch" aria-hidden="true"></span>
-        </label>
-      </section>
-
-      ${isWrong ? '' : `
-      <section class="opt-section">
-        <label class="switch-row">
-          <span><b>한 바퀴 모드</b><small>범위 안의 ${Subject.noun}가 한 번씩 다 나올 때까지 중복 없이 출제 (나눠 풀어도 이어짐)</small></span>
-          <input type="checkbox" id="cycleToggle" ${o.cycle ? 'checked' : ''}>
-          <span class="switch" aria-hidden="true"></span>
-        </label>
-        ${cycleInfo}
-      </section>`}
+      <p class="muted small opt-help">✅ <b>외운 것 빼기</b>: 암기 탭에서 체크한 ${Subject.noun}는 안 나와요 · 🔁 <b>한 바퀴</b>: 범위 안의 ${Subject.noun}가 다 나올 때까지 중복 없이 (나눠 풀어도 이어짐)${rem ? ` · <button type="button" class="link-btn" data-action="reset-cycle">한 바퀴 처음부터</button>` : ''}</p>
 
       ${notices.length ? `<section class="notice">${notices.map((n) => `<div>${n}</div>`).join('')}</section>` : ''}
 
       <div class="action-bar">
+        ${toggles}
         <div class="pool-info">${pool.length
           ? `출제 가능 ${pool.length}${Subject.unit} · 이번에 <b>${o.cycle && !isWrong ? Math.min(limit, Quiz.cycleRemaining(state.weeds, o) || pool.length) : limit}문제</b>`
           : `<span class="warn-text">조건에 맞는 ${Subject.noun}가 없어요${o.skipMastered !== false && masteredCount() ? ' (외운 것 제외 중)' : ''}</span>`}</div>
@@ -340,6 +332,10 @@
       o.wrongType = t.dataset.wrongtype;
     } else if (t.dataset.count) {
       o.count = t.dataset.count;
+    } else if (t.dataset.toggle === 'skipMastered') {
+      o.skipMastered = o.skipMastered === false;
+    } else if (t.dataset.toggle === 'cycle') {
+      o.cycle = !o.cycle;
     } else if (t.dataset.action === 'reset-cycle') {
       if (!confirm('이번 바퀴 진행을 지우고 처음부터 다시 시작할까요?')) return;
       Storage.setCycle(Quiz.cycleKey(o), null);
@@ -355,9 +351,7 @@
     const t = e.target;
     const o = state.opts;
     if (t.id === 'dataFile' && t.files[0]) return pickDataFile(t.files[0]);
-    if (t.id === 'cycleToggle') o.cycle = t.checked;
-    else if (t.id === 'skipMasteredToggle') o.skipMastered = t.checked;
-    else if (t.dataset.facet) {
+    if (t.dataset.facet) {
       const f = Subject.facets.find((x) => x.key === t.dataset.facet);
       if (!f) return;
       toggleIn(o.filters[f.key], t.dataset.value, t.checked, f.values);
