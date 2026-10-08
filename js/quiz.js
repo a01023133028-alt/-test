@@ -38,6 +38,10 @@ const Quiz = (() => {
     const type = typeOf(opts);
     let list = weeds.filter((w) => Subject.facets.every((f) => (opts.filters[f.key] || []).includes(w[f.key])));
     if (MODES[type].photo) list = list.filter((w) => w.images.length > 0);
+    if (opts.skipMastered !== false) {
+      const done = Storage.getMastered();
+      list = list.filter((w) => !done.has(w.id));
+    }
     if (opts.mode === 'wrong') {
       const wrong = new Set(Storage.getWrongIds());
       list = list.filter((w) => wrong.has(w.id));
