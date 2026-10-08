@@ -22,6 +22,11 @@ GitHub Pages(`main` 브랜치, `/` 루트)로 배포되며 `main`에 머지되�
 - `data/credits.json` — iNaturalist에서 추가한 사진의 촬영자·라이선스·원본 링크
 - `images/{3자리 id}/01.jpg …` — 잡초별 사진. 추가·삭제하면 `weeds.json`의 `images`와 `credits.json`도 함께 고친다.
 
+## 디자인
+
+- 초록 기반. 색은 `css/style.css` 맨 위 토큰(`--primary`, `--primary-strong`(입체 버튼 아래 테두리), `--primary-soft`, `--hero`(초록 그라데이션) 등)만 고치고, 라이트·다크(두 군데) 값을 함께 바꾼다.
+- 글꼴은 Pretendard Variable(jsdelivr npm CDN). 버튼·카드는 아래 테두리 4px 입체 버튼, 둥근 카드(18~24px), 그림자 최소. 개편 규칙은 `style.css` 끝의 "디자인 개편" 블록에 있다.
+
 ## 배포 캐시
 
 - `index.html`의 CSS·JS 주소 끝 `?v=날짜+문자`(예: `?v=20261008a`)는 브라우저 캐시 무효화용이다. **`css/`나 `js/` 파일을 고치면 반드시 이 값을 모두 함께 올린다.** 안 올리면 휴대폰이 예전 JS를 계속 써서 새 화면이 안 나온다.
