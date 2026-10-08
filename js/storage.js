@@ -56,6 +56,23 @@ const Storage = (() => {
     return get('wrong', []);
   }
 
+  /* 암기 체크: 확실히 외운 id 목록 (기록 초기화와 별개로 유지) */
+  function getMastered() {
+    return new Set(get('mastered', []));
+  }
+
+  function setMastered(id, on) {
+    const s = getMastered();
+    if (on) s.add(id);
+    else s.delete(id);
+    set('mastered', [...s]);
+    return s;
+  }
+
+  function clearMastered() {
+    remove('mastered');
+  }
+
   /* 한 바퀴 모드: 출제 조건별로 아직 안 나온 id 목록 */
   function getCycle(key) {
     return get('cycles', {})[key] || null;
@@ -93,5 +110,8 @@ const Storage = (() => {
     setCycle,
     removeFromCycle,
     resetRecords,
+    getMastered,
+    setMastered,
+    clearMastered,
   };
 })();

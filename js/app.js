@@ -8,6 +8,7 @@
     count: '10',
     filters: Object.fromEntries(Subject.facets.map((f) => [f.key, f.values.slice()])),
     cycle: false,
+    skipMastered: true,
   };
 
   const state = {
@@ -23,6 +24,9 @@
     dexQuery: '',
     pairs: [],
     pairKind: '전체',
+    checkFilter: '전체',
+    checkHide: false,
+    checkRevealed: new Set(),
   };
 
   function loadOpts() {
@@ -51,7 +55,7 @@
   const screen = (name) => document.getElementById('screen-' + name);
 
   /* ================= 라우팅 ================= */
-  const SCREENS = ['loading', 'loadfile', 'home', 'quiz', 'result', 'stats', 'dex', 'pairs'];
+  const SCREENS = ['loading', 'loadfile', 'home', 'quiz', 'result', 'stats', 'dex', 'pairs', 'check'];
 
   function go(route) {
     if (location.hash === '#' + route) onRoute();
@@ -80,10 +84,10 @@
     if (r === 'quiz' && !state.session) r = 'home';
     if (r === 'result' && !state.lastSession) r = 'home';
     if (r === 'pairs' && !Subject.hasPairs) r = 'home';
-    if (!['home', 'quiz', 'result', 'stats', 'dex', 'pairs'].includes(r)) r = 'home';
+    if (!['home', 'quiz', 'result', 'stats', 'dex', 'pairs', 'check'].includes(r)) r = 'home';
     if (('#' + r) !== location.hash) history.replaceState(null, '', '#' + r);
 
-    ({ home: renderHome, quiz: renderQuiz, result: renderResult, stats: renderStats, dex: renderDex, pairs: renderPairs })[r]();
+    ({ home: renderHome, quiz: renderQuiz, result: renderResult, stats: renderStats, dex: renderDex, pairs: renderPairs, check: renderCheck })[r]();
     show(r);
     if (r !== 'quiz') window.scrollTo(0, 0);
   }
@@ -247,6 +251,14 @@
           </div>`).join('')}
       </section>
 
+      <section class="opt-section">
+        <label class="switch-row">
+          <span><b>✅ 외운 것 빼고 출제</b><small>암기 탭에서 체크한 ${Subject.noun}(${masteredCount()}${Subject.unit})는 문제에 안 나와요</small></span>
+          <input type="checkbox" id="skipMasteredToggle" ${o.skipMastered !== false ? 'checked' : ''}>
+          <span class="switch" aria-hidden="true"></span>
+        </label>
+      </section>
+
       ${isWrong ? '' : `
       <section class="opt-section">
         <label class="switch-row">
@@ -262,7 +274,7 @@
       <div class="action-bar">
         <div class="pool-info">${pool.length
           ? `출제 가능 ${pool.length}${Subject.unit} · 이번에 <b>${o.cycle && !isWrong ? Math.min(limit, Quiz.cycleRemaining(state.weeds, o) || pool.length) : limit}문제</b>`
-          : `<span class="warn-text">조건에 맞는 ${Subject.noun}가 없어요</span>`}</div>
+          : `<span class="warn-text">조건에 맞는 ${Subject.noun}가 없어요${o.skipMastered !== false && masteredCount() ? ' (외운 것 제외 중)' : ''}</span>`}</div>
         <button type="button" class="btn btn-primary btn-block btn-lg" data-action="start" ${pool.length ? '' : 'disabled'}>퀴즈 시작</button>
       </div>`;
   }
@@ -298,6 +310,7 @@
     const o = state.opts;
     if (t.id === 'dataFile' && t.files[0]) return pickDataFile(t.files[0]);
     if (t.id === 'cycleToggle') o.cycle = t.checked;
+    else if (t.id === 'skipMasteredToggle') o.skipMastered = t.checked;
     else if (t.dataset.facet) {
       const f = Subject.facets.find((x) => x.key === t.dataset.facet);
       if (!f) return;
@@ -465,6 +478,7 @@
         ${UI.tags(w)}
         ${infoLines(w)}
         ${UI.thumbs(w)}
+        ${masterButton(w)}
       </div>`;
   }
 
@@ -918,6 +932,82 @@
     return Subject.dataUrl.split('/').pop();
   }
 
+  /* ================= 암기 체크 ================= */
+  function masteredCount() {
+    const done = Storage.getMastered();
+    return state.weeds.filter((w) => done.has(w.id)).length;
+  }
+
+  function masterButton(w, done = Storage.getMastered().has(w.id)) {
+    return `<button type="button" class="btn btn-block master-btn ${done ? 'is-on' : ''}" data-master="${w.id}" aria-pressed="${done}">
+      ${done ? '✅ 외웠어요 (문제에서 빠짐)' : '⬜ 외웠으면 체크'}</button>`;
+  }
+
+  function renderCheck() {
+    const done = Storage.getMastered();
+    const total = state.weeds.length;
+    const n = state.weeds.filter((w) => done.has(w.id)).length;
+    const f = state.checkFilter;
+    const list = state.weeds.filter((w) => f === '전체' || (f === '외운 것') === done.has(w.id));
+    const hide = state.checkHide;
+    screen('check').innerHTML = `
+      <h1>암기 체크</h1>
+      <p class="muted small">확실히 외운 ${Subject.noun}는 체크하세요. 체크한 것은 퀴즈에 나오지 않아요 (홈에서 끌 수 있어요).</p>
+      <div class="check-progress">
+        <div><b>${n}</b> / ${total}${Subject.unit} 외움 · ${UI.pct(n, total)}%</div>
+        <div class="progress-bar"><div style="width:${UI.pct(n, total)}%"></div></div>
+      </div>
+      <div class="seg check-filter">
+        ${['전체', '안 외운 것', '외운 것'].map((k) => `<button type="button" class="seg-btn ${f === k ? 'selected' : ''}" data-check-filter="${k}">${k}</button>`).join('')}
+      </div>
+      <label class="switch-row check-hide">
+        <span><b>이름 가리기</b><small>사진만 보고 떠올린 뒤, 이름 칸을 눌러 확인하세요</small></span>
+        <input type="checkbox" id="checkHideToggle" ${hide ? 'checked' : ''}>
+        <span class="switch" aria-hidden="true"></span>
+      </label>
+      <div class="check-grid">
+        ${list.map((w) => {
+          const on = done.has(w.id);
+          const shown = !hide || state.checkRevealed.has(w.id);
+          return `<div class="check-card ${on ? 'is-on' : ''}">
+            <button type="button" class="check-img" data-zoom-weed="${w.id}" data-zoom-index="0" aria-label="사진 ${w.images.length}장 크게 보기">
+              ${UI.img(w.images[0], '', shown ? w.name : `${Subject.noun} 사진`)}
+              ${w.images.length > 1 ? `<span class="img-count">📷 ${w.images.length}</span>` : ''}
+            </button>
+            ${shown
+              ? `<button type="button" class="check-name" data-weed-detail="${w.id}"><b>${esc(w.name)}</b>${w.host ? `<small class="muted">${esc(w.host)}</small>` : ''}</button>`
+              : `<button type="button" class="check-name is-hidden" data-reveal="${w.id}">${w.host ? `<small class="muted">기주 ${esc(w.host)}</small>` : ''}<b>❓ 눌러서 확인</b></button>`}
+            <button type="button" class="check-toggle" data-master="${w.id}" aria-pressed="${on}">${on ? '✅ 외웠음' : '⬜ 체크'}</button>
+          </div>`;
+        }).join('') || `<p class="muted center">${f === '외운 것' ? '아직 체크한 게 없어요.' : '전부 외웠어요! 🎉'}</p>`}
+      </div>
+      ${n ? '<button type="button" class="btn btn-ghost btn-block check-reset" data-action="clear-mastered">체크 모두 해제</button>' : ''}`;
+  }
+
+  function toggleMastered(id) {
+    const on = !Storage.getMastered().has(id);
+    Storage.setMastered(id, on);
+    return on;
+  }
+
+  function onCheckClick(e) {
+    const fb = e.target.closest('[data-check-filter]');
+    if (fb) {
+      state.checkFilter = fb.dataset.checkFilter;
+      return renderCheck();
+    }
+    const rv = e.target.closest('[data-reveal]');
+    if (rv) {
+      state.checkRevealed.add(Number(rv.dataset.reveal));
+      return renderCheck();
+    }
+    if (e.target.closest('[data-action="clear-mastered"]')) {
+      if (!confirm(`체크한 ${Subject.noun}(${masteredCount()}${Subject.unit})를 모두 해제할까요? 다시 문제에 나오게 돼요.`)) return;
+      Storage.clearMastered();
+      renderCheck();
+    }
+  }
+
   /* ================= 상세 모달 ================= */
   function openWeedDetail(id) {
     const w = state.byId.get(id);
@@ -927,6 +1017,7 @@
       <h2 class="detail-name">${esc(w.name)} <small class="muted">No.${w.id}</small></h2>
       ${UI.tags(w)}
       ${infoLines(w)}
+      ${masterButton(w)}
       <p class="muted small">${r ? `내 기록: 정답률 ${UI.pct(r.correct, r.tries)}% (${r.correct}/${r.tries})` : '아직 푼 기록이 없어요.'}</p>
       <div class="detail-photos">${w.images.length
         ? w.images.map((src, i) => `<button type="button" class="detail-photo" data-zoom-weed="${w.id}" data-zoom-index="${i}">${UI.img(src, '', `${w.name} 사진 ${i + 1}`)}</button>`).join('')
@@ -979,6 +1070,14 @@
     screen('stats').addEventListener('click', onStatsClick);
     screen('dex').addEventListener('click', onDexClick);
     screen('pairs').addEventListener('click', onPairsClick);
+    screen('check').addEventListener('click', onCheckClick);
+    screen('check').addEventListener('change', (e) => {
+      if (e.target.id === 'checkHideToggle') {
+        state.checkHide = e.target.checked;
+        state.checkRevealed = new Set();
+        renderCheck();
+      }
+    });
     screen('dex').addEventListener('input', (e) => {
       if (e.target.id === 'dexSearch') {
         state.dexQuery = e.target.value;
@@ -988,6 +1087,17 @@
 
     // 썸네일 확대, 잡초 상세 (모든 화면·모달 공통)
     document.addEventListener('click', (e) => {
+      // 외웠어요 체크 (암기 탭·정답 카드·상세 모달 공통)
+      const mb = e.target.closest('[data-master]');
+      if (mb) {
+        const id = Number(mb.dataset.master);
+        const on = toggleMastered(id);
+        if (state.route === 'check') renderCheck();
+        document.querySelectorAll(`.master-btn[data-master="${id}"]`).forEach((b) => {
+          b.outerHTML = masterButton(state.byId.get(id), on);
+        });
+        return;
+      }
       const z = e.target.closest('[data-zoom-weed]');
       if (z) {
         const w = state.byId.get(Number(z.dataset.zoomWeed));
