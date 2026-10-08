@@ -902,3 +902,22 @@ body[data-route="home"] .action-bar { bottom: calc(var(--tabbar-h) + var(--safe-
 .check-reset { margin-top: 20px; }
 .master-btn { margin-top: 12px; }
 .master-btn.is-on { border-color: var(--ok); background: var(--ok-bg); color: var(--ok); }
+
+/* 도감 묶음 접기/펴기 */
+.dex-fold-all { display: flex; justify-content: flex-end; gap: 12px; font-size: 0.88rem; }
+.dex-head { padding: 0; }
+.fold-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  min-height: 44px;
+  padding: 8px 12px;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+}
+.dex-sub .fold-btn { padding: 6px 2px; min-height: 40px; color: var(--muted); font-weight: 600; }
+.fold-arrow { display: inline-block; width: 1em; font-size: 0.9em; }
