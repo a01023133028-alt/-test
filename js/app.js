@@ -1,6 +1,10 @@
 /* 앱 시작점: 데이터 로드, 화면 전환, 각 화면 그리기 */
 (() => {
   const { esc } = UI;
+  /* 병해는 "배추 탄저병"처럼 기주를 붙인 이름 (같은 병명이 여러 기주에 있음) */
+  const fullName = (w) => (w.host ? `${w.host} ${w.name}` : w.name);
+  /* 보기에 같은 병명이 있으면 기주를 붙여 구분하고, 사진 위 기주 표시는 감춘다(정답이 보이므로) */
+  const sameNameChoices = (q) => !!q.choices && new Set(q.choices.map((c) => c.name)).size < q.choices.length;
 
   /* 지금 실행 중인 버전 = index.html이 붙인 ?v= 값 */
   const APP_VERSION = (document.currentScript && new URL(document.currentScript.src).searchParams.get('v')) || '';
@@ -106,7 +110,7 @@
     let r = location.hash.replace(/^#\/?/, '') || 'home';
     if (r === 'quiz' && !state.session) r = 'home';
     if (r === 'result' && !state.lastSession) r = 'home';
-    if (r === 'pairs' && !Subject.hasPairs) r = 'home';
+    if (r === 'pairs' && !Subject.pairsUrl) r = 'home';
     if (!['home', 'quiz', 'result', 'stats', 'dex', 'pairs', 'check'].includes(r)) r = 'home';
     if (('#' + r) !== location.hash) history.replaceState(null, '', '#' + r);
 
@@ -126,7 +130,7 @@
     sw.textContent = Subject.other.label;
     sw.setAttribute('aria-label', `${Subject.other.label.replace(/^\S+\s/, '')} 퀴즈로 이동`);
     const pairsTab = document.querySelector('#tabbar a[data-tab="pairs"]');
-    if (pairsTab) pairsTab.hidden = !Subject.hasPairs;
+    if (pairsTab) pairsTab.hidden = !Subject.pairsUrl;
   }
 
   async function init() {
@@ -308,7 +312,7 @@
       </div>`;
   }
 
-  const MODE_ICONS = { write: '✍️', choice: '🔢', class: '🏷️', real: '🎯', wrong: '🔁' };
+  const MODE_ICONS = { write: '✍️', choice: '🔢', class: '🏷️', pathogen: '🦠', real: '🎯', wrong: '🔁' };
 
   /* 홈 카드의 누적 정답률 (기록 없으면 -) */
   function heroRate() {
@@ -416,7 +420,7 @@
 
       ${photo ? `
         <div class="photo-box">
-          ${w.host ? `<div class="host-label">기주: <b>${esc(w.host)}</b></div>` : ''}
+          ${w.host && !sameNameChoices(q) ? `<div class="host-label">기주: <b>${esc(w.host)}</b></div>` : ''}
           <button type="button" class="photo-btn" data-action="zoom" aria-label="사진 크게 보기">
             ${UI.img(w.images[q.imageIndex], 'quiz-photo', '문제 사진', 'loading="eager"')}
             <span class="zoom-hint">🔍 탭하면 확대</span>
@@ -429,8 +433,8 @@
           </div>
         </div>` : `
         <div class="name-card">
-          <div class="name-card-label">이 잡초의 분류와 생활형은?</div>
-          <div class="name-card-name">${esc(w.name)}</div>
+          <div class="name-card-label">${Quiz.MODES[q.type].ask || ''}</div>
+          <div class="name-card-name">${esc(fullName(w))}</div>
         </div>`}
 
       <div class="answer-area">${answerArea(q)}</div>
@@ -479,13 +483,17 @@
           else cls = 'is-dim';
         }
         return `<button type="button" class="choice ${cls}" data-choice="${c.id}" ${q.answered ? 'disabled' : ''}>
-          <span class="choice-num">${i + 1}</span>${esc(c.name)}</button>`;
+          <span class="choice-num">${i + 1}</span>${esc(sameNameChoices(q) ? fullName(c) : c.name)}</button>`;
       }).join('')}</div>`);
     }
 
     if (q.type === 'class' || q.type === 'real') {
       parts.push(optionGroup('형태적 분류', 'morph', Data.MORPHS, Data.MORPH_CLASS, q, w.morph));
       parts.push(optionGroup('생활형', 'life', Data.LIFES, Data.LIFE_CLASS, q, w.life));
+    }
+    if (q.type === 'pathogen') {
+      const values = Subject.groupOrder.pathogen;
+      parts.push(optionGroup('병원', 'pathogen', values, Object.fromEntries(values.map((v) => [v, UI.pathogenClass(v)])), q, w.pathogen));
     }
     return parts.join('');
   }
@@ -516,6 +524,7 @@
       rows.push(partRow('분류', q.parts.morph, ua.morph));
       rows.push(partRow('생활형', q.parts.life, ua.life));
     }
+    if (q.type === 'pathogen') rows.push(partRow('병원', q.parts.pathogen, ua.pathogen));
     return `
       <section class="feedback ${q.correct ? 'ok' : 'ng'}" id="feedback">
         <div class="verdict">${q.correct ? '⭕ 정답!' : '❌ 오답'}</div>
@@ -543,6 +552,7 @@
   function canSubmit(q) {
     if (q.type === 'write') return true; // 빈칸 제출 = 모름(오답)
     if (q.type === 'class' || q.type === 'real') return !!(q.draft.morph && q.draft.life);
+    if (q.type === 'pathogen') return !!q.draft.pathogen;
     return false;
   }
 
@@ -559,7 +569,7 @@
     const input = $('#nameInput');
     if (input) q.draft.text = input.value;
     if (q.type !== 'choice' && !canSubmit(q)) return;
-    Quiz.grade(s, { text: q.draft.text, morph: q.draft.morph, life: q.draft.life, ...extra });
+    Quiz.grade(s, { text: q.draft.text, morph: q.draft.morph, life: q.draft.life, pathogen: q.draft.pathogen, ...extra });
     if (document.activeElement) document.activeElement.blur();
     renderQuiz();
     const fb = $('#feedback');
@@ -626,8 +636,8 @@
     if (a === 'reveal') return revealChoices();
     if (q.answered) return;
     if (t.dataset.choice) return submitAnswer({ choiceId: Number(t.dataset.choice) });
-    if (t.dataset.morph || t.dataset.life) {
-      const kind = t.dataset.morph ? 'morph' : 'life';
+    if (t.dataset.morph || t.dataset.life || t.dataset.pathogen) {
+      const kind = ['morph', 'life', 'pathogen'].find((k) => t.dataset[k]);
       q.draft[kind] = t.dataset[kind];
       t.parentElement.querySelectorAll('.opt-btn').forEach((b) => b.classList.toggle('selected', b === t));
       updateSubmitButton();
@@ -927,17 +937,13 @@
 
   function pairTitle(p) {
     if (p.mixed) return '전체 랜덤';
-    return pairWeeds(p).map((w) => (w ? esc(w.name) : '?')).join(' vs ');
+    return pairWeeds(p).map((w) => (w ? esc(fullName(w)) : '?')).join(' vs ');
   }
 
-  /* 헷갈리는 이유별 묶음 (kind가 없는 쌍은 '생김새') */
-  const PAIR_KINDS = [
-    { key: '생김새', desc: '모양이 비슷해서 사진으로 헷갈리는 쌍' },
-    { key: '이름', desc: '이름이 비슷하거나 세트로 외우는 쌍' },
-    { key: '생활형·분류', desc: '비슷한데 생활형·분류가 달라 함정이 되는 쌍' },
-    { key: '키워드', desc: '같은 키워드로 묶여서 헷갈리는 쌍' },
-  ];
-  const pairKind = (p) => p.kind || '생김새';
+  /* 헷갈리는 이유별 묶음 (과목 설정, kind가 없는 쌍은 첫 번째 묶음) */
+  const PAIR_KINDS = Subject.pairKinds || [];
+  const pairKind = (p) => p.kind || (PAIR_KINDS[0] || {}).key;
+  const countWord = (n) => ['', '', '둘', '셋', '넷'][n] || n;
 
   function renderPairs() {
     const kinds = PAIR_KINDS.filter((k) => state.pairs.some((p) => pairKind(p) === k.key));
@@ -950,7 +956,7 @@
               ${UI.img(w.images[0], '', w.name)}
               ${w.images.length > 1 ? `<span class="img-count">📷 ${w.images.length}</span>` : ''}
             </button>
-            <b class="pair-name">${esc(w.name)}</b>
+            <b class="pair-name">${esc(fullName(w))}</b>
             ${UI.tags(w)}
             ${note ? `<p class="pair-note">${esc(note)}</p>` : ''}
           </div>`;
@@ -958,9 +964,9 @@
         return `
           <section class="pair-card card">
             <h2 class="pair-title"><span class="pair-num">${i + 1}</span>${pairTitle(p)}</h2>
-            <div class="pair-row ${ws.length === 3 ? 'three' : ''}">${ws.map((w, k) => side(w, (p.notes || [p.a, p.b])[k])).join('<span class="pair-vs">vs</span>')}</div>
+            <div class="pair-row ${['', '', '', 'three', 'four'][ws.length]}">${ws.map((w, k) => side(w, (p.notes || [p.a, p.b])[k])).join('<span class="pair-vs">vs</span>')}</div>
             ${p.common ? `<p class="pair-common">💡 ${esc(p.common)}</p>` : ''}
-            ${canPractice ? `<button type="button" class="btn btn-block btn-sm pair-practice" data-pair="${i}">📝 사진 보고 ${ws.length === 3 ? '셋' : '둘'} 중 맞히기 (8문제)</button>` : ''}
+            ${canPractice ? `<button type="button" class="btn btn-block btn-sm pair-practice" data-pair="${i}">📝 사진 보고 ${countWord(ws.length)} 중 맞히기 (8문제)</button>` : ''}
           </section>`;
     };
     const shown = kinds.filter((k) => state.pairKind === '전체' || state.pairKind === k.key);
@@ -973,7 +979,7 @@
       <h1>헷갈리는 쌍 <small class="muted">${state.pairs.length}쌍</small></h1>
       <p class="muted small">사진을 누르면 그 ${Subject.noun}의 사진 전부와 특징을 볼 수 있어요.</p>
       ${state.pairs.length ? `
-        <button type="button" class="btn btn-primary btn-block" data-action="pair-mixed">🔀 전체 쌍 섞어서 둘 중 맞히기 (20문제)</button>
+        <button type="button" class="btn btn-primary btn-block" data-action="pair-mixed">🔀 전체 쌍 섞어서 맞히기 (20문제)</button>
         <div class="seg pair-filter">
           ${['전체', ...kinds.map((k) => k.key)].map((k) => `<button type="button" class="seg-btn ${state.pairKind === k ? 'selected' : ''}" data-kind="${esc(k)}">${esc(k)}</button>`).join('')}
         </div>` : ''}
@@ -1044,9 +1050,10 @@
     renderDex();
   }
 
-  /* 정답 카드·상세에 보이는 추가 정보 (병원은 태그로 표시) */
+  /* 정답 카드·상세에 보이는 추가 정보 (병원 분류는 태그, 병원균 속명은 따로 한 줄) */
   function infoLines(w) {
-    return w.features ? `<p class="features">${esc(w.features)}</p>` : '';
+    return (w.genus ? `<p class="genus">병원균 <i>${esc(w.genus)}</i></p>` : '')
+      + (w.features ? `<p class="features">${esc(w.features)}</p>` : '');
   }
 
   function dataFileName() {

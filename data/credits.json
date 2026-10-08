@@ -1798,5 +1798,53 @@
   "login": "",
   "license": "CC0",
   "source": "https://github.com/spMohanty/PlantVillage-Dataset"
+ },
+ "images/disease/018/02.jpg": {
+  "author": "Gerrit Öhm",
+  "login": "gerrit_oehm",
+  "license": "CC-BY-NC",
+  "source": "https://www.inaturalist.org/observations/cd0e81cc-4f27-484d-a385-cfae4cf360ac"
+ },
+ "images/disease/018/03.jpg": {
+  "author": "Gerrit Öhm",
+  "login": "gerrit_oehm",
+  "license": "CC-BY-NC",
+  "source": "https://www.inaturalist.org/observations/cd0e81cc-4f27-484d-a385-cfae4cf360ac"
+ },
+ "images/disease/016/02.jpg": {
+  "author": "大肚魚",
+  "login": "wallacechen",
+  "license": "CC-BY-NC",
+  "source": "https://www.inaturalist.org/observations/843b3f39-a4b5-4185-b74c-01b23d7fbd4b"
+ },
+ "images/disease/016/03.jpg": {
+  "author": "大肚魚",
+  "login": "wallacechen",
+  "license": "CC-BY-NC",
+  "source": "https://www.inaturalist.org/observations/843b3f39-a4b5-4185-b74c-01b23d7fbd4b"
+ },
+ "images/disease/017/02.jpg": {
+  "author": "大肚魚",
+  "login": "wallacechen",
+  "license": "CC-BY-NC",
+  "source": "https://www.inaturalist.org/observations/babb79f1-f794-4ad2-a61e-b39f1dcdab07"
+ },
+ "images/disease/017/03.jpg": {
+  "author": "大肚魚",
+  "login": "wallacechen",
+  "license": "CC-BY-NC",
+  "source": "https://www.inaturalist.org/observations/babb79f1-f794-4ad2-a61e-b39f1dcdab07"
+ },
+ "images/disease/022/02.jpg": {
+  "author": "大肚魚",
+  "login": "wallacechen",
+  "license": "CC-BY-NC",
+  "source": "https://www.inaturalist.org/observations/70f38044-3617-4411-8389-e6d71fcee34a"
+ },
+ "images/disease/038/02.jpg": {
+  "author": "valere_brouckaert",
+  "login": "valere_brouckaert",
+  "license": "CC-BY-NC",
+  "source": "https://www.inaturalist.org/observations/7ffe43a7-bc50-4cf9-9d63-01508a3aaca1"
  }
 }

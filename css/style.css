@@ -1286,3 +1286,11 @@ h2 { font-weight: 800; letter-spacing: -0.02em; }
 .choice-cover b { font-size: 1.05rem; }
 .choice-cover small { color: var(--muted); font-weight: 600; }
 .choice-cover:active { transform: translateY(1px); }
+
+/* 병원균 속명, 비교 탭 4개 묶음 */
+.genus { margin: 8px 0 0; font-size: 0.9rem; color: var(--muted); }
+.genus i { color: var(--text); font-weight: 600; }
+.pair-row.four { grid-template-columns: 1fr 1fr; gap: 10px 8px; }
+.pair-row.four .pair-vs { display: none; }
+.pair-row.four .pair-name { font-size: 0.95rem; }
+.opt-pathogen { grid-template-columns: repeat(2, 1fr); }

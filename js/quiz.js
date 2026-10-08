@@ -4,11 +4,12 @@ const Quiz = (() => {
     ? {
         write: { label: '사진 → 병명 쓰기', desc: '사진과 기주를 보고 병명을 직접 입력', photo: true },
         choice: { label: '사진 → 4지선다', desc: '같은 기주·작물의 헷갈리는 병명 중 고르기', photo: true },
+        pathogen: { label: '병명 → 병원 고르기', desc: '병명·기주를 보고 곰팡이(5종)·난균류·세균·바이러스 등 고르기', photo: false, ask: '이 병해의 병원은?' },
       }
     : {
         write: { label: '사진 → 이름 쓰기', desc: '사진을 보고 이름을 직접 입력', photo: true },
         choice: { label: '사진 → 4지선다', desc: '같은 분류의 헷갈리는 보기 중 고르기', photo: true },
-        class: { label: '이름 → 분류·생활형', desc: '이름을 보고 형태적 분류와 생활형 고르기', photo: false },
+        class: { label: '이름 → 분류·생활형', desc: '이름을 보고 형태적 분류와 생활형 고르기', photo: false, ask: '이 잡초의 분류와 생활형은?' },
         real: { label: '실전 모드', desc: '사진 → 이름 + 분류 + 생활형 한꺼번에', photo: true },
       };
   const TYPES = Subject.types;
@@ -91,7 +92,7 @@ const Quiz = (() => {
       type,
       imageIndex: weed.images.length ? randInt(weed.images.length) : -1,
       choices: type === 'choice' ? makeChoices(weed, all) : null,
-      draft: { text: '', morph: null, life: null },
+      draft: { text: '', morph: null, life: null, pathogen: null },
       hintUsed: false,
       revealed: false, // 4지선다: 사진을 보고 먼저 떠올린 뒤 보기를 연다
       answered: false,
@@ -207,7 +208,7 @@ const Quiz = (() => {
     };
   }
 
-  /* 채점. answer: { text, choiceId, morph, life } */
+  /* 채점. answer: { text, choiceId, morph, life, pathogen } */
   function grade(session, answer) {
     const q = session.questions[session.index];
     if (q.answered) return q;
@@ -222,6 +223,9 @@ const Quiz = (() => {
         break;
       case 'class':
         parts = { morph: answer.morph === w.morph, life: answer.life === w.life };
+        break;
+      case 'pathogen':
+        parts = { pathogen: answer.pathogen === w.pathogen };
         break;
       case 'real':
         parts = {
