@@ -105,13 +105,13 @@ const Data = (() => {
     }
   }
 
-  /* 헷갈리는 쌍 [{ ids: [a, b], a, b, common }] (없어도 동작) */
+  /* 헷갈리는 쌍 [{ ids: [a, b(, c)], a, b 또는 notes: [...], common }] (없어도 동작) */
   async function loadPairs() {
     if (!Subject.hasPairs) return [];
     try {
       const res = await fetch(PAIRS_URL, { cache: 'no-cache' });
       const json = res.ok ? await res.json() : [];
-      return Array.isArray(json) ? json.filter((p) => Array.isArray(p.ids) && p.ids.length === 2) : [];
+      return Array.isArray(json) ? json.filter((p) => Array.isArray(p.ids) && p.ids.length >= 2 && p.ids.length <= 3) : [];
     } catch (e) {
       return [];
     }

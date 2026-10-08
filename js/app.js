@@ -22,6 +22,7 @@
     dexGroup: Subject.dexGroups[0].key,
     dexQuery: '',
     pairs: [],
+    pairKind: '전체',
   };
 
   function loadOpts() {
@@ -651,7 +652,8 @@
     if (!t) return;
     const s = state.lastSession;
     if (s.pair && t.dataset.action === 'again') {
-      startPairQuiz(state.pairs.indexOf(s.pair));
+      if (s.pair.mixed) startMixedPairQuiz();
+      else startPairQuiz(state.pairs.indexOf(s.pair));
     } else if (t.dataset.action === 'retry-wrong') {
       const ids = s.questions.filter((q) => !q.correct).map((q) => q.weed.id);
       const session = Quiz.createSession(state.weeds, { ...s.opts, count: 'all', cycle: false }, ids);
@@ -818,12 +820,22 @@
   }
 
   function pairTitle(p) {
+    if (p.mixed) return '전체 랜덤';
     return pairWeeds(p).map((w) => (w ? esc(w.name) : '?')).join(' vs ');
   }
 
+  /* 헷갈리는 이유별 묶음 (kind가 없는 쌍은 '생김새') */
+  const PAIR_KINDS = [
+    { key: '생김새', desc: '모양이 비슷해서 사진으로 헷갈리는 쌍' },
+    { key: '이름', desc: '이름이 비슷하거나 세트로 외우는 쌍' },
+    { key: '생활형·분류', desc: '비슷한데 생활형·분류가 달라 함정이 되는 쌍' },
+    { key: '키워드', desc: '같은 키워드로 묶여서 헷갈리는 쌍' },
+  ];
+  const pairKind = (p) => p.kind || '생김새';
+
   function renderPairs() {
-    const cards = state.pairs
-      .map((p, i) => {
+    const kinds = PAIR_KINDS.filter((k) => state.pairs.some((p) => pairKind(p) === k.key));
+    const card = (p, i) => {
         const ws = pairWeeds(p);
         if (ws.some((w) => !w)) return '';
         const side = (w, note) => `
@@ -840,16 +852,33 @@
         return `
           <section class="pair-card card">
             <h2 class="pair-title"><span class="pair-num">${i + 1}</span>${pairTitle(p)}</h2>
-            <div class="pair-row">${side(ws[0], p.a)}<span class="pair-vs">vs</span>${side(ws[1], p.b)}</div>
+            <div class="pair-row ${ws.length === 3 ? 'three' : ''}">${ws.map((w, k) => side(w, (p.notes || [p.a, p.b])[k])).join('<span class="pair-vs">vs</span>')}</div>
             ${p.common ? `<p class="pair-common">💡 ${esc(p.common)}</p>` : ''}
-            ${canPractice ? `<button type="button" class="btn btn-block btn-sm pair-practice" data-pair="${i}">📝 사진 보고 둘 중 맞히기 (8문제)</button>` : ''}
+            ${canPractice ? `<button type="button" class="btn btn-block btn-sm pair-practice" data-pair="${i}">📝 사진 보고 ${ws.length === 3 ? '셋' : '둘'} 중 맞히기 (8문제)</button>` : ''}
           </section>`;
-      })
-      .join('');
+    };
+    const shown = kinds.filter((k) => state.pairKind === '전체' || state.pairKind === k.key);
+    const body = shown.map((k) => {
+      const cards = state.pairs.map((p, i) => (pairKind(p) === k.key ? card(p, i) : '')).join('');
+      return `<h2 class="pair-kind">${esc(k.key)} <small>${state.pairs.filter((p) => pairKind(p) === k.key).length}쌍</small></h2>
+        <p class="muted small pair-kind-desc">${esc(k.desc)}</p>${cards}`;
+    }).join('');
     screen('pairs').innerHTML = `
-      <h1>헷갈리는 쌍</h1>
-      <p class="muted small">사진을 누르면 그 잡초의 사진 전부와 특징을 볼 수 있어요.</p>
-      ${cards || '<p class="muted center">불러오는 중…</p>'}`;
+      <h1>헷갈리는 쌍 <small class="muted">${state.pairs.length}쌍</small></h1>
+      <p class="muted small">사진을 누르면 그 ${Subject.noun}의 사진 전부와 특징을 볼 수 있어요.</p>
+      ${state.pairs.length ? `
+        <button type="button" class="btn btn-primary btn-block" data-action="pair-mixed">🔀 전체 쌍 섞어서 둘 중 맞히기 (20문제)</button>
+        <div class="seg pair-filter">
+          ${['전체', ...kinds.map((k) => k.key)].map((k) => `<button type="button" class="seg-btn ${state.pairKind === k ? 'selected' : ''}" data-kind="${esc(k)}">${esc(k)}</button>`).join('')}
+        </div>` : ''}
+      ${body || '<p class="muted center">불러오는 중…</p>'}`;
+  }
+
+  function startMixedPairQuiz() {
+    const session = Quiz.createMixedPairSession(state.pairs, state.byId, { ...state.opts, mode: 'choice', cycle: false });
+    if (!session) return;
+    state.session = session;
+    go('quiz');
   }
 
   function startPairQuiz(i) {
@@ -862,6 +891,13 @@
   }
 
   function onPairsClick(e) {
+    if (e.target.closest('[data-action="pair-mixed"]')) return startMixedPairQuiz();
+    const k = e.target.closest('[data-kind]');
+    if (k) {
+      state.pairKind = k.dataset.kind;
+      renderPairs();
+      return;
+    }
     const t = e.target.closest('[data-pair]');
     if (t) startPairQuiz(Number(t.dataset.pair));
   }
