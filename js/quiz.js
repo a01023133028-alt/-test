@@ -38,6 +38,10 @@ const Quiz = (() => {
     const type = typeOf(opts);
     let list = weeds.filter((w) => Subject.facets.every((f) => (opts.filters[f.key] || []).includes(w[f.key])));
     if (MODES[type].photo) list = list.filter((w) => w.images.length > 0);
+    if (opts.favOnly) {
+      const fav = Storage.getFavorites();
+      list = list.filter((w) => fav.has(w.id));
+    }
     if (opts.skipMastered !== false) {
       const done = Storage.getMastered();
       list = list.filter((w) => !done.has(w.id));
@@ -50,7 +54,7 @@ const Quiz = (() => {
   }
 
   function cycleKey(opts) {
-    return [typeOf(opts), ...Subject.facets.map((f) => (opts.filters[f.key] || []).join(','))].join('|');
+    return [typeOf(opts), ...Subject.facets.map((f) => (opts.filters[f.key] || []).join(',')), opts.favOnly ? 'fav' : ''].join('|');
   }
 
   /* 한 바퀴 모드에서 이번 바퀴에 남은 수 (새 바퀴면 null) */

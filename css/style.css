@@ -1204,3 +1204,64 @@ h2 { font-weight: 800; letter-spacing: -0.02em; }
 .seg-grid { display: grid; grid-template-columns: 1fr 1fr; }
 .seg-grid .seg-btn { min-width: 0; font-size: 0.88rem; padding: 8px 6px; }
 .tabbar { background: color-mix(in srgb, var(--surface) 97%, transparent); }
+
+/* ========== 즐겨찾기 ========== */
+.fav-btn {
+  display: inline-grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--muted);
+  font-size: 1.35rem;
+  line-height: 1;
+  vertical-align: middle;
+  transition: transform 0.12s;
+}
+.fav-btn:active { transform: scale(0.85); }
+.fav-btn.on { color: #f5b400; }
+.answer-name .fav-btn, .detail-name .fav-btn { margin-left: 4px; }
+/* 카드 위 별: 사진 오른쪽 위 동그란 배경 */
+.dex-cell { position: relative; display: flex; }
+.dex-cell > .dex-card { width: 100%; }
+.dex-cell > .fav-btn, .check-card > .fav-btn {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  z-index: 2;
+  background: rgba(0, 0, 0, 0.42);
+  color: #fff;
+  font-size: 1.15rem;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+.dex-cell > .fav-btn.on, .check-card > .fav-btn.on { background: rgba(255, 255, 255, 0.92); color: #f5b400; }
+.check-card { position: relative; }
+.dex-fold-all { align-items: center; }
+.dex-fold-all .spacer { flex: 1; }
+.fav-filter {
+  min-height: 34px;
+  padding: 4px 12px;
+  border: 2px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--muted);
+  font-weight: 800;
+  font-size: 0.85rem;
+}
+.fav-filter.on { border-color: #f5b400; background: color-mix(in srgb, #f5b400 16%, var(--surface)); color: var(--text); }
+/* 하단 토글 3개 */
+.quick-toggles.three { grid-template-columns: 1fr 1fr 1fr; gap: 6px; }
+.quick-toggles.three .qt { gap: 6px; padding: 8px 8px; }
+.quick-toggles.three .qt-box { width: 20px; height: 20px; border-radius: 7px; }
+.quick-toggles.three .qt-text b { font-size: 0.86rem; }
+.quick-toggles.three .qt-text small { font-size: 0.74rem; }
+.qt.fav.on { border-color: #f5b400; background: color-mix(in srgb, #f5b400 14%, var(--surface)); }
+.qt.fav.on .qt-box { border-color: #f5b400; background-color: #f5b400; }
+.qt.fav.on .qt-text small { color: #b07f00; }
+.dex-tools { background: var(--bg); }
+.check-filter .seg-btn { white-space: nowrap; min-width: 0; padding: 6px 4px; font-size: 0.86rem; }
+.check-filter .seg-btn[data-check-filter="⭐"] { flex: 0 0 52px; }
