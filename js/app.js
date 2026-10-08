@@ -440,7 +440,9 @@
         ${q.answered
           ? `<button type="button" class="btn btn-primary btn-block btn-lg" data-action="next">${s.index + 1 < total ? '다음 문제 →' : '결과 보기'}</button>`
           : q.type === 'choice'
-            ? `<div class="muted small center">보기를 누르세요${finePointer ? ' (숫자키 1~4)' : ''}</div>`
+            ? (q.revealed
+              ? `<div class="muted small center">보기를 누르세요${finePointer ? ` (숫자키 1~${q.choices.length})` : ''}</div>`
+              : `<button type="button" class="btn btn-primary btn-block btn-lg" data-action="reveal">👀 보기 열기${finePointer ? ' <small>(Enter)</small>' : ''}</button>`)
             : `<button type="button" class="btn btn-primary btn-block btn-lg" data-action="submit" ${canSubmit(q) ? '' : 'disabled'}>확인</button>`}
       </div>`;
 
@@ -462,7 +464,13 @@
           spellcheck="false" enterkeyhint="done" ${q.answered ? 'disabled' : ''}>`);
     }
 
-    if (q.type === 'choice') {
+    if (q.type === 'choice' && !q.answered && !q.revealed) {
+      parts.push(`<button type="button" class="choice-cover" data-action="reveal">
+        <span class="choice-cover-icon" aria-hidden="true">🤔</span>
+        <b>먼저 이름을 떠올려 보세요</b>
+        <small>떠올렸으면 눌러서 보기 ${q.choices.length}개 열기</small>
+      </button>`);
+    } else if (q.type === 'choice') {
       parts.push(`<div class="choices">${q.choices.map((c, i) => {
         let cls = '';
         if (q.answered) {
@@ -615,6 +623,7 @@
     }
     if (a === 'submit') return submitAnswer();
     if (a === 'next') return nextQuestion();
+    if (a === 'reveal') return revealChoices();
     if (q.answered) return;
     if (t.dataset.choice) return submitAnswer({ choiceId: Number(t.dataset.choice) });
     if (t.dataset.morph || t.dataset.life) {
@@ -637,6 +646,17 @@
     if (!q) return;
     if (q.answered) nextQuestion();
     else if (q.type !== 'choice') submitAnswer();
+    else if (!q.revealed) revealChoices();
+  }
+
+  /* 4지선다 보기 열기 (다른 사진 보기를 눌러도 다시 가려지지 않음) */
+  function revealChoices() {
+    const q = current();
+    if (!q || q.answered || q.revealed) return;
+    q.revealed = true;
+    renderQuiz();
+    const c = $('.choices');
+    if (c && c.getBoundingClientRect().bottom > window.innerHeight - 90) c.scrollIntoView({ block: 'center', behavior: 'smooth' });
   }
 
   function onKeydown(e) {
@@ -653,7 +673,7 @@
     }
     if (e.keyCode === 229) return;
     const q = current();
-    if (q && !q.answered && q.type === 'choice' && /^[1-4]$/.test(e.key) && q.choices[e.key - 1]) {
+    if (q && !q.answered && q.type === 'choice' && q.revealed && /^[1-4]$/.test(e.key) && q.choices[e.key - 1]) {
       submitAnswer({ choiceId: q.choices[e.key - 1].id });
     }
   }

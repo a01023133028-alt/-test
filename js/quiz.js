@@ -93,6 +93,7 @@ const Quiz = (() => {
       choices: type === 'choice' ? makeChoices(weed, all) : null,
       draft: { text: '', morph: null, life: null },
       hintUsed: false,
+      revealed: false, // 4지선다: 사진을 보고 먼저 떠올린 뒤 보기를 연다
       answered: false,
       correct: null,
       parts: null,
