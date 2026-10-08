@@ -2,6 +2,27 @@
 (() => {
   const { esc } = UI;
 
+  /* 지금 실행 중인 버전 = index.html이 붙인 ?v= 값 */
+  const APP_VERSION = (document.currentScript && new URL(document.currentScript.src).searchParams.get('v')) || '';
+
+  /* 배포된 최신 버전(version.json)과 다르면, 휴대폰이 예전 index.html을 캐시한 것 → 주소를 바꿔 새로 불러옴 */
+  async function checkForUpdate() {
+    try {
+      const res = await fetch('version.json?t=' + Date.now(), { cache: 'no-store' });
+      if (!res.ok) return;
+      const latest = (await res.json()).v;
+      if (!latest || latest === APP_VERSION) return;
+      const key = 'weedquiz:reloadedFor';
+      if (sessionStorage.getItem(key) === latest) return; // 한 번만 시도 (무한 새로고침 방지)
+      sessionStorage.setItem(key, latest);
+      const url = new URL(location.href);
+      url.searchParams.set('u', latest);
+      location.replace(url.toString());
+    } catch (e) {
+      /* 오프라인 등은 무시 */
+    }
+  }
+
   const DEFAULT_OPTS = {
     mode: 'write',
     wrongType: 'write',
@@ -107,6 +128,7 @@
   }
 
   async function init() {
+    checkForUpdate();
     applySubject();
     applyTheme(Storage.get('theme', null));
     UI.initOverlays();
