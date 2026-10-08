@@ -809,12 +809,17 @@
   function groupValues(key) {
     const f = Subject.facets.find((x) => x.key === key);
     if (f) return f.values;
-    return [...new Set(state.weeds.map((w) => w[key]).filter(Boolean))].sort((a, b) => a.localeCompare(b, 'ko'));
+    const present = new Set(state.weeds.map((w) => w[key]).filter(Boolean));
+    const order = ((Subject.groupOrder || {})[key] || []).filter((v) => present.has(v));
+    const rest = [...present].filter((v) => !order.includes(v)).sort((a, b) => a.localeCompare(b, 'ko'));
+    return [...order, ...rest];
   }
 
   function groupClasses(key) {
     const f = Subject.facets.find((x) => x.key === key);
-    return f ? f.cls : {};
+    if (f) return f.cls;
+    if (key === 'pathogen') return Object.fromEntries(groupValues(key).map((v) => [v, UI.pathogenClass(v)]));
+    return {};
   }
 
   function dexCard(w, r) {

@@ -50,8 +50,16 @@ const Subject = (() => {
     similarKeys: ['host', 'crop'],
     dexGroups: [
       { key: 'crop', label: '작물별', inner: 'host' },
+      { key: 'pathogen', label: '병원별', inner: 'crop' },
       { key: 'name', label: '병명별', inner: null },
     ],
+    // 도감 묶음 순서 (여기 없는 값은 뒤에 가나다순)
+    groupOrder: {
+      pathogen: [
+        '곰팡이(병꼴균)', '곰팡이(접합균)', '곰팡이(자낭균)', '곰팡이(담자균)', '곰팡이(불완전균)',
+        '곰팡이(난균)', '곰팡이(점균류)', '세균', '세균(방선균)', '바이러스', '파이토플라스마',
+      ],
+    },
     showHost: true,
     hasPairs: false,
   };
