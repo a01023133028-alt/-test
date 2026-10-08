@@ -844,3 +844,14 @@ body[data-route="home"] .action-bar { bottom: calc(var(--tabbar-h) + var(--safe-
   background: var(--surface-2);
   font-size: 1.05rem;
 }
+
+.pair-filter { margin: 12px 0 4px; }
+.pair-filter .seg-btn { min-width: 64px; flex: 1 1 auto; }
+.pair-kind { margin: 20px 0 2px; }
+.pair-kind small { color: var(--muted); font-weight: 600; }
+.pair-kind-desc { margin: 0 0 10px; }
+
+.pair-row.three { grid-template-columns: 1fr 1fr 1fr; gap: 6px; }
+.pair-row.three .pair-vs { display: none; }
+.pair-row.three .pair-name { font-size: 0.95rem; }
+.pair-row.three .pair-note { font-size: 0.8rem; padding: 5px 6px; }

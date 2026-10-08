@@ -139,11 +139,11 @@ const Quiz = (() => {
     };
   }
 
-  /* 헷갈리는 쌍 연습: 두 잡초 사진을 섞어 출제, 보기는 두 이름만 */
+  /* 헷갈리는 쌍(2~3개) 연습: 사진을 섞어 출제, 보기는 그 묶음의 이름만 */
   function createPairSession(pair, weeds, opts, count = 8) {
     const both = weeds.filter((w) => w.images.length > 0);
-    if (both.length !== 2) return null;
-    const order = shuffle(Array.from({ length: count }, (_, i) => both[i % 2]));
+    if (both.length < 2 || both.length !== weeds.length) return null;
+    const order = shuffle(Array.from({ length: count }, (_, i) => both[i % both.length]));
     const questions = order.map((w) => {
       const q = makeQuestion(w, 'choice', weeds);
       q.choices = shuffle(both);
@@ -171,6 +171,31 @@ const Quiz = (() => {
       const hn = Grading.normalize(h);
       return hn && t.startsWith(hn) && Grading.isNameCorrect(t.slice(hn.length), w.name);
     });
+  }
+
+  /* 헷갈리는 쌍 전체 랜덤 연습: 문제마다 쌍 하나를 고르고, 보기는 그 쌍의 두 이름 */
+  function createMixedPairSession(pairs, byId, opts, count = 20) {
+    const usable = pairs
+      .map((p) => p.ids.map((id) => byId.get(id)))
+      .filter((ws) => ws.length >= 2 && ws.every((w) => w && w.images.length));
+    if (!usable.length) return null;
+    const questions = Array.from({ length: count }, () => {
+      const both = usable[randInt(usable.length)];
+      const q = makeQuestion(both[randInt(both.length)], 'choice', both);
+      q.choices = shuffle(both);
+      return q;
+    });
+    return {
+      opts: { ...opts },
+      type: 'choice',
+      questions,
+      index: 0,
+      score: 0,
+      cycleKey: null,
+      newRound: false,
+      roundComplete: false,
+      pair: { mixed: true, ids: [] },
+    };
   }
 
   /* 채점. answer: { text, choiceId, morph, life } */
@@ -211,5 +236,5 @@ const Quiz = (() => {
     return q;
   }
 
-  return { MODES, TYPES, shuffle, typeOf, pool, cycleKey, cycleRemaining, createSession, createPairSession, grade };
+  return { MODES, TYPES, shuffle, typeOf, pool, cycleKey, cycleRemaining, createSession, createPairSession, createMixedPairSession, grade };
 })();
