@@ -1,0 +1,62 @@
+plugins {
+    id 'com.android.application'
+}
+
+/* 사이트 파일(저장소 루트)을 앱 assets/www 로 복사해 오프라인으로 동작하게 함 */
+def webOut = new File(buildDir, 'generated/webassets')
+tasks.register('copyWeb', Copy) {
+    from(rootProject.file('..')) {
+        include 'index.html', 'version.json', 'css/**', 'js/**', 'data/**', 'images/**'
+    }
+    into new File(webOut, 'www')
+}
+preBuild.dependsOn 'copyWeb'
+
+android {
+    namespace 'io.github.weedquiz'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId 'io.github.a01023133028alt.weedquiz'
+        minSdk 24
+        targetSdk 34
+        // CI에서 실행 번호로 버전을 올림 (설치된 앱 위에 업데이트 가능)
+        versionCode((project.findProperty('versionCode') ?: '1') as int)
+        versionName((project.findProperty('versionName') ?: '1.0') as String)
+    }
+
+    signingConfigs {
+        // 개인 배포용 고정 키 (매번 같은 서명이라 기록을 지우지 않고 업데이트 가능)
+        release {
+            storeFile file('weedquiz.keystore')
+            storePassword 'weedquiz-study'
+            keyAlias 'weedquiz'
+            keyPassword 'weedquiz-study'
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            signingConfig signingConfigs.release
+        }
+    }
+
+    sourceSets {
+        main.assets.srcDirs += webOut
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    // 사진(jpg)은 이미 압축돼 있으니 다시 압축하지 않음
+    androidResources {
+        noCompress 'jpg', 'jpeg', 'png', 'json'
+    }
+}
+
+dependencies {
+    implementation 'androidx.webkit:webkit:1.11.0'
+}

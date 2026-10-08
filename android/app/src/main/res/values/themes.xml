@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 밝은 테마: WebView의 prefers-color-scheme도 light -->
+    <style name="AppTheme" parent="@android:style/Theme.Material.Light.NoActionBar">
+        <item name="android:colorPrimary">#1f9d55</item>
+        <item name="android:colorPrimaryDark">#157a40</item>
+        <item name="android:colorAccent">#1f9d55</item>
+        <item name="android:windowBackground">@android:color/white</item>
+        <item name="android:statusBarColor">#157a40</item>
+    </style>
+</resources>
