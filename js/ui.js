@@ -181,6 +181,7 @@ const UI = (() => {
   return {
     esc,
     facetTag,
+    pathogenClass,
     tags,
     img,
     thumbs,

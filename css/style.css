@@ -685,7 +685,8 @@ body[data-route="home"] .action-bar { bottom: calc(var(--tabbar-h) + var(--safe-
   background: var(--surface);
 }
 .dex-img { position: relative; display: block; aspect-ratio: 4 / 3; background: #000; }
-.dex-img img, .dex-img .img-missing { width: 100%; height: 100%; object-fit: cover; display: block; }
+.dex-img { overflow: hidden; }
+.dex-img img, .dex-img .img-missing { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
 .img-count {
   position: absolute;
   right: 6px;
@@ -809,7 +810,7 @@ body[data-route="home"] .action-bar { bottom: calc(var(--tabbar-h) + var(--safe-
   overflow: hidden;
   background: #000;
 }
-.pair-img img, .pair-img .img-missing { width: 100%; height: 100%; object-fit: cover; display: block; }
+.pair-img img, .pair-img .img-missing { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
 .pair-name { font-size: 1.05rem; word-break: keep-all; }
 .pair-note {
   margin: 2px 0 0;
