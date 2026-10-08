@@ -128,6 +128,7 @@
 .p-bacteria { --c: var(--sedge); --c-bg: var(--sedge-bg); }
 .p-virus { --c: var(--summer); --c-bg: var(--summer-bg); }
 .p-other { --c: var(--winter); --c-bg: var(--winter-bg); }
+.p-oomycete { --c: var(--perennial); --c-bg: var(--perennial-bg); }
 
 /* ========== 기본 ========== */
 *, *::before, *::after { box-sizing: border-box; }
