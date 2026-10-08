@@ -1265,3 +1265,24 @@ h2 { font-weight: 800; letter-spacing: -0.02em; }
 .dex-tools { background: var(--bg); }
 .check-filter .seg-btn { white-space: nowrap; min-width: 0; padding: 6px 4px; font-size: 0.86rem; }
 .check-filter .seg-btn[data-check-filter="⭐"] { flex: 0 0 52px; }
+
+/* 4지선다: 보기 가리개 */
+.choice-cover {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  width: 100%;
+  min-height: 150px;
+  padding: 18px 14px;
+  border: 2px dashed color-mix(in srgb, var(--primary) 55%, var(--border));
+  border-radius: 20px;
+  background: var(--primary-soft);
+  color: var(--text);
+  text-align: center;
+}
+.choice-cover-icon { font-size: 2rem; line-height: 1; }
+.choice-cover b { font-size: 1.05rem; }
+.choice-cover small { color: var(--muted); font-weight: 600; }
+.choice-cover:active { transform: translateY(1px); }
