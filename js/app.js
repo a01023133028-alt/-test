@@ -232,9 +232,16 @@
 
     screen('home').innerHTML = `
       ${resume}
-      <div class="hero">
-        <h1>${Subject.title}</h1>
-        <p class="muted">${state.weeds.length}${Subject.unit} · 사진 ${imageTotal}장${photoCount < state.weeds.length ? ` · 사진 없는 ${Subject.noun} ${state.weeds.length - photoCount}${Subject.unit}` : ''}</p>
+      <div class="hero" data-icon="${Subject.heroIcon}">
+        <div class="hero-text">
+          <div class="hero-eyebrow">${Subject.eyebrow}</div>
+          <h1>${Subject.title}</h1>
+          <p>${state.weeds.length}${Subject.unit} · 사진 ${imageTotal}장${photoCount < state.weeds.length ? ` · 사진 없는 ${Subject.noun} ${state.weeds.length - photoCount}${Subject.unit}` : ''}</p>
+        </div>
+        <div class="hero-stats">
+          <div><b>${masteredCount()}</b><span>외움</span></div>
+          <div><b>${heroRate()}</b><span>정답률</span></div>
+        </div>
       </div>
 
       <section class="opt-section">
@@ -244,7 +251,7 @@
             const disabled = key === 'wrong' && wc === 0;
             return `<button type="button" role="radio" class="mode-card ${o.mode === key ? 'selected' : ''}"
               data-mode="${key}" aria-checked="${o.mode === key}" ${disabled ? 'disabled' : ''}>
-              <span class="mode-num">${i + 1}</span>
+              <span class="mode-num" aria-hidden="true">${MODE_ICONS[key] || i + 1}</span>
               <span class="mode-text"><b>${m.label}</b><small>${m.desc}${key === 'wrong' ? ` · ${wc}${Subject.unit}` : ''}</small></span>
             </button>`;
           }).join('')}
@@ -299,6 +306,23 @@
           : `<span class="warn-text">조건에 맞는 ${Subject.noun}가 없어요${o.skipMastered !== false && masteredCount() ? ' (외운 것 제외 중)' : ''}</span>`}</div>
         <button type="button" class="btn btn-primary btn-block btn-lg" data-action="start" ${pool.length ? '' : 'disabled'}>퀴즈 시작</button>
       </div>`;
+  }
+
+  const MODE_ICONS = { write: '✍️', choice: '🔢', class: '🏷️', real: '🎯', wrong: '🔁' };
+
+  /* 홈 카드의 누적 정답률 (기록 없으면 -) */
+  function heroRate() {
+    let t = 0;
+    let c = 0;
+    const stats = Storage.getStats();
+    state.weeds.forEach((w) => {
+      const r = stats[w.id];
+      if (r) {
+        t += r.tries;
+        c += r.correct;
+      }
+    });
+    return t ? `${UI.pct(c, t)}%` : '-';
   }
 
   function chip(key, value, on, cls) {
