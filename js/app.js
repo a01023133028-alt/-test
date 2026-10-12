@@ -301,6 +301,7 @@
 
       <p class="muted small opt-help">✅ <b>외운 것 빼기</b>: 암기 탭에서 체크한 ${Subject.noun}는 안 나와요 · 🔁 <b>한 바퀴</b>: 범위 안의 ${Subject.noun}가 다 나올 때까지 중복 없이 (나눠 풀어도 이어짐)${rem ? ` · <button type="button" class="link-btn" data-action="reset-cycle">한 바퀴 처음부터</button>` : ''}</p>
 
+      <p class="muted small source-note">📚 자료 출처: ${esc(Subject.source)} 공개 자료 사진은 크게 보면 촬영자와 원본 링크가 나와요.</p>
       ${notices.length ? `<section class="notice">${notices.map((n) => `<div>${n}</div>`).join('')}</section>` : ''}
 
       <div class="action-bar">
