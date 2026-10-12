@@ -1294,3 +1294,6 @@ h2 { font-weight: 800; letter-spacing: -0.02em; }
 .pair-row.four .pair-vs { display: none; }
 .pair-row.four .pair-name { font-size: 0.95rem; }
 .opt-pathogen { grid-template-columns: repeat(2, 1fr); }
+
+/* 자료 출처 문구 */
+.source-note { margin: 14px 2px 0; line-height: 1.6; }

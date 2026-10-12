@@ -14,6 +14,7 @@ const Subject = (() => {
     eyebrow: '잡초 식별 시험 대비',
     heroIcon: '🌿',
     dataUrl: 'data/weeds.json',
+    source: '잡초 사진과 이름·특징은 작물병충해 수업 자료를 바탕으로 만들었고, 추가 사진은 iNaturalist 등 공개 자료입니다.',
     storageNs: '',
     types: ['write', 'choice', 'class', 'real'],
     // 분류 기준(출제 범위 필터·태그·도감 묶음)
@@ -48,6 +49,7 @@ const Subject = (() => {
     eyebrow: '식물 병해 시험 대비',
     heroIcon: '🍃',
     dataUrl: 'data/diseases.json',
+    source: '병해 사진·병명·기주는 작물병충해 수업 자료를 바탕으로 만들었고, 병원 분류는 6강 강의자료 기준입니다. 추가 사진은 iNaturalist·PlantVillage 등 공개 자료입니다.',
     storageNs: 'disease:',
     types: ['write', 'choice', 'pathogen'],
     facets: [
