@@ -4,6 +4,11 @@
 사진을 랜덤으로 보여주고 **이름·형태적 분류·생활형**을 맞힙니다.
 서버·DB·AI 없이 HTML + CSS + 바닐라 JavaScript만으로 동작하고, 기록은 브라우저(localStorage)에 저장됩니다.
 
+**사이트 주소**
+- 잡초 퀴즈: <https://weedquiz.netlify.app/>
+- 병해 퀴즈: <https://weedquiz.netlify.app/?s=disease>
+- (예전 주소 <https://a01023133028-alt.github.io/-test/>도 그대로 열리지만, 기록은 주소마다 따로 저장됩니다.)
+
 ## 기능
 
 | 퀴즈 유형 | 설명 |
@@ -138,7 +143,9 @@ images/001/01.jpg   잡초별 사진 폴더 (번호 3자리)
 2. 저장소 **Settings → Pages** → Source를 **Deploy from a branch**, 브랜치 `main` / 폴더 `/(root)`로 저장.
 3. 1~2분 뒤 `https://<아이디>.github.io/<저장소이름>/` 에서 열립니다.
 
-### Netlify
+### Netlify (현재 사용 중: weedquiz.netlify.app)
+
+GitHub 저장소 `main`과 연결되어 있어 머지할 때마다 자동으로 다시 배포됩니다.
 
 1. <https://app.netlify.com/drop> 에 이 폴더를 통째로 끌어다 놓습니다.
 2. 바로 주소가 생깁니다. (GitHub 저장소를 연결하면 push할 때마다 자동 배포 — 빌드 명령은 비우고, 배포 폴더는 `/`)
