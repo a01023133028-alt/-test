@@ -494,19 +494,21 @@
     }
     if (q.type === 'pathogen') {
       const values = Subject.groupOrder.pathogen;
-      parts.push(optionGroup('병원', 'pathogen', values, Object.fromEntries(values.map((v) => [v, UI.pathogenClass(v)])), q, w.pathogen));
+      parts.push(optionGroup('병원', 'pathogen', values, Object.fromEntries(values.map((v) => [v, UI.pathogenClass(v)])), q, [w.pathogen, ...(w.pathogenAlt || [])]));
     }
     return parts.join('');
   }
 
-  function optionGroup(title, kind, values, classMap, q, correctValue) {
+  /* correct: 정답 값 하나 또는 정답으로 인정하는 값 목록 */
+  function optionGroup(title, kind, values, classMap, q, correct) {
     const picked = q.answered ? q.userAnswer[kind] : q.draft[kind];
+    const ok = [].concat(correct);
     return `
       <div class="field-label">${title}</div>
       <div class="opt-grid opt-${kind}">${values.map((v) => {
         let st = '';
         if (q.answered) {
-          if (v === correctValue) st = 'is-correct';
+          if (ok.includes(v)) st = 'is-correct';
           else if (v === picked) st = 'is-wrong';
           else st = 'is-dim';
         } else if (v === picked) st = 'selected';

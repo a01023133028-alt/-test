@@ -225,7 +225,7 @@ const Quiz = (() => {
         parts = { morph: answer.morph === w.morph, life: answer.life === w.life };
         break;
       case 'pathogen':
-        parts = { pathogen: answer.pathogen === w.pathogen };
+        parts = { pathogen: answer.pathogen === w.pathogen || (w.pathogenAlt || []).includes(answer.pathogen) };
         break;
       case 'real':
         parts = {
