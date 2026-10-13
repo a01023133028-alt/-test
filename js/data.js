@@ -52,6 +52,8 @@ const Data = (() => {
       // 병해 전용: 기주·병원
       if (typeof w.host === 'string' && w.host.trim()) item.host = w.host.trim();
       if (typeof w.pathogen === 'string' && w.pathogen.trim()) item.pathogen = w.pathogen.trim();
+      // 수업에서 정답을 둘 이상 인정하는 병원 (예: 그을음병 자낭균·불완전균)
+      if (Array.isArray(w.pathogenAlt)) item.pathogenAlt = w.pathogenAlt.filter((p) => typeof p === 'string' && p.trim());
       if (typeof w.genus === 'string' && w.genus.trim()) item.genus = w.genus.trim();
       seen.add(id);
       weeds.push(item);
