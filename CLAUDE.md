@@ -1,7 +1,7 @@
 # 잡초 사진 퀴즈
 
 대학 잡초 식별(77종)·병해 식별(63개) 시험 대비용 정적 사이트. HTML + CSS + 바닐라 JS, 빌드 도구 없음.
-주 주소는 Netlify(https://weedquiz.netlify.app/, `main` 연결)이고 GitHub Pages(`main` 브랜치, `/` 루트)에도 그대로 배포된다. 둘 다 `main`에 머지되면 자동 재배포된다.
+주 주소는 Cloudflare Pages(https://weedquiz.pages.dev/, `main` 연결, 빌드 없음·출력 폴더 `/`)이다. 예전 주소 Netlify(https://weedquiz.netlify.app/)와 GitHub Pages(`main` 브랜치, `/` 루트)에도 그대로 배포된다. 모두 `main`에 머지되면 자동 재배포된다. Netlify 무료 플랜은 배포마다 크레딧이 빠지므로 자잘한 수정은 모아서 머지한다.
 
 ## 작업 규칙
 

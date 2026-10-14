@@ -4,10 +4,10 @@
 사진을 랜덤으로 보여주고 **이름·형태적 분류·생활형**을 맞힙니다.
 서버·DB·AI 없이 HTML + CSS + 바닐라 JavaScript만으로 동작하고, 기록은 브라우저(localStorage)에 저장됩니다.
 
-**사이트 주소**
-- 잡초 퀴즈: <https://weedquiz.netlify.app/>
-- 병해 퀴즈: <https://weedquiz.netlify.app/?s=disease>
-- (예전 주소 <https://a01023133028-alt.github.io/-test/>도 그대로 열리지만, 기록은 주소마다 따로 저장됩니다.)
+**사이트 주소** (Cloudflare Pages)
+- 잡초 퀴즈: <https://weedquiz.pages.dev/>
+- 병해 퀴즈: <https://weedquiz.pages.dev/?s=disease>
+- 예전 주소 <https://weedquiz.netlify.app/>, <https://a01023133028-alt.github.io/-test/>도 그대로 열리지만, 기록(암기 체크·즐겨찾기·정답률)은 주소마다 따로 저장됩니다.
 
 ## 기능
 
@@ -137,15 +137,23 @@ images/001/01.jpg   잡초별 사진 폴더 (번호 3자리)
 
 빌드 과정이 없으므로 폴더 그대로 올리면 됩니다.
 
+### Cloudflare Pages (주 주소: weedquiz.pages.dev)
+
+무료 플랜에서 정적 파일 전송량 제한이 없어 학생이 몰려도 멈추지 않습니다. GitHub 저장소 `main`과 연결되어 머지할 때마다 자동 배포됩니다.
+
+1. Cloudflare 대시보드 → **Compute → Workers & Pages → Create** → **Pages** → Import an existing Git repository → 저장소 선택.
+   (Deploy command에 `npx wrangler deploy`가 보이는 화면은 Workers 화면이니 Pages로 바꿉니다.)
+2. Framework preset **None**, Build command **비움**, Build output directory **`/`**.
+
 ### GitHub Pages
 
 1. 이 폴더를 GitHub 저장소에 올립니다 (`index.html`이 저장소 최상위에 있어야 함).
 2. 저장소 **Settings → Pages** → Source를 **Deploy from a branch**, 브랜치 `main` / 폴더 `/(root)`로 저장.
 3. 1~2분 뒤 `https://<아이디>.github.io/<저장소이름>/` 에서 열립니다.
 
-### Netlify (현재 사용 중: weedquiz.netlify.app)
+### Netlify (예전 주소: weedquiz.netlify.app)
 
-GitHub 저장소 `main`과 연결되어 있어 머지할 때마다 자동으로 다시 배포됩니다.
+GitHub 저장소 `main`과 연결되어 있어 머지할 때마다 자동으로 다시 배포됩니다. 무료 플랜은 월 300크레딧(배포 1번 15크레딧, 전송 1GB 20크레딧)을 다 쓰면 다음 달까지 멈춥니다.
 
 1. <https://app.netlify.com/drop> 에 이 폴더를 통째로 끌어다 놓습니다.
 2. 바로 주소가 생깁니다. (GitHub 저장소를 연결하면 push할 때마다 자동 배포 — 빌드 명령은 비우고, 배포 폴더는 `/`)
