@@ -1,5 +1,5 @@
 [
-  {"id": 1, "name": "빗자루병", "host": "대추나무", "crop": "과수", "pathogen": "파이토플라스마", "genus": "Phytoplasma", "features": "잔가지가 빗자루처럼 무더기로 나오고 잎이 작아지며 누렇게 됨 · 매개충: 마름무늬매미충 · 옥시테트라사이클린 수간주사", "images": ["images/disease/001/01.jpg"]},
+  {"id": 1, "name": "빗자루병", "host": "대추나무", "crop": "과수", "pathogen": "파이토플라즈마", "genus": "Phytoplasma", "features": "잔가지가 빗자루처럼 무더기로 나오고 잎이 작아지며 누렇게 됨 · 매개충: 마름무늬매미충 · 옥시테트라사이클린 수간주사", "images": ["images/disease/001/01.jpg"]},
   {"id": 2, "name": "노균병", "host": "배추", "crop": "채소", "pathogen": "난균류", "genus": "Hyaloperonospora", "features": "잎 앞면에 잎맥으로 둘러싸인 다각형 황색 병반 · 잎 뒷면에 흰~회색 곰팡이 · 서늘하고 습할 때", "images": ["images/disease/002/01.jpg"]},
   {"id": 3, "name": "붉은곰팡이병", "host": "맥류", "crop": "식량작물", "pathogen": "곰팡이(자낭균)", "genus": "Gibberella(Fusarium)", "features": "이삭 일부가 일찍 하얗게 마르고 분홍~붉은색 곰팡이 · 곰팡이독소(DON) 생성 · 개화기에 비가 잦을 때", "images": ["images/disease/003/01.jpg", "images/disease/003/02.jpg"]},
   {"id": 4, "name": "탄저병", "host": "배추", "crop": "채소", "pathogen": "곰팡이(자낭균)", "genus": "Colletotrichum(Glomerella)", "features": "잎·잎맥에 작은 회백색 원형 병반, 가운데가 말라 구멍이 남 · 고온다습(여름 배추)", "images": ["images/disease/004/01.jpg"]},
@@ -22,7 +22,7 @@
   {"id": 21, "name": "덩굴마름병", "host": "오이", "crop": "채소", "pathogen": "곰팡이(자낭균)", "genus": "Didymella", "features": "줄기 마디에 담갈색 병반, 갈색 진(수지)이 흘러나옴 · 병반 위에 작은 검은 점 · 잎에는 V자 병반", "images": ["images/disease/021/01.jpg"]},
   {"id": 22, "name": "잿빛곰팡이병", "host": "고추", "crop": "채소", "pathogen": "곰팡이(불완전균)", "genus": "Botrytis", "features": "꽃·과실·줄기가 물러지고 잿빛 곰팡이 · 저온다습한 시설 재배", "images": ["images/disease/022/01.jpg", "images/disease/022/02.jpg"]},
   {"id": 23, "name": "점무늬낙엽병", "host": "사과", "crop": "과수", "pathogen": "곰팡이(불완전균)", "genus": "Alternaria", "features": "잎에 2~3mm 갈색 원형 반점, 커지면 겹무늬 · 심하면 일찍 낙엽 · 장마철", "images": ["images/disease/023/01.jpg"]},
-  {"id": 24, "name": "빗자루병", "host": "미나리", "crop": "채소", "pathogen": "파이토플라스마", "genus": "Phytoplasma", "features": "잔줄기가 많이 나와 빗자루처럼 무더기로 자라고 잎이 작고 누렇게 됨 · 매개충: 매미충", "images": ["images/disease/024/01.jpg"]},
+  {"id": 24, "name": "빗자루병", "host": "미나리", "crop": "채소", "pathogen": "파이토플라즈마", "genus": "Phytoplasma", "features": "잔줄기가 많이 나와 빗자루처럼 무더기로 자라고 잎이 작고 누렇게 됨 · 매개충: 매미충", "images": ["images/disease/024/01.jpg"]},
   {"id": 25, "name": "흑색썩음균핵병", "host": "파", "crop": "채소", "pathogen": "곰팡이(불완전균)", "genus": "Sclerotium", "features": "잎끝부터 누렇게 말라 죽고, 땅속 줄기·뿌리에 흰 균사와 깨알 같은 검은 균핵 · 저온기", "images": ["images/disease/025/01.jpg"]},
   {"id": 26, "name": "화상병", "host": "사과", "crop": "과수", "pathogen": "세균", "genus": "Erwinia", "features": "꽃·잎·가지가 불에 탄 듯 검게 마르고 새 가지 끝이 갈고리처럼 굽음 · 세균 점액(우즈) · 검역 금지병해충", "images": ["images/disease/026/01.jpg", "images/disease/026/02.jpg", "images/disease/026/03.jpg", "images/disease/026/04.jpg"]},
   {"id": 27, "name": "겉깜부기병", "host": "보리", "crop": "식량작물", "pathogen": "곰팡이(담자균)", "genus": "Ustilago", "features": "이삭이 검은 가루(깜부기 포자) 덩어리로 바뀌어 바람에 날림 · 종자 속에 잠복(온탕침법으로 소독)", "images": ["images/disease/027/01.jpg", "images/disease/027/02.jpg", "images/disease/027/03.jpg", "images/disease/027/04.jpg", "images/disease/027/05.jpg"]},
