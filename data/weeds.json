@@ -3,7 +3,7 @@
   {"id": 2, "name": "강피", "morph": "화본과", "life": "하계일년생", "features": "이삭 초록색, 까락 X\n강피 = 까락 X / 물피 = 까락 O", "images": ["images/002/01.jpg", "images/002/02.jpg", "images/002/03.jpg"]},
   {"id": 3, "name": "물피", "morph": "화본과", "life": "하계일년생", "features": "까락 O (강피와 비교)", "images": ["images/003/01.jpg"]},
   {"id": 4, "name": "알방동사니", "morph": "방동사니과", "life": "하계일년생", "features": "논잡초 · 꽃차례가 동그란 공 모양", "images": ["images/004/01.jpg", "images/004/02.jpg", "images/004/03.jpg", "images/004/04.jpg"]},
-  {"id": 5, "name": "가막사리", "morph": "광엽잡초", "life": "하계일년생", "features": "국화과, 잎 가장자리 결각\n미국가막사리와 잎 모양·줄기색으로 구분", "images": ["images/005/01.jpg", "images/005/02.jpg", "images/005/03.jpg", "images/005/04.jpg", "images/005/05.jpg", "images/005/06.jpg"]},
+  {"id": 5, "name": "가막사리", "morph": "광엽잡초", "life": "하계일년생", "features": "국화과, 잎 가장자리 결각\n미국가막사리와 잎 모양·줄기색으로 구분", "images": ["images/005/01.jpg", "images/005/02.jpg", "images/005/03.jpg", "images/005/04.jpg"]},
   {"id": 6, "name": "미국가막사리", "morph": "광엽잡초", "life": "하계일년생", "features": "줄기 색 보라색, 잎이 여러 갈래로 갈라짐(겹잎)\n외래잡초", "images": ["images/006/01.jpg", "images/006/02.jpg", "images/006/03.jpg"]},
   {"id": 7, "name": "물달개비", "morph": "광엽잡초", "life": "하계일년생", "features": "논잡초 · 보라색 꽃, 하트 모양 잎", "images": ["images/007/01.jpg", "images/007/02.jpg", "images/007/03.jpg", "images/007/04.jpg", "images/007/05.jpg"]},
   {"id": 8, "name": "가래", "morph": "광엽잡초", "life": "다년생", "features": "논잡초 · 잎이 수면에 뜸, 괴경으로 영양번식", "images": ["images/008/01.jpg", "images/008/02.jpg", "images/008/03.jpg", "images/008/04.jpg"]},
