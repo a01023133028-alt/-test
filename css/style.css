@@ -475,6 +475,7 @@ body[data-route="home"] .action-bar { bottom: calc(var(--tabbar-h) + var(--safe-
 }
 .name-card-label { color: var(--muted); font-size: 0.9rem; }
 .name-card-name { font-size: 2.1rem; font-weight: 800; margin-top: 4px; word-break: keep-all; }
+.name-card-host { margin-top: 6px; font-size: 1rem; font-weight: 600; opacity: 0.85; }
 
 .answer-area { margin-top: 14px; }
 .field-label { display: block; margin: 12px 0 6px; font-size: 0.9rem; font-weight: 700; color: var(--muted); }
@@ -1345,7 +1346,6 @@ h2 { font-weight: 800; letter-spacing: -0.02em; }
 }
 .dex-stack-badge b { font-weight: 800; }
 .dex-stack-badge small { margin-left: 4px; font-size: 0.72rem; font-weight: 500; opacity: 0.85; }
-.dex-host-pre { color: var(--primary); font-weight: 800; }
 .dex-stack-nav {
   position: absolute;
   z-index: 2;

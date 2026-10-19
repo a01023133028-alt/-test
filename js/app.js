@@ -1,7 +1,7 @@
 /* 앱 시작점: 데이터 로드, 화면 전환, 각 화면 그리기 */
 (() => {
   const { esc } = UI;
-  /* 병해는 "배추 탄저병"처럼 기주를 붙인 이름 (같은 병명이 여러 기주에 있음) */
+  /* 병해는 "배추 탄저병"처럼 기주를 붙인 이름 (같은 병명 보기끼리 구분할 때만 씀) */
   const fullName = (w) => (w.host ? `${w.host} ${w.name}` : w.name);
   /* 보기에 같은 병명이 있으면 기주를 붙여 구분하고, 사진 위 기주 표시는 감춘다(정답이 보이므로) */
   const sameNameChoices = (q) => !!q.choices && new Set(q.choices.map((c) => c.name)).size < q.choices.length;
@@ -436,7 +436,8 @@
         </div>` : `
         <div class="name-card">
           <div class="name-card-label">${Quiz.MODES[q.type].ask || ''}</div>
-          <div class="name-card-name">${esc(fullName(w))}</div>
+          <div class="name-card-name">${esc(w.name)}</div>
+          ${w.host ? `<div class="name-card-host">기주: ${esc(w.host)}</div>` : ''}
         </div>`}
 
       <div class="answer-area">${answerArea(q)}</div>
@@ -932,7 +933,7 @@
   /* 같은 병명 카드 겹치기: 옆으로 밀어 넘기고, 뒤에 카드가 더 있는 것처럼 보이게 */
   function dexStack(ws, stats) {
     return `<div class="dex-stack" data-stack>
-      <div class="dex-stack-track">${ws.map((w) => dexCard(w, stats[w.id], true)).join('')}</div>
+      <div class="dex-stack-track">${ws.map((w) => dexCard(w, stats[w.id])).join('')}</div>
       <span class="dex-stack-badge" aria-hidden="true"><b data-stack-pos>1</b> / ${ws.length} <small>넘겨 보기</small></span>
       <button type="button" class="dex-stack-nav prev" data-stack-step="-1" aria-label="이전 카드">‹</button>
       <button type="button" class="dex-stack-nav next" data-stack-step="1" aria-label="다음 카드">›</button>
@@ -984,13 +985,12 @@
     return {};
   }
 
-  /* inStack: 겹친 카드 안에서는 이름이 같으므로 기주를 붙여 보여줌 */
-  function dexCard(w, r, inStack = false) {
+  function dexCard(w, r) {
     return `<div class="dex-cell">${favButton(w.id)}<button type="button" class="dex-card" data-weed-detail="${w.id}">
       <span class="dex-img">${UI.img(w.images[0], '', w.name)}
         ${w.images.length > 1 ? `<span class="img-count">📷 ${w.images.length}</span>` : ''}</span>
       <span class="dex-info">
-        <b>${inStack && w.host ? `<span class="dex-host-pre">${esc(w.host)}</span> ` : ''}${esc(w.name)}</b>
+        <b>${esc(w.name)}</b>
         <small class="muted">No.${w.id}${r ? ` · 정답률 ${UI.pct(r.correct, r.tries)}%` : ''}</small>
         ${UI.tags(w)}
       </span></button></div>`;
@@ -1003,7 +1003,10 @@
 
   function pairTitle(p) {
     if (p.mixed) return '전체 랜덤';
-    return pairWeeds(p).map((w) => (w ? esc(fullName(w)) : '?')).join(' vs ');
+    const ws = pairWeeds(p);
+    // 이름이 모두 같은 묶음(탄저병 4개 등)은 'vs'로 늘어놓지 않고 개수로
+    if (ws.length > 1 && ws.every((w) => w && w.name === ws[0].name)) return `${esc(ws[0].name)} ${ws.length}종 비교`;
+    return ws.map((w) => (w ? esc(w.name) : '?')).join(' vs ');
   }
 
   /* 헷갈리는 이유별 묶음 (과목 설정, kind가 없는 쌍은 첫 번째 묶음) */
@@ -1022,7 +1025,7 @@
               ${UI.img(w.images[0], '', w.name)}
               ${w.images.length > 1 ? `<span class="img-count">📷 ${w.images.length}</span>` : ''}
             </button>
-            <b class="pair-name">${esc(fullName(w))}</b>
+            <b class="pair-name">${esc(w.name)}</b>
             ${UI.tags(w)}
             ${note ? `<p class="pair-note">${esc(note)}</p>` : ''}
           </div>`;
@@ -1242,7 +1245,7 @@
       </div>` : '';
     UI.openModal(`${nav}
       <div class="detail-card ${dir > 0 ? 'from-right' : dir < 0 ? 'from-left' : ''}" data-weed-detail-id="${w.id}">
-      <h2 class="detail-name">${w.host && state.weeds.some((x) => x.id !== w.id && x.name === w.name) ? `<span class="dex-host-pre">${esc(w.host)}</span> ` : ''}${esc(w.name)} <small class="muted">No.${w.id}</small>${favButton(w.id)}</h2>
+      <h2 class="detail-name">${esc(w.name)} <small class="muted">No.${w.id}</small>${favButton(w.id)}</h2>
       ${UI.tags(w)}
       ${infoLines(w)}
       ${masterButton(w)}
