@@ -866,7 +866,6 @@
     const outerKey = group.key;
     const innerKey = group.inner;
     const outer = groupValues(outerKey);
-    const inner = innerKey ? groupValues(innerKey) : [];
     const outerCls = groupClasses(outerKey);
     const innerCls = groupClasses(innerKey);
     const stats = Storage.getStats();
@@ -874,21 +873,27 @@
     const known = new Set(outer);
     const others = list.filter((w) => !known.has(w[outerKey]));
     // 검색 중에는 결과가 가려지지 않게 모두 펼쳐서 보여줌
-    const folded = q || state.dexFavOnly ? new Set() : dexFolded();
+    const searching = !!(q || state.dexFavOnly);
+    const folded = searching ? new Set() : dexFolded();
     const foldBtn = (key, open) => `data-fold="${esc(key)}" aria-expanded="${open}"`;
+    // innerClosed 묶음은 기본으로 접혀 있고, 저장된 키는 '펼친 것'을 뜻함
+    const innerOpen = (key) => searching || (group.innerClosed ? folded.has(key) : !folded.has(key));
 
     let html = outer.map((o) => {
       const g = list.filter((w) => w[outerKey] === o);
       if (!g.length) return '';
       const oKey = `${outerKey}|${o}`;
       const oOpen = !folded.has(oKey);
+      const inner = innerValues(group, g);
       const subs = inner.map((i) => {
         const sg = g.filter((w) => w[innerKey] === i);
         if (!sg.length) return '';
         const iKey = `${oKey}|${i}`;
-        const iOpen = !folded.has(iKey);
+        const iOpen = innerOpen(iKey);
+        // 같은 병명 묶음은 접혀 있어도 어떤 기주가 있는지 보이게
+        const hosts = innerKey === 'name' && sg.every((w) => w.host) ? ` · ${sg.map((w) => w.host).join('·')}` : '';
         return `<h3 class="dex-sub"><button type="button" class="fold-btn" ${foldBtn(iKey, iOpen)}>
-            <span class="fold-arrow">${iOpen ? '▾' : '▸'}</span><span class="dot ${innerCls[i] || ''}"></span>${esc(i)} <small>${sg.length}${Subject.unit}</small></button></h3>
+            <span class="fold-arrow">${iOpen ? '▾' : '▸'}</span>${innerCls[i] ? `<span class="dot ${innerCls[i]}"></span>` : ''}${esc(i)} <small>${sg.length}${Subject.unit}${esc(hosts)}</small></button></h3>
           ${iOpen ? `<div class="dex-grid">${sg.map((w) => dexCard(w, stats[w.id])).join('')}</div>` : ''}`;
       }).join('');
       const rest = g.filter((w) => !inner.includes(w[innerKey]));
@@ -904,6 +909,15 @@
         <div class="dex-grid">${others.map((w) => dexCard(w, stats[w.id])).join('')}</div></section>`;
     }
     $('#dexBody').innerHTML = html || '<p class="muted center">검색 결과가 없어요.</p>';
+  }
+
+  /* 묶음 안의 소분류 값. innerMin이 있으면 그 수 이상 모인 값만 따로 묶고 나머지는 그냥 나열 */
+  function innerValues(group, items) {
+    if (!group.inner) return [];
+    const values = groupValues(group.inner);
+    if (!group.innerMin) return values;
+    const count = (v) => items.filter((w) => w[group.inner] === v).length;
+    return values.filter((v) => count(v) >= group.innerMin);
   }
 
   /* 도감 묶음 값: 분류 기준이면 정해진 순서, 아니면(기주·병명) 데이터에 나온 값을 가나다순 */
@@ -1044,6 +1058,13 @@
       const prefix = `${group.key}|`;
       const set = new Set([...dexFolded()].filter((k) => !k.startsWith(prefix)));
       if (fa.dataset.foldAll === 'close') groupValues(group.key).forEach((v) => set.add(prefix + v));
+      // 기본으로 접혀 있는 소분류는 '모두 펴기' 때 펼친 키를 넣어 줌
+      if (fa.dataset.foldAll === 'open' && group.innerClosed) {
+        groupValues(group.key).forEach((v) => {
+          const items = state.weeds.filter((w) => w[group.key] === v);
+          innerValues(group, items).forEach((i) => set.add(`${prefix}${v}|${i}`));
+        });
+      }
       setDexFolded(set);
       renderDexBody();
       return;

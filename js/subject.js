@@ -63,7 +63,8 @@ const Subject = (() => {
     similarKeys: ['host', 'crop'],
     dexGroups: [
       { key: 'crop', label: '작물별', inner: 'host' },
-      { key: 'pathogen', label: '병원별', inner: 'crop' },
+      // 병원별: 안에서 같은 병명(탄저병 4개 등)끼리 묶어 접어 둠. 병명 하나 → 병원 하나로 외우기 좋게
+      { key: 'pathogen', label: '병원별', inner: 'name', innerMin: 2, innerClosed: true },
       { key: 'name', label: '병명별', inner: null },
     ],
     // 도감 묶음 순서 (여기 없는 값은 뒤에 가나다순)
