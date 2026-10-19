@@ -884,7 +884,7 @@
       if (!g.length) return '';
       const oKey = `${outerKey}|${o}`;
       const oOpen = !folded.has(oKey);
-      const inner = innerValues(group, g);
+      const inner = group.stack ? [] : innerValues(group, g);
       const subs = inner.map((i) => {
         const sg = g.filter((w) => w[innerKey] === i);
         if (!sg.length) return '';
@@ -897,11 +897,11 @@
           ${iOpen ? `<div class="dex-grid">${sg.map((w) => dexCard(w, stats[w.id])).join('')}</div>` : ''}`;
       }).join('');
       const rest = g.filter((w) => !inner.includes(w[innerKey]));
-      return `<section class="dex-group">
+      return `<section class="dex-group" data-label="${esc(o)}">
         <h2 class="dex-head ${outerCls[o] || ''}"><button type="button" class="fold-btn" ${foldBtn(oKey, oOpen)}>
           <span class="fold-arrow">${oOpen ? '▾' : '▸'}</span>${esc(o)} <small>${g.length}${Subject.unit}</small></button></h2>
         ${oOpen ? `${subs}
-        ${rest.length ? `<div class="dex-grid">${rest.map((w) => dexCard(w, stats[w.id])).join('')}</div>` : ''}` : ''}
+        ${rest.length ? `<div class="dex-grid">${dexEntries(group, rest).map((ws) => (ws.length > 1 ? dexStack(ws, stats) : dexCard(ws[0], stats[ws[0].id]))).join('')}</div>` : ''}` : ''}
       </section>`;
     }).join('');
     if (others.length) {
@@ -909,6 +909,53 @@
         <div class="dex-grid">${others.map((w) => dexCard(w, stats[w.id])).join('')}</div></section>`;
     }
     $('#dexBody').innerHTML = html || '<p class="muted center">검색 결과가 없어요.</p>';
+    bindDexStacks();
+  }
+
+  /* 카드 목록: stack 기준(병명)이 같은 것끼리 한 묶음, 묶음 자리는 첫 카드 자리 */
+  function dexEntries(group, items) {
+    if (!group.stack) return items.map((w) => [w]);
+    const byKey = new Map();
+    const entries = [];
+    items.forEach((w) => {
+      const k = w[group.stack];
+      if (byKey.has(k)) byKey.get(k).push(w);
+      else {
+        const e = [w];
+        byKey.set(k, e);
+        entries.push(e);
+      }
+    });
+    return entries;
+  }
+
+  /* 같은 병명 카드 겹치기: 옆으로 밀어 넘기고, 뒤에 카드가 더 있는 것처럼 보이게 */
+  function dexStack(ws, stats) {
+    return `<div class="dex-stack" data-stack>
+      <div class="dex-stack-track">${ws.map((w) => dexCard(w, stats[w.id], true)).join('')}</div>
+      <span class="dex-stack-badge" aria-hidden="true"><b data-stack-pos>1</b> / ${ws.length} <small>넘겨 보기</small></span>
+      <button type="button" class="dex-stack-nav prev" data-stack-step="-1" aria-label="이전 카드">‹</button>
+      <button type="button" class="dex-stack-nav next" data-stack-step="1" aria-label="다음 카드">›</button>
+    </div>`;
+  }
+
+  function stackIndex(track) {
+    return Math.round(track.scrollLeft / Math.max(1, track.clientWidth));
+  }
+
+  function bindDexStacks() {
+    document.querySelectorAll('#dexBody .dex-stack-track').forEach((t) => {
+      const pos = t.parentElement.querySelector('[data-stack-pos]');
+      const n = t.children.length;
+      const update = () => {
+        const i = stackIndex(t);
+        pos.textContent = i + 1;
+        t.parentElement.classList.toggle('at-start', i <= 0);
+        t.parentElement.classList.toggle('at-end', i >= n - 1);
+      };
+      t.addEventListener('scroll', update, { passive: true });
+      update();
+    });
   }
 
   /* 묶음 안의 소분류 값. innerMin이 있으면 그 수 이상 모인 값만 따로 묶고 나머지는 그냥 나열 */
@@ -937,12 +984,13 @@
     return {};
   }
 
-  function dexCard(w, r) {
+  /* inStack: 겹친 카드 안에서는 이름이 같으므로 기주를 붙여 보여줌 */
+  function dexCard(w, r, inStack = false) {
     return `<div class="dex-cell">${favButton(w.id)}<button type="button" class="dex-card" data-weed-detail="${w.id}">
       <span class="dex-img">${UI.img(w.images[0], '', w.name)}
         ${w.images.length > 1 ? `<span class="img-count">📷 ${w.images.length}</span>` : ''}</span>
       <span class="dex-info">
-        <b>${esc(w.name)}</b>
+        <b>${inStack && w.host ? `<span class="dex-host-pre">${esc(w.host)}</span> ` : ''}${esc(w.name)}</b>
         <small class="muted">No.${w.id}${r ? ` · 정답률 ${UI.pct(r.correct, r.tries)}%` : ''}</small>
         ${UI.tags(w)}
       </span></button></div>`;
@@ -1042,6 +1090,12 @@
   }
 
   function onDexClick(e) {
+    const st = e.target.closest('[data-stack-step]');
+    if (st) {
+      const t = st.closest('.dex-stack').querySelector('.dex-stack-track');
+      t.scrollTo({ left: (stackIndex(t) + Number(st.dataset.stackStep)) * t.clientWidth, behavior: 'smooth' });
+      return;
+    }
     const fb = e.target.closest('[data-fold]');
     if (fb) {
       const set = dexFolded();
@@ -1174,19 +1228,39 @@
   }
 
   /* ================= 상세 모달 ================= */
-  function openWeedDetail(id) {
+  function openWeedDetail(id, dir = 0) {
     const w = state.byId.get(id);
     if (!w) return;
     const r = Storage.getStats()[w.id];
-    UI.openModal(`
-      <h2 class="detail-name">${esc(w.name)} <small class="muted">No.${w.id}</small>${favButton(w.id)}</h2>
+    const seq = state.detailSeq && state.detailSeq.includes(id) ? state.detailSeq : null;
+    const at = seq ? seq.indexOf(id) : -1;
+    const nav = seq && seq.length > 1 ? `
+      <div class="detail-nav">
+        <button type="button" class="detail-step" data-detail-step="-1" ${at <= 0 ? 'disabled' : ''} aria-label="이전 카드">‹</button>
+        <span class="detail-pos"><b>${at + 1}</b> / ${seq.length}${state.detailSeqLabel ? ` · ${esc(state.detailSeqLabel)}` : ''}</span>
+        <button type="button" class="detail-step" data-detail-step="1" ${at >= seq.length - 1 ? 'disabled' : ''} aria-label="다음 카드">›</button>
+      </div>` : '';
+    UI.openModal(`${nav}
+      <div class="detail-card ${dir > 0 ? 'from-right' : dir < 0 ? 'from-left' : ''}" data-weed-detail-id="${w.id}">
+      <h2 class="detail-name">${w.host && state.weeds.some((x) => x.id !== w.id && x.name === w.name) ? `<span class="dex-host-pre">${esc(w.host)}</span> ` : ''}${esc(w.name)} <small class="muted">No.${w.id}</small>${favButton(w.id)}</h2>
       ${UI.tags(w)}
       ${infoLines(w)}
       ${masterButton(w)}
       <p class="muted small">${r ? `내 기록: 정답률 ${UI.pct(r.correct, r.tries)}% (${r.correct}/${r.tries})` : '아직 푼 기록이 없어요.'}</p>
       <div class="detail-photos">${w.images.length
         ? w.images.map((src, i) => `<button type="button" class="detail-photo" data-zoom-weed="${w.id}" data-zoom-index="${i}">${UI.img(src, '', `${w.name} 사진 ${i + 1}`)}</button>`).join('')
-        : '<p class="muted">등록된 사진이 없습니다.</p>'}</div>`);
+        : '<p class="muted">등록된 사진이 없습니다.</p>'}</div>
+      </div>`);
+  }
+
+  /* 상세 카드 넘기기 (도감에서 연 경우) */
+  function stepDetail(d) {
+    const seq = state.detailSeq;
+    if (!seq || !UI.isModalOpen()) return;
+    const cur = Number((document.querySelector('#modal [data-weed-detail-id]') || {}).dataset?.weedDetailId);
+    const i = seq.indexOf(cur) + d;
+    if (i < 0 || i >= seq.length) return;
+    openWeedDetail(seq[i], d);
   }
 
   /* ================= 테마 ================= */
@@ -1289,11 +1363,42 @@
         if (w) UI.openLightbox(w.images, Number(z.dataset.zoomIndex) || 0);
         return;
       }
+      const ds = e.target.closest('[data-detail-step]');
+      if (ds) return stepDetail(Number(ds.dataset.detailStep));
       const d = e.target.closest('[data-weed-detail]');
-      if (d) openWeedDetail(Number(d.dataset.weedDetail));
+      if (d && !d.closest('#modal')) {
+        // 도감에서 열면 같은 묶음 카드들을 순서대로 넘겨 볼 수 있게
+        const sec = d.closest('#dexBody .dex-group');
+        state.detailSeq = sec ? [...sec.querySelectorAll('[data-weed-detail]')].map((x) => Number(x.dataset.weedDetail)) : null;
+        state.detailSeqLabel = sec ? sec.dataset.label || '' : '';
+        openWeedDetail(Number(d.dataset.weedDetail));
+      }
     });
 
     document.addEventListener('keydown', onKeydown);
+
+    // 상세 카드: 좌우로 밀거나 ←/→ 키로 같은 묶음의 다음 카드
+    const sheet = document.querySelector('#modal .modal-sheet');
+    let sx = null;
+    let sy = null;
+    sheet.addEventListener('touchstart', (e) => {
+      const t = e.touches[0];
+      sx = e.touches.length === 1 ? t.clientX : null;
+      sy = t.clientY;
+    }, { passive: true });
+    sheet.addEventListener('touchend', (e) => {
+      if (sx == null) return;
+      const t = e.changedTouches[0];
+      const dx = t.clientX - sx;
+      const dy = t.clientY - sy;
+      sx = null;
+      if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.5) stepDetail(dx < 0 ? 1 : -1);
+    });
+    document.addEventListener('keydown', (e) => {
+      if (!UI.isModalOpen() || !state.detailSeq) return;
+      if (e.key === 'ArrowRight') stepDetail(1);
+      else if (e.key === 'ArrowLeft') stepDetail(-1);
+    });
     document.addEventListener('compositionend', () => {
       if (!pendingEnter) return;
       pendingEnter = false;
