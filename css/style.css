@@ -1301,3 +1301,104 @@ h2 { font-weight: 800; letter-spacing: -0.02em; }
 
 /* 만든 사람 표시 */
 .made-by { margin: 10px 0 0; text-align: center; font-size: 0.75rem; color: var(--muted); opacity: 0.8; }
+
+/* 도감 병원별: 같은 병명 카드 겹치기(옆으로 넘김) */
+.dex-stack { position: relative; min-width: 0; display: flex; container-type: inline-size; }
+.dex-stack::before, .dex-stack::after {
+  content: "";
+  position: absolute;
+  border-radius: 20px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+}
+.dex-stack::after { inset: 7px -5px 7px 5px; background: var(--surface-2); }
+.dex-stack::before { inset: 14px -9px 14px 9px; background: var(--surface-2); opacity: 0.6; }
+.dex-stack-track {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  width: 100%;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  border-radius: 20px;
+}
+.dex-stack-track::-webkit-scrollbar { display: none; }
+.dex-stack-track > .dex-cell { flex: 0 0 100%; scroll-snap-align: start; scroll-snap-stop: always; }
+.dex-stack-track .dex-card { box-shadow: none; }
+.dex-stack-badge {
+  position: absolute;
+  z-index: 2;
+  top: 10px;
+  left: 10px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.62);
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  font-variant-numeric: tabular-nums;
+  pointer-events: none;
+}
+.dex-stack-badge b { font-weight: 800; }
+.dex-stack-badge small { margin-left: 4px; font-size: 0.72rem; font-weight: 500; opacity: 0.85; }
+.dex-host-pre { color: var(--primary); font-weight: 800; }
+.dex-stack-nav {
+  position: absolute;
+  z-index: 2;
+  top: calc(37.5cqw - 17px); /* 사진(4:3) 세로 가운데 */
+  width: 34px;
+  height: 34px;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.9);
+  color: #14201a;
+  font-size: 1.4rem;
+  line-height: 1;
+  font-weight: 700;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  display: none;
+}
+.dex-stack-nav.prev { left: 6px; }
+.dex-stack-nav.next { right: 6px; }
+@media (hover: hover) and (pointer: fine) {
+  .dex-stack:hover .dex-stack-nav { display: block; }
+  .dex-stack.at-start .dex-stack-nav.prev, .dex-stack.at-end .dex-stack-nav.next { display: none; }
+}
+
+/* 상세 카드 넘기기 */
+.detail-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin: -4px 44px 12px;
+  font-size: 0.9rem;
+  color: var(--muted);
+  letter-spacing: -0.01em;
+  font-variant-numeric: tabular-nums;
+}
+.detail-pos b { color: var(--text); font-weight: 800; }
+.detail-step {
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--border);
+  border-bottom-width: 3px;
+  border-radius: 12px;
+  background: var(--surface);
+  color: var(--text);
+  font-size: 1.3rem;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+}
+.detail-step:disabled { opacity: 0.35; cursor: default; }
+.detail-card.from-right { animation: detail-in-r 0.22s ease-out; }
+.detail-card.from-left { animation: detail-in-l 0.22s ease-out; }
+@keyframes detail-in-r { from { transform: translateX(28px); opacity: 0.3; } to { transform: none; opacity: 1; } }
+@keyframes detail-in-l { from { transform: translateX(-28px); opacity: 0.3; } to { transform: none; opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .detail-card.from-right, .detail-card.from-left { animation: none; } }
