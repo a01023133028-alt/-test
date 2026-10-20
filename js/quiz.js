@@ -4,7 +4,7 @@ const Quiz = (() => {
     ? {
         write: { label: '사진 → 병명 쓰기', desc: '사진과 기주를 보고 병명을 직접 입력', photo: true },
         choice: { label: '사진 → 4지선다', desc: '같은 기주·작물의 헷갈리는 병명 중 고르기', photo: true },
-        pathogen: { label: '병명 → 병원 고르기', desc: '병명·기주를 보고 곰팡이(5종)·난균류·세균·바이러스 등 고르기', photo: false, ask: '이 병해의 병원은?' },
+        pathogen: { label: '병명 → 병원 고르기', desc: '병명·기주·사진을 보고 곰팡이(5종)·난균류·세균·바이러스 등 고르기', photo: true, showName: true, ask: '이 병해의 병원은?' },
       }
     : {
         write: { label: '사진 → 이름 쓰기', desc: '사진을 보고 이름을 직접 입력', photo: true },

@@ -476,6 +476,10 @@ body[data-route="home"] .action-bar { bottom: calc(var(--tabbar-h) + var(--safe-
 .name-card-label { color: var(--muted); font-size: 0.9rem; }
 .name-card-name { font-size: 2.1rem; font-weight: 800; margin-top: 4px; word-break: keep-all; }
 .name-card-host { margin-top: 6px; font-size: 1rem; font-weight: 600; opacity: 0.85; }
+.name-card.compact { padding-top: 14px; padding-bottom: 14px; margin-bottom: 12px; }
+.name-card.compact .name-card-name { font-size: 1.7rem; margin-top: 2px; }
+/* 이름 카드와 함께 나오는 사진은 보기가 화면에 들어오게 낮게 */
+.photo-box.short .quiz-photo { max-height: 34vh; }
 
 .answer-area { margin-top: 14px; }
 .field-label { display: block; margin: 12px 0 6px; font-size: 0.9rem; font-weight: 700; color: var(--muted); }
