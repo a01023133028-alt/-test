@@ -409,6 +409,8 @@
     const total = s.questions.length;
     const done = s.index + (q.answered ? 1 : 0);
     const photo = Quiz.MODES[q.type].photo;
+    // 병원 고르기처럼 이름을 묻지 않는 문제는 이름 카드를 보여주고, 사진이 있으면 그 아래에
+    const showName = !photo || Quiz.MODES[q.type].showName;
     const typeLabel = s.pair ? `헷갈리는 쌍 · ${pairTitle(s.pair)}` : Quiz.MODES[q.type].label + (s.opts.mode === 'wrong' ? ' · 오답' : '');
 
     screen('quiz').innerHTML = `
@@ -420,8 +422,14 @@
       <div class="progress-bar"><div style="width:${(done / total) * 100}%"></div></div>
       <div class="quiz-type">${typeLabel}</div>
 
+      ${showName ? `
+        <div class="name-card ${photo ? 'compact' : ''}">
+          <div class="name-card-label">${Quiz.MODES[q.type].ask || ''}</div>
+          <div class="name-card-name">${esc(w.name)}</div>
+          ${w.host && !photo ? `<div class="name-card-host">기주: ${esc(w.host)}</div>` : ''}
+        </div>` : ''}
       ${photo ? `
-        <div class="photo-box">
+        <div class="photo-box ${showName ? 'short' : ''}">
           ${w.host && !sameNameChoices(q) ? `<div class="host-label">기주: <b>${esc(w.host)}</b></div>` : ''}
           <button type="button" class="photo-btn" data-action="zoom" aria-label="사진 크게 보기">
             ${UI.img(w.images[q.imageIndex], 'quiz-photo', '문제 사진', 'loading="eager"')}
@@ -433,12 +441,7 @@
               : '<span></span>'}
             ${q.hintUsed ? '<span class="badge-hint">💡 힌트 사용</span>' : ''}
           </div>
-        </div>` : `
-        <div class="name-card">
-          <div class="name-card-label">${Quiz.MODES[q.type].ask || ''}</div>
-          <div class="name-card-name">${esc(w.name)}</div>
-          ${w.host ? `<div class="name-card-host">기주: ${esc(w.host)}</div>` : ''}
-        </div>`}
+        </div>` : ''}
 
       <div class="answer-area">${answerArea(q)}</div>
       ${q.answered ? feedback(q) : ''}
