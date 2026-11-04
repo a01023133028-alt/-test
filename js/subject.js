@@ -1,6 +1,6 @@
-/* 과목 설정: 잡초(기본) / 병해(?s=disease). 화면 문구·데이터 파일·분류 기준이 여기서 갈린다 */
+/* 과목 설정: 잡초(기본) / 병해(?s=disease) / 해충(?s=pest). 화면 문구·데이터 파일·분류 기준이 여기서 갈린다 */
 const Subject = (() => {
-  const isDisease = new URLSearchParams(location.search).get('s') === 'disease';
+  const sid = new URLSearchParams(location.search).get('s');
   const base = location.pathname;
 
   const WEED = {
@@ -51,7 +51,22 @@ const Subject = (() => {
     dataUrl: 'data/diseases.json',
     source: '병해 사진·병명·기주는 작물병충해 수업 자료를 바탕으로 만들었고, 병원 분류는 수업에서 알려주신 병원 표 기준입니다. 추가 사진은 iNaturalist·PlantVillage 등 공개 자료입니다.',
     storageNs: 'disease:',
-    types: ['write', 'choice', 'pathogen'],
+    types: ['write', 'choice', 'classify'],
+    modes: {
+      write: { label: '사진 → 병명 쓰기', desc: '사진과 기주를 보고 병명을 직접 입력' },
+      choice: { label: '사진 → 4지선다', desc: '같은 기주·작물의 헷갈리는 병명 중 고르기' },
+    },
+    // 분류 고르기 문제(병명 → 병원). key는 데이터 필드, keyAlt 필드는 함께 인정하는 답
+    classify: {
+      key: 'pathogen',
+      label: '병원',
+      icon: '🦠',
+      mode: '병명 → 병원 고르기',
+      desc: '병명·기주·사진을 보고 곰팡이(5종)·난균류·세균·바이러스 등 고르기',
+      ask: '이 병해의 병원은?',
+      cls: (p) => (p.startsWith('곰팡이') ? 'p-fungus' : p.startsWith('난균') ? 'p-oomycete' : p.startsWith('세균') ? 'p-bacteria'
+        : p.startsWith('바이러스') ? 'p-virus' : p.startsWith('점균') ? 'p-slime' : 'p-other'),
+    },
     facets: [
       {
         key: 'crop',
@@ -84,9 +99,70 @@ const Subject = (() => {
     ],
   };
 
-  // 다른 과목으로 가는 링크는 서로 반대쪽을 가리킨다
-  WEED.other = { href: base + '?s=disease#home', label: '🦠 병해' };
-  DISEASE.other = { href: base + '#home', label: '🌱 잡초' };
+  const PEST_ORDERS = ['나비목', '딱정벌레목', '노린재목', '파리목', '총채벌레목', '메뚜기목', '톡토기목',
+    '응애류(거미강)', '달팽이류(연체동물)', '쥐며느리류(갑각류)'];
+  const PEST_ORDER_CLS = {
+    나비목: 'p-fungus', 딱정벌레목: 'p-oomycete', 노린재목: 'p-bacteria', 파리목: 'p-virus', 총채벌레목: 'p-slime',
+  };
 
-  return isDisease ? DISEASE : WEED;
+  const PEST = {
+    id: 'pest',
+    title: '해충 사진 퀴즈',
+    brand: '🐛 해충 퀴즈',
+    noun: '해충',
+    unit: '종',
+    nameLabel: '이름',
+    placeholder: '해충 이름 입력 (예: 배추흰나비)',
+    eyebrow: '작물 해충 시험 대비',
+    heroIcon: '🐞',
+    dataUrl: 'data/pests.json',
+    source: '해충 사진·이름은 작물병충해 수업 자료를 바탕으로 만들었고, 분류(목)·특징은 수업 메모와 일반 교재를 참고해 정리했습니다.',
+    storageNs: 'pest:',
+    types: ['write', 'choice', 'classify'],
+    modes: {
+      write: { label: '사진 → 이름 쓰기', desc: '사진을 보고 해충 이름을 직접 입력' },
+      choice: { label: '사진 → 4지선다', desc: '같은 목·가해 방식의 헷갈리는 해충 중 고르기' },
+    },
+    classify: {
+      key: 'order',
+      label: '분류(목)',
+      icon: '🏷️',
+      mode: '이름 → 분류(목) 고르기',
+      desc: '이름·사진을 보고 나비목·딱정벌레목·노린재목·응애류 등 고르기',
+      ask: '이 해충은 어느 무리?',
+      cls: (v) => PEST_ORDER_CLS[v] || 'p-other',
+    },
+    facets: [
+      {
+        key: 'feed',
+        label: '가해 방식',
+        values: ['흡즙형', '저작형'],
+        cls: { 흡즙형: 'c-fruit', 저작형: 'c-food' },
+      },
+    ],
+    similarKeys: ['order', 'feed'],
+    dexGroups: [
+      { key: 'order', label: '분류(목)별', inner: null },
+      { key: 'feed', label: '가해 방식별', inner: 'order' },
+      { key: 'name', label: '이름별', inner: null },
+    ],
+    groupOrder: { order: PEST_ORDERS },
+    showHost: true,
+    pairsUrl: 'data/pest-pairs.json',
+    pairKinds: [
+      { key: '생김새', desc: '모양이 비슷해서 사진으로 헷갈리는 쌍' },
+      { key: '같은 무리', desc: '같은 무리(진딧물·총채벌레·응애 등)끼리 구분하는 묶음' },
+      { key: '가해 방식', desc: '가해하는 부위·방식이 비슷해서 헷갈리는 묶음' },
+    ],
+  };
+
+  // 상단 바: 지금 과목을 뺀 나머지 과목으로 가는 링크
+  const ALL = [
+    [WEED, base + '#home', '🌱 잡초'],
+    [DISEASE, base + '?s=disease#home', '🦠 병해'],
+    [PEST, base + '?s=pest#home', '🐛 해충'],
+  ];
+  const cur = sid === 'disease' ? DISEASE : sid === 'pest' ? PEST : WEED;
+  cur.others = ALL.filter(([s]) => s !== cur).map(([, href, label]) => ({ href, label }));
+  return cur;
 })();

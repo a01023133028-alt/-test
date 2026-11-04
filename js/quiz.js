@@ -1,10 +1,12 @@
 /* 출제·채점 엔진 (화면과 무관한 로직) */
 const Quiz = (() => {
-  const ALL_MODES = Subject.id === 'disease'
+  const C = Subject.classify;
+  const ALL_MODES = Subject.modes
     ? {
-        write: { label: '사진 → 병명 쓰기', desc: '사진과 기주를 보고 병명을 직접 입력', photo: true },
-        choice: { label: '사진 → 4지선다', desc: '같은 기주·작물의 헷갈리는 병명 중 고르기', photo: true },
-        pathogen: { label: '병명 → 병원 고르기', desc: '병명·기주·사진을 보고 곰팡이(5종)·난균류·세균·바이러스 등 고르기', photo: true, showName: true, ask: '이 병해의 병원은?' },
+        write: { ...Subject.modes.write, photo: true },
+        choice: { ...Subject.modes.choice, photo: true },
+        // 분류 고르기(병해: 병원, 해충: 목). 이름 카드와 사진을 함께 보여줌
+        classify: { label: C.mode, desc: C.desc, photo: true, showName: true, ask: C.ask },
       }
     : {
         write: { label: '사진 → 이름 쓰기', desc: '사진을 보고 이름을 직접 입력', photo: true },
@@ -92,7 +94,7 @@ const Quiz = (() => {
       type,
       imageIndex: weed.images.length ? randInt(weed.images.length) : -1,
       choices: type === 'choice' ? makeChoices(weed, all) : null,
-      draft: { text: '', morph: null, life: null, pathogen: null },
+      draft: { text: '', morph: null, life: null, cls: null },
       hintUsed: false,
       revealed: false, // 4지선다: 사진을 보고 먼저 떠올린 뒤 보기를 연다
       answered: false,
@@ -208,7 +210,7 @@ const Quiz = (() => {
     };
   }
 
-  /* 채점. answer: { text, choiceId, morph, life, pathogen } */
+  /* 채점. answer: { text, choiceId, morph, life, cls } */
   function grade(session, answer) {
     const q = session.questions[session.index];
     if (q.answered) return q;
@@ -224,8 +226,8 @@ const Quiz = (() => {
       case 'class':
         parts = { morph: answer.morph === w.morph, life: answer.life === w.life };
         break;
-      case 'pathogen':
-        parts = { pathogen: answer.pathogen === w.pathogen || (w.pathogenAlt || []).includes(answer.pathogen) };
+      case 'classify':
+        parts = { cls: classAnswers(w).includes(answer.cls) };
         break;
       case 'real':
         parts = {
@@ -249,5 +251,10 @@ const Quiz = (() => {
     return q;
   }
 
-  return { MODES, TYPES, shuffle, typeOf, pool, cycleKey, cycleRemaining, createSession, createPairSession, createMixedPairSession, grade };
+  /* 분류 고르기에서 정답으로 인정하는 값 (수업에서 함께 인정하는 답 포함, 예: 그을음병) */
+  function classAnswers(w) {
+    return C ? [w[C.key], ...(w[`${C.key}Alt`] || [])].filter(Boolean) : [];
+  }
+
+  return { MODES, TYPES, classAnswers, shuffle, typeOf, pool, cycleKey, cycleRemaining, createSession, createPairSession, createMixedPairSession, grade };
 })();

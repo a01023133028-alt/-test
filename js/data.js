@@ -49,11 +49,12 @@ const Data = (() => {
         if (!f.values.includes(w[f.key])) warnings.push(`${w.name}: ${f.key} "${w[f.key]}"는 알 수 없는 값`);
         item[f.key] = w[f.key];
       });
-      // 병해 전용: 기주·병원
+      // 병해·해충: 기주와 분류 고르기 값(병원·목)
       if (typeof w.host === 'string' && w.host.trim()) item.host = w.host.trim();
-      if (typeof w.pathogen === 'string' && w.pathogen.trim()) item.pathogen = w.pathogen.trim();
-      // 수업에서 정답을 둘 이상 인정하는 병원 (예: 그을음병 자낭균·불완전균)
-      if (Array.isArray(w.pathogenAlt)) item.pathogenAlt = w.pathogenAlt.filter((p) => typeof p === 'string' && p.trim());
+      const ck = Subject.classify && Subject.classify.key;
+      if (ck && typeof w[ck] === 'string' && w[ck].trim()) item[ck] = w[ck].trim();
+      // 수업에서 정답을 둘 이상 인정하는 값 (예: 그을음병 자낭균·불완전균)
+      if (ck && Array.isArray(w[`${ck}Alt`])) item[`${ck}Alt`] = w[`${ck}Alt`].filter((p) => typeof p === 'string' && p.trim());
       if (typeof w.genus === 'string' && w.genus.trim()) item.genus = w.genus.trim();
       seen.add(id);
       weeds.push(item);
