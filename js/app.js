@@ -68,6 +68,9 @@
     });
     delete o.morphs;
     delete o.lifes;
+    // 예전 이름(병원 고르기 = 'pathogen')도 이어서 씀
+    if (o.mode === 'pathogen') o.mode = 'classify';
+    if (o.wrongType === 'pathogen') o.wrongType = 'classify';
     if (!Quiz.MODES[o.mode]) o.mode = 'write';
     if (!Quiz.TYPES.includes(o.wrongType)) o.wrongType = 'write';
     if (!['10', '20', 'all'].includes(o.count)) o.count = '10';
@@ -125,10 +128,9 @@
     document.title = Subject.title;
     document.documentElement.dataset.subject = Subject.id;
     $('.brand').textContent = Subject.brand;
+    // 다른 과목으로 가는 링크 (지금 과목 빼고)
     const sw = document.getElementById('subjectSwitch');
-    sw.href = Subject.other.href;
-    sw.textContent = Subject.other.label;
-    sw.setAttribute('aria-label', `${Subject.other.label.replace(/^\S+\s/, '')} 퀴즈로 이동`);
+    sw.innerHTML = Subject.others.map((o) => `<a class="subject-switch" href="${esc(o.href)}" aria-label="${esc(o.label.replace(/^\S+\s/, ''))} 퀴즈로 이동">${esc(o.label)}</a>`).join('');
     const pairsTab = document.querySelector('#tabbar a[data-tab="pairs"]');
     if (pairsTab) pairsTab.hidden = !Subject.pairsUrl;
   }
@@ -314,7 +316,7 @@
       </div>`;
   }
 
-  const MODE_ICONS = { write: '✍️', choice: '🔢', class: '🏷️', pathogen: '🦠', real: '🎯', wrong: '🔁' };
+  const MODE_ICONS = { write: '✍️', choice: '🔢', class: '🏷️', classify: Subject.classify ? Subject.classify.icon : '🏷️', real: '🎯', wrong: '🔁' };
 
   /* 홈 카드의 누적 정답률 (기록 없으면 -) */
   function heroRate() {
@@ -497,9 +499,10 @@
       parts.push(optionGroup('형태적 분류', 'morph', Data.MORPHS, Data.MORPH_CLASS, q, w.morph));
       parts.push(optionGroup('생활형', 'life', Data.LIFES, Data.LIFE_CLASS, q, w.life));
     }
-    if (q.type === 'pathogen') {
-      const values = Subject.groupOrder.pathogen;
-      parts.push(optionGroup('병원', 'pathogen', values, Object.fromEntries(values.map((v) => [v, UI.pathogenClass(v)])), q, [w.pathogen, ...(w.pathogenAlt || [])]));
+    if (q.type === 'classify') {
+      const C = Subject.classify;
+      const values = Subject.groupOrder[C.key];
+      parts.push(optionGroup(C.label, 'cls', values, Object.fromEntries(values.map((v) => [v, UI.classClass(v)])), q, Quiz.classAnswers(w)));
     }
     return parts.join('');
   }
@@ -532,7 +535,7 @@
       rows.push(partRow('분류', q.parts.morph, ua.morph));
       rows.push(partRow('생활형', q.parts.life, ua.life));
     }
-    if (q.type === 'pathogen') rows.push(partRow('병원', q.parts.pathogen, ua.pathogen));
+    if (q.type === 'classify') rows.push(partRow(Subject.classify.label, q.parts.cls, ua.cls));
     return `
       <section class="feedback ${q.correct ? 'ok' : 'ng'}" id="feedback">
         <div class="verdict">${q.correct ? '⭕ 정답!' : '❌ 오답'}</div>
@@ -560,7 +563,7 @@
   function canSubmit(q) {
     if (q.type === 'write') return true; // 빈칸 제출 = 모름(오답)
     if (q.type === 'class' || q.type === 'real') return !!(q.draft.morph && q.draft.life);
-    if (q.type === 'pathogen') return !!q.draft.pathogen;
+    if (q.type === 'classify') return !!q.draft.cls;
     return false;
   }
 
@@ -577,7 +580,7 @@
     const input = $('#nameInput');
     if (input) q.draft.text = input.value;
     if (q.type !== 'choice' && !canSubmit(q)) return;
-    Quiz.grade(s, { text: q.draft.text, morph: q.draft.morph, life: q.draft.life, pathogen: q.draft.pathogen, ...extra });
+    Quiz.grade(s, { text: q.draft.text, morph: q.draft.morph, life: q.draft.life, cls: q.draft.cls, ...extra });
     if (document.activeElement) document.activeElement.blur();
     renderQuiz();
     const fb = $('#feedback');
@@ -644,8 +647,8 @@
     if (a === 'reveal') return revealChoices();
     if (q.answered) return;
     if (t.dataset.choice) return submitAnswer({ choiceId: Number(t.dataset.choice) });
-    if (t.dataset.morph || t.dataset.life || t.dataset.pathogen) {
-      const kind = ['morph', 'life', 'pathogen'].find((k) => t.dataset[k]);
+    if (t.dataset.morph || t.dataset.life || t.dataset.cls) {
+      const kind = ['morph', 'life', 'cls'].find((k) => t.dataset[k]);
       q.draft[kind] = t.dataset[kind];
       t.parentElement.querySelectorAll('.opt-btn').forEach((b) => b.classList.toggle('selected', b === t));
       updateSubmitButton();
@@ -845,7 +848,7 @@
     screen('dex').innerHTML = `
       <h1>${Subject.noun} 도감</h1>
       <div class="dex-tools">
-        <input type="search" id="dexSearch" class="search" placeholder="${Subject.showHost ? '병명·기주 검색' : '이름 검색'}" value="${esc(state.dexQuery)}" autocomplete="off">
+        <input type="search" id="dexSearch" class="search" placeholder="${Subject.showHost ? `${Subject.nameLabel}·기주 검색` : '이름 검색'}" value="${esc(state.dexQuery)}" autocomplete="off">
         <div class="seg">
           ${Subject.dexGroups.map((g) => `<button type="button" class="seg-btn ${state.dexGroup === g.key ? 'selected' : ''}" data-group="${g.key}">${g.label}</button>`).join('')}
         </div>
@@ -984,7 +987,7 @@
   function groupClasses(key) {
     const f = Subject.facets.find((x) => x.key === key);
     if (f) return f.cls;
-    if (key === 'pathogen') return Object.fromEntries(groupValues(key).map((v) => [v, UI.pathogenClass(v)]));
+    if (Subject.classify && key === Subject.classify.key) return Object.fromEntries(groupValues(key).map((v) => [v, UI.classClass(v)]));
     return {};
   }
 

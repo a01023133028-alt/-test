@@ -1,6 +1,6 @@
 # 잡초 사진 퀴즈
 
-대학 잡초 식별(77종)·병해 식별(63개) 시험 대비용 정적 사이트. HTML + CSS + 바닐라 JS, 빌드 도구 없음.
+대학 잡초 식별(77종)·병해 식별(63개)·해충 식별(50종) 시험 대비용 정적 사이트. HTML + CSS + 바닐라 JS, 빌드 도구 없음.
 주 주소는 Cloudflare Pages(https://weedquiz.pages.dev/, `main` 연결, 빌드 없음·출력 폴더 `/`)이다. 예전 주소 Netlify(https://weedquiz.netlify.app/)와 GitHub Pages(`main` 브랜치, `/` 루트)에도 그대로 배포된다. 모두 `main`에 머지되면 자동 재배포된다. Netlify 무료 플랜은 배포마다 크레딧이 빠지므로 자잘한 수정은 모아서 머지한다.
 
 ## 작업 규칙
@@ -14,9 +14,10 @@
 ## 구조
 
 - `index.html`, `css/style.css`, `js/*.js` — 화면과 로직 (`js/app.js`가 시작점)
-- `js/subject.js` — 과목 설정. 잡초(기본)와 병해(`?s=disease`)가 같은 화면 코드를 쓰고, 문구·데이터 파일·분류 기준만 여기서 갈린다. 과목별 문구를 화면 코드에 직접 쓰지 않는다.
+- `js/subject.js` — 과목 설정. 잡초(기본)·병해(`?s=disease`)·해충(`?s=pest`)이 같은 화면 코드를 쓰고, 문구·데이터 파일·분류 기준만 여기서 갈린다. 과목별 문구를 화면 코드에 직접 쓰지 않는다. 병해·해충의 '분류 고르기' 문제(병원·목)는 `classify`(데이터 필드 `key`, 함께 인정하는 답은 `{key}Alt`)로 설정한다.
 - `data/weeds.json` — 77종 데이터 (`id`, `name`, `morph`, `life`, `features`, `images`)
 - `data/diseases.json` — 병해 63개 (`id`, `name`, `host`(기주), `crop`(작물 구분), `pathogen`(병원: 곰팡이(병꼴균·접합균·자낭균·담자균·불완전균)/점균류(원생생물계)/난균류/세균/파이토플라즈마/바이러스/바이로이드 — 교수님이 알려주신 병원 표 기준), `pathogenAlt`(수업에서 함께 인정하는 병원, 예: 그을음병), `genus`(병원균 속명), `features`(병징·표징 구분 포인트, 식물보호산업기사 수준으로 짧게), `images`). 사진은 `images/disease/{3자리 id}/`
+- `data/pests.json` — 해충 50종 (`id`, `name`, `host`, `order`(목: 나비목·딱정벌레목·노린재목·파리목·총채벌레목·메뚜기목·톡토기목·응애류·달팽이류·쥐며느리류), `feed`(흡즙형/저작형), `features`, `images`). 사진은 `images/pest/{3자리 id}/`, 비교 쌍은 `data/pest-pairs.json`
 - 암기 체크는 localStorage `mastered`(과목별)에 저장되고, `Quiz.pool`이 `opts.skipMastered`가 켜져 있으면 제외한다.
 - 즐겨찾기는 localStorage `favorites`(과목별)에 저장되고, `opts.favOnly`가 켜지면 `Quiz.pool`이 즐겨찾기만 남긴다(한 바퀴 키에도 포함).
 - `data/pairs.json` — 헷갈리는 쌍(비교 탭) 목록과 구분 포인트. 병해는 `data/disease-pairs.json`(`ids` 2~4개). 과목별 쌍 파일과 묶음(kind)은 `subject.js`의 `pairsUrl`·`pairKinds`

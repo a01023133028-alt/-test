@@ -843,6 +843,7 @@ body[data-route="home"] .action-bar { bottom: calc(var(--tabbar-h) + var(--safe-
 
 /* ========== 과목 전환·기주 표시 ========== */
 .topbar-right { display: flex; align-items: center; gap: 4px; }
+.subject-links { display: flex; gap: 6px; }
 .subject-switch {
   display: inline-flex;
   align-items: center;
@@ -1299,7 +1300,7 @@ h2 { font-weight: 800; letter-spacing: -0.02em; }
 .pair-row.four { grid-template-columns: 1fr 1fr; gap: 10px 8px; }
 .pair-row.four .pair-vs { display: none; }
 .pair-row.four .pair-name { font-size: 0.95rem; }
-.opt-pathogen { grid-template-columns: repeat(2, 1fr); }
+.opt-cls { grid-template-columns: repeat(2, 1fr); }
 
 /* 자료 출처 문구 */
 .source-note { margin: 14px 2px 0; line-height: 1.6; }

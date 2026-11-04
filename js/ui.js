@@ -14,20 +14,16 @@ const UI = (() => {
     return `<span class="tag ${f.cls[value] || ''}">${esc(value)}</span>`;
   }
 
-  /* 병원 종류별 색 (곰팡이·점균류·난균류·세균·바이러스·파이토플라즈마·바이로이드) */
-  function pathogenClass(p) {
-    if (p.startsWith('곰팡이')) return 'p-fungus';
-    if (p.startsWith('난균')) return 'p-oomycete';
-    if (p.startsWith('세균')) return 'p-bacteria';
-    if (p.startsWith('바이러스')) return 'p-virus';
-    if (p.startsWith('점균')) return 'p-slime';
-    return 'p-other';
+  /* 분류 고르기 값(병원·목)의 색 */
+  function classClass(v) {
+    return Subject.classify ? Subject.classify.cls(v) : '';
   }
 
-  /* 분류 태그 (병해는 기주·병원 태그 먼저) */
+  /* 분류 태그 (병해·해충은 기주·분류 태그 먼저) */
   function tags(w) {
     const host = w.host ? `<span class="tag t-host">기주 ${esc(w.host)}</span>` : '';
-    const path = w.pathogen ? `<span class="tag ${pathogenClass(w.pathogen)}">${esc([w.pathogen, ...(w.pathogenAlt || [])].join(' / '))}</span>` : '';
+    const ck = Subject.classify && Subject.classify.key;
+    const path = ck && w[ck] ? `<span class="tag ${classClass(w[ck])}">${esc([w[ck], ...(w[`${ck}Alt`] || [])].join(' / '))}</span>` : '';
     return `<span class="tags">${host}${path}${Subject.facets.map((f) => facetTag(f, w[f.key])).join('')}</span>`;
   }
 
@@ -183,7 +179,7 @@ const UI = (() => {
   return {
     esc,
     facetTag,
-    pathogenClass,
+    classClass,
     tags,
     img,
     thumbs,
