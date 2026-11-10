@@ -177,6 +177,8 @@ const Quiz = (() => {
   /* 이름 채점: 병해는 "배추 탄저병"처럼 기주를 붙여 써도 정답 */
   function nameMatches(text, w) {
     if (Grading.isNameCorrect(text, w.name)) return true;
+    // 다른 이름(예: 작은각시들명나방 = 목화바둑명나방)도 정답
+    if ((w.aliases || []).some((a) => Grading.isNameCorrect(text, a))) return true;
     if (!w.host) return false;
     const t = Grading.normalize(text);
     return w.host.split('/').some((h) => {

@@ -52,7 +52,8 @@
 - 진딧물·가루이·깍지벌레·매미충·선녀벌레는 지금 분류대로 **노린재목**(옛 교재의 매미목)으로 묶었습니다. 수업 기준이 다르면 `data/pests.json`의 `order`만 고치면 됩니다.
 - 범위 필터와 태그는 **가해 방식**(흡즙형·저작형). 도감은 분류(목)별·가해 방식별·이름별.
 - 비교 탭: 담배가루이 vs 온실가루이, 총채벌레·진딧물·응애 3종 등 18묶음(`data/pest-pairs.json`).
-- 데이터는 `data/pests.json`(`id`, `name`, `host`, `order`, `feed`, `features`, `images`), 사진은 `images/pest/{3자리 id}/`입니다.
+- 다른 이름이 있는 해충(작은각시들명나방 = 목화바둑명나방, 큰이십팔점박이무당벌레 = 왕무당벌레붙이, 차응애 = 간자와응애)은 `aliases`에 넣어 주관식에서 둘 다 정답으로 처리합니다.
+- 데이터는 `data/pests.json`(`id`, `name`, `aliases`, `host`, `order`, `feed`, `features`, `images`), 사진은 `images/pest/{3자리 id}/`입니다.
 
 ## 안드로이드 앱(APK)
 
