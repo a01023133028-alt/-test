@@ -51,6 +51,8 @@ const Data = (() => {
       });
       // 병해·해충: 기주와 분류 고르기 값(병원·목)
       if (typeof w.host === 'string' && w.host.trim()) item.host = w.host.trim();
+      // 정답으로 함께 인정하는 다른 이름 (화면에는 features에 '= 다른 이름'으로 보여줌)
+      if (Array.isArray(w.aliases)) item.aliases = w.aliases.filter((a) => typeof a === 'string' && a.trim());
       const ck = Subject.classify && Subject.classify.key;
       if (ck && typeof w[ck] === 'string' && w[ck].trim()) item[ck] = w[ck].trim();
       // 수업에서 정답을 둘 이상 인정하는 값 (예: 그을음병 자낭균·불완전균)

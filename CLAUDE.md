@@ -17,7 +17,7 @@
 - `js/subject.js` — 과목 설정. 잡초(기본)·병해(`?s=disease`)·해충(`?s=pest`)이 같은 화면 코드를 쓰고, 문구·데이터 파일·분류 기준만 여기서 갈린다. 과목별 문구를 화면 코드에 직접 쓰지 않는다. 병해·해충의 '분류 고르기' 문제(병원·목)는 `classify`(데이터 필드 `key`, 함께 인정하는 답은 `{key}Alt`)로 설정한다.
 - `data/weeds.json` — 77종 데이터 (`id`, `name`, `morph`, `life`, `features`, `images`)
 - `data/diseases.json` — 병해 63개 (`id`, `name`, `host`(기주), `crop`(작물 구분), `pathogen`(병원: 곰팡이(병꼴균·접합균·자낭균·담자균·불완전균)/점균류(원생생물계)/난균류/세균/파이토플라즈마/바이러스/바이로이드 — 교수님이 알려주신 병원 표 기준), `pathogenAlt`(수업에서 함께 인정하는 병원, 예: 그을음병), `genus`(병원균 속명), `features`(병징·표징 구분 포인트, 식물보호산업기사 수준으로 짧게), `images`). 사진은 `images/disease/{3자리 id}/`
-- `data/pests.json` — 해충 50종 (`id`, `name`, `host`, `order`(목: 나비목·딱정벌레목·노린재목·파리목·총채벌레목·메뚜기목·톡토기목·응애류·달팽이류·쥐며느리류), `feed`(흡즙형/저작형), `features`, `images`). 사진은 `images/pest/{3자리 id}/`, 비교 쌍은 `data/pest-pairs.json`
+- `data/pests.json` — 해충 50종 (`id`, `name`, `aliases`(주관식에서 함께 인정하는 다른 이름), `host`, `order`(목: 나비목·딱정벌레목·노린재목·파리목·총채벌레목·메뚜기목·톡토기목·응애류·달팽이류·쥐며느리류), `feed`(흡즙형/저작형), `features`, `images`). 사진은 `images/pest/{3자리 id}/`, 비교 쌍은 `data/pest-pairs.json`
 - 암기 체크는 localStorage `mastered`(과목별)에 저장되고, `Quiz.pool`이 `opts.skipMastered`가 켜져 있으면 제외한다.
 - 즐겨찾기는 localStorage `favorites`(과목별)에 저장되고, `opts.favOnly`가 켜지면 `Quiz.pool`이 즐겨찾기만 남긴다(한 바퀴 키에도 포함).
 - `data/pairs.json` — 헷갈리는 쌍(비교 탭) 목록과 구분 포인트. 병해는 `data/disease-pairs.json`(`ids` 2~4개). 과목별 쌍 파일과 묶음(kind)은 `subject.js`의 `pairsUrl`·`pairKinds`
